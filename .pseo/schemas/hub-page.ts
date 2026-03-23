@@ -3,7 +3,7 @@
  *
  * Generic high-volume keyword pages that serve as "parent" pages
  * in a hub & spoke architecture. No industry suffix — these capture
- * head terms like "customer retention strategies" or "referral program ideas".
+ * head terms (high-volume, broad keywords).
  *
  * Spoke pages (industry-specific guides/resources) link UP to these hubs.
  * Hubs link DOWN to spokes via the spoke_pages section.
@@ -13,7 +13,7 @@ interface HubPage {
   meta: {
     content_type: 'hub';
     hub_type: 'guide' | 'resource';   // determines URL prefix: /guides/ or /resources/
-    subtype: string;                   // e.g., 'retention-strategies', 'referral-ideas', 'loyalty-examples'
+    subtype: string;                   // e.g., 'topic-strategies', 'topic-ideas', 'topic-examples'
     niche: string;                     // e.g., 'your-niche'
     generated_at: string;
     date_published: string;        // ISO date (YYYY-MM-DD)
@@ -30,7 +30,7 @@ interface HubPage {
   content: {
     intro: {
       hook: string;                    // Opening that names the broad problem
-      problem_statement: string;       // Why this topic matters for ecommerce/your platform merchants
+      problem_statement: string;       // Why this topic matters broadly
       what_youll_learn: string[];      // EXACTLY 5 takeaways
       reading_time: string;            // e.g., "15 min read"
       hero_stat?: {                    // Optional headline stat
@@ -66,10 +66,10 @@ interface HubPage {
     }>;
   };
   spoke_pages: Array<{                 // Industry-specific child pages
-    slug: string;                      // e.g., "retention-strategies-fashion-apparel"
-    title: string;                     // e.g., "Customer Retention Strategies for Fashion Brands"
+    slug: string;                      // e.g., "topic-industry-slug"
+    title: string;                     // e.g., "Topic Strategies for Industry Brands"
     type: 'guide' | 'resource';        // determines URL prefix for the link
-    industry: string;                  // e.g., "Fashion & Apparel"
+    industry: string;                  // e.g., "Your Industry"
   }>;
   sibling_hubs: Array<{               // Related hub pages
     slug: string;

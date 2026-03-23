@@ -76,7 +76,7 @@ interface ComparisonPage {
       score_a: number;             // Total weighted score
       score_b: number;
       summary: string;             // 3-4 sentences
-      choose_a_if: string;         // Specific merchant profile
+      choose_a_if: string;         // Specific user profile
       choose_b_if: string;
     };
     faq: Array<{                   // EXACTLY 6 FAQ items

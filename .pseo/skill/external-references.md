@@ -16,7 +16,7 @@ Always prefer higher-tier sources. Each page must have at least 2 Tier 1 sources
 
 These domains are **valid sources** but block automated URL verification (WebFetch returns 403/timeout). When using them, **only use URLs found via WebSearch** — never fabricate or guess a URL path:
 
-Forbes, McKinsey, Investopedia, NRF, Glossy, WWD, Business of Fashion, Beauty Independent, Food Dive, QSR Magazine, Vogue Business
+Forbes, McKinsey, Investopedia, and various niche-specific industry publications
 
 ## Rules
 

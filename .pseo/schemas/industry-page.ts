@@ -14,33 +14,33 @@ interface IndustryPage {
   meta: {
     content_type: 'industry';
     niche: string;                     // e.g., 'your-niche'
-    industry: string;                  // e.g., 'fashion-apparel' — must match meta.industry in spoke pages
-    industry_display: string;          // e.g., 'Fashion & Apparel'
+    industry: string;                  // e.g., 'your-industry' — must match meta.industry in spoke pages
+    industry_display: string;          // e.g., 'Your Industry'
     generated_at: string;
     date_published: string;        // ISO date (YYYY-MM-DD)
     date_modified: string;         // ISO date (YYYY-MM-DD)
     version: number;
   };
   seo: {
-    title: string;                     // e.g., "Fashion & Apparel Programs: Guides, Tools & Resources"
+    title: string;                     // e.g., "Your Industry: Guides, Tools & Resources"
     description: string;               // max 155 chars
     keywords: string[];                // 8-12 keywords
-    slug: string;                      // e.g., 'fashion-apparel' — matches industry slug
+    slug: string;                      // e.g., 'your-industry' — matches industry slug
     canonical_url: string;
   };
   content: {
     hero: {
-      headline: string;               // e.g., "Programs for Fashion & Apparel Brands"
+      headline: string;               // e.g., "Resources for Your Industry"
       subheadline: string;            // 1-2 sentence value prop for this vertical
     };
     hero_stat?: {                     // Optional headline stat
       value: string;                  // e.g., "65%"
-      description: string;           // e.g., "of fashion shoppers join programs"
+      description: string;           // e.g., "of customers in this vertical prefer X"
       source: string;                // e.g., "McKinsey 2024"
     };
-    overview: string;                 // 2-3 paragraphs about loyalty in this industry (HTML)
+    overview: string;                 // 2-3 paragraphs about this industry vertical (HTML)
     pain_points: string[];            // 3-5 industry-specific pain points
-    product_angle: string;        // How wallet passes help this vertical (HTML)
+    product_angle?: string;       // How our product helps this vertical (HTML, optional)
     faq: Array<{                      // 4-6 industry-specific FAQs
       question: string;
       answer: string;

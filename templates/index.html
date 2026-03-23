@@ -127,16 +127,7 @@
         .view-all-btn:hover{background:var(--accent);color:var(--light);text-decoration:none}
 
         /* ─── Thumb backgrounds ─── */
-        .thumb-fashion{background:radial-gradient(circle at 30% 30%,rgba(233,30,99,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(112,0,255,0.12) 0%,transparent 50%),var(--ind-fashion)}
-        .thumb-beauty{background:radial-gradient(circle at 20% 40%,rgba(255,64,129,0.15) 0%,transparent 60%),radial-gradient(circle at 70% 60%,rgba(170,0,255,0.12) 0%,transparent 50%),var(--ind-beauty)}
-        .thumb-food{background:radial-gradient(circle at 30% 30%,rgba(178,130,200,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(112,0,255,0.1) 0%,transparent 50%),var(--ind-food)}
-        .thumb-health{background:radial-gradient(circle at 20% 40%,rgba(149,117,205,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(112,0,255,0.1) 0%,transparent 50%),var(--ind-health)}
-        .thumb-pet{background:radial-gradient(circle at 30% 30%,rgba(188,170,164,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(161,136,127,0.12) 0%,transparent 50%),var(--ind-pet)}
-        .thumb-sports{background:radial-gradient(circle at 20% 40%,rgba(100,120,180,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(112,0,255,0.1) 0%,transparent 50%),var(--ind-sports)}
-        .thumb-jewelry{background:radial-gradient(circle at 30% 30%,rgba(206,186,224,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(112,0,255,0.1) 0%,transparent 50%),var(--ind-jewelry)}
-        .thumb-home{background:radial-gradient(circle at 20% 40%,rgba(176,170,164,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(140,130,120,0.12) 0%,transparent 50%),var(--ind-home)}
-        .thumb-coffee{background:radial-gradient(circle at 30% 30%,rgba(200,188,176,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(160,140,120,0.12) 0%,transparent 50%),var(--ind-coffee)}
-        .thumb-baby{background:radial-gradient(circle at 20% 40%,rgba(236,64,122,0.12) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(126,87,194,0.12) 0%,transparent 50%),var(--ind-baby)}
+        /* Per-niche industry thumb classes are added during content setup */
         .thumb-default{background:radial-gradient(circle at 30% 30%,rgba(112,0,255,0.12) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(82,0,204,0.1) 0%,transparent 50%),var(--accent)}
 
         /* ─── Responsive ─── */
@@ -204,7 +195,7 @@
         <div class="section-header">
             <div>
                 <div class="section-title">Interactive Tools</div>
-                <div class="section-subtitle">Free calculators to measure your ROI</div>
+                <div class="section-subtitle">{{INDEX_TOOLS_SUBTITLE}}</div>
             </div>
             <a href="/tools/" class="section-link">View all tools &rarr;</a>
         </div>
@@ -218,7 +209,7 @@
         <div class="section-header">
             <div>
                 <div class="section-title">Browse by Industry</div>
-                <div class="section-subtitle">Find strategies for your vertical</div>
+                <div class="section-subtitle">{{INDEX_INDUSTRIES_SUBTITLE}}</div>
             </div>
         </div>
         <div class="ind-grid" id="indGrid"></div>
@@ -231,7 +222,7 @@
         <div class="section-header">
             <div>
                 <div class="section-title">Guides</div>
-                <div class="section-subtitle">Step-by-step playbooks for success</div>
+                <div class="section-subtitle">{{INDEX_GUIDES_SUBTITLE}}</div>
             </div>
             <a href="/guides/" class="section-link">View all guides &rarr;</a>
         </div>
@@ -283,7 +274,7 @@
 <!-- ═══ Newsletter ═══ -->
 <div class="nl-banner">
     <div class="pw">
-        <h3 class="nl-banner-title">More repeat customers, less guesswork</h3>
+        <h3 class="nl-banner-title">{{NL_BANNER_TITLE}}</h3>
         <p class="nl-banner-desc">{{INDEX_NL_DESC}}</p>
         <form class="nl-form" data-source="banner">
             <input type="email" placeholder="Email address" required>
@@ -297,9 +288,9 @@
 <div class="section">
     <div class="pw">
         <div class="cta-block home-cta">
-            <h3>Keep more customers coming back</h3>
+            <h3>{{INDEX_CTA_HEADLINE}}</h3>
             <p>{{INDEX_CTA_BODY}}</p>
-            <a id="home-cta" class="cta-btn">Start free &rarr;</a>
+            <a id="home-cta" class="cta-btn">{{CTA_TEXT}}</a>
         </div>
     </div>
 </div>
@@ -312,25 +303,15 @@ const PAGES = {{PAGES}};
 const urlPrefixes = {resource:'/resources/',guide:'/guides/',alternatives:'/compare/',comparison:'/compare/',tool:'/tools/',industry:'/industries/'};
 const typeLabels = {resource:'Resource',guide:'Guide',alternatives:'Alternatives',comparison:'Comparison',tool:'Tool',industry:'Industry'};
 const thumbClasses = {
-    'fashion-apparel':'thumb-fashion','beauty-cosmetics':'thumb-beauty','food-beverage':'thumb-food',
-    'health-supplements':'thumb-health','pet-supplies':'thumb-pet','sports-outdoor':'thumb-sports',
-    'jewelry-accessories':'thumb-jewelry','home-decor':'thumb-home','coffee-tea':'thumb-coffee','baby-kids':'thumb-baby'
+    // Populated per-niche: e.g. 'industry-key':'thumb-industry'
 };
 
 // ─── Icon helpers (SVG sprite via <use>) ───
 const indIconIds = {
-    'fashion-apparel':'ic-fashion','beauty-cosmetics':'ic-beauty','food-beverage':'ic-food',
-    'health-supplements':'ic-health','pet-supplies':'ic-pet','sports-outdoor':'ic-sports',
-    'jewelry-accessories':'ic-jewelry','home-decor':'ic-home','coffee-tea':'ic-coffee','baby-kids':'ic-baby',
-    'gyms-fitness-studios':'ic-sports','spas-salons-medspas':'ic-spa',
-    'health-coaching-personal-training':'ic-health-coaching','health-food-organic-stores':'ic-health-food',
-    'supplement-vitamin-brands':'ic-supplement','wellness-dtc-ecommerce':'ic-wellness','yoga-pilates-studios':'ic-yoga'
+    // Populated per-niche: e.g. 'industry-key':'ic-industry'
 };
 const toolIconIds = {
-    'loyalty-roi-calculator':'ic-roi','retention-rate-calculator':'ic-retention',
-    'referral-roi-calculator':'ic-referral',
-    'loyalty-cost-comparison':'ic-compare','points-value-calculator':'ic-points',
-    'push-vs-email-roi':'ic-push-email'
+    // Populated per-niche: e.g. 'tool-slug':'ic-tool-name'
 };
 function icon(id,cls){return `<svg class="${cls||''}" viewBox="0 0 48 48"><use href="#${id}"></use></svg>`;}
 function indIcon(key){return icon(indIconIds[key]||'ic-default','ind-icon');}
@@ -398,12 +379,7 @@ if(guideMain){
 // ─── Hubs (topic cards) ───
 const hubs = PAGES.filter(p => p.is_hub);
 const hubTopicMap = {
-    'best-loyalty-programs':'Loyalty Programs','ecommerce-loyalty-program':'Loyalty Programs','loyalty-program-examples':'Loyalty Programs',
-    'loyalty-program-small-business':'Loyalty Programs','tiered-loyalty-program':'Loyalty Programs','digital-punch-card':'Loyalty Programs','omnichannel-loyalty-program':'Loyalty Programs',
-    'ecommerce-referral-program':'Referral','referral-program-examples':'Referral','referral-program-ideas':'Referral',
-    'customer-retention-program':'Retention','customer-retention-strategies-ecommerce':'Retention','how-to-retain-customers':'Retention','retention-rate-formula':'Retention',
-    'fitness-studio-marketing':'Marketing','salon-marketing-ideas':'Marketing','spa-marketing-ideas':'Marketing','yoga-studio-marketing':'Marketing',
-    'coffee-shop-loyalty-program':'Marketing','salon-loyalty-program':'Marketing'
+    // Populated per-niche: e.g. 'hub-slug':'Topic Name'
 };
 const hubsByTopic = {};
 hubs.forEach(p => {
@@ -412,10 +388,7 @@ hubs.forEach(p => {
     hubsByTopic[topic].push(p);
 });
 const hubTopics = [
-    {id:'Loyalty Programs', anchor:'loyalty-programs', icon:'ic-topic-loyalty', desc:'Points, tiers, and program design'},
-    {id:'Referral', anchor:'referral', icon:'ic-topic-referral', desc:'Referral programs and word-of-mouth growth'},
-    {id:'Retention', anchor:'retention', icon:'ic-topic-retention', desc:'Retention strategies, formulas, and frameworks'},
-    {id:'Marketing', anchor:'marketing', icon:'ic-topic-marketing', desc:'Industry-specific marketing and promotion'}
+    // Populated per-niche: e.g. {id:'Topic', anchor:'topic', icon:'ic-topic', desc:'Topic description'}
 ];
 let hubsHTML = '<div class="topic-grid">';
 hubTopics.forEach(t => {

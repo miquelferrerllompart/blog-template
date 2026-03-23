@@ -479,12 +479,12 @@ node -e "
     out += 'This blog provides free calculators, guides, comparison pages, and actionable resources.\n\n';
 
     const sections = [
-        {key:'tool', title:'Free Tools', desc:'Interactive calculators for loyalty program metrics.'},
-        {key:'guide', title:'Guides', desc:'In-depth guides on loyalty, retention, and wallet-pass strategies by industry.'},
-        {key:'resource', title:'Resources', desc:'Curated reward ideas, checklists, and best practices by industry vertical.'},
-        {key:'alternatives', title:'Alternatives', desc:'Comparison pages for app alternatives.'},
-        {key:'comparison', title:'Comparisons', desc:'Head-to-head product comparisons for loyalty platforms.'},
-        {key:'industry', title:'Industries', desc:'Industry-specific loyalty program landing pages with curated guides, tools, and resources.'}
+        {key:'tool', title:'Free Tools', desc:'Interactive calculators and free tools.'},
+        {key:'guide', title:'Guides', desc:'In-depth guides and step-by-step playbooks.'},
+        {key:'resource', title:'Resources', desc:'Curated ideas, checklists, and best practices.'},
+        {key:'alternatives', title:'Alternatives', desc:'Alternative solutions and comparison pages.'},
+        {key:'comparison', title:'Comparisons', desc:'Head-to-head product comparisons.'},
+        {key:'industry', title:'Industries', desc:'Industry-specific landing pages with curated guides, tools, and resources.'}
     ];
 
     for (const s of sections) {
@@ -609,11 +609,16 @@ for html_file in $(find "$OUTPUT_DIR" -name "*.html" -type f); do
         html = html.replace(/\{\{INDEX_CANONICAL\}\}/g, 'https://' + config.brand.domain);
         html = html.replace(/\{\{INDEX_BLOG_NAME\}\}/g, config.brand.site_name);
         html = html.replace(/\{\{INDEX_HERO_TITLE\}\}/g, config.index.hero_headline);
-        html = html.replace(/\{\{INDEX_NL_DESC\}\}/g, config.newsletter?.description || 'Stay updated with our latest guides and resources.');
+        html = html.replace(/\{\{INDEX_NL_DESC\}\}/g, config.index?.nl_description || config.newsletter?.banner_description || 'Stay updated with our latest guides and resources.');
         html = html.replace(/\{\{INDEX_CTA_BODY\}\}/g, config.cta.mid_body || 'Try ' + config.brand.name + ' today.');
+        html = html.replace(/\{\{INDEX_CTA_HEADLINE\}\}/g, config.index?.cta_headline || 'Ready to take the next step?');
+        html = html.replace(/\{\{INDEX_TOOLS_SUBTITLE\}\}/g, config.index?.tools_subtitle || 'Free calculators and interactive tools');
+        html = html.replace(/\{\{INDEX_INDUSTRIES_SUBTITLE\}\}/g, config.index?.industries_subtitle || 'Find content for your industry');
+        html = html.replace(/\{\{INDEX_GUIDES_SUBTITLE\}\}/g, config.index?.guides_subtitle || 'Step-by-step playbooks for success');
 
         // Listing/static page placeholders
         html = html.replace(/\{\{NL_BANNER_DESC\}\}/g, config.newsletter?.banner_description || 'Weekly strategies and real examples. One email, no fluff.');
+        html = html.replace(/\{\{LISTING_CTA_HEADLINE\}\}/g, config.index?.cta_headline || 'Ready to take the next step?');
         html = html.replace(/\{\{LISTING_CTA_BODY\}\}/g, config.cta.mid_body || 'Try ' + config.brand.name + ' today.');
         html = html.replace(/\{\{LISTING_CTA_BUTTON\}\}/g, config.cta.text);
         html = html.replace(/\{\{STYLEGUIDE_CTA_BODY\}\}/g, config.cta.mid_body || 'Try ' + config.brand.name + ' today.');
@@ -633,6 +638,9 @@ for html_file in $(find "$OUTPUT_DIR" -name "*.html" -type f); do
 
         // Newsletter placeholders (with fallbacks)
         html = html.replace(/\{\{NL_SIDEBAR_LABEL\}\}/g, config.newsletter?.sidebar_label || 'Stay updated');
+        html = html.replace(/\{\{NL_SIDEBAR_DESC\}\}/g, config.newsletter?.sidebar_description || 'The latest insights delivered to your inbox. One email, no fluff.');
+        html = html.replace(/\{\{NL_FOOTER_DESC\}\}/g, config.newsletter?.footer_description || 'The latest insights delivered to your inbox. One email, no fluff.');
+        html = html.replace(/\{\{NL_BANNER_TITLE\}\}/g, config.newsletter?.banner_title || 'Stay ahead of the curve');
 
         // Dashboard password
         html = html.replace(/\{\{DASHBOARD_PASSWORD\}\}/g, config.dashboard_password || 'admin2026');

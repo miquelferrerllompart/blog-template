@@ -20,8 +20,8 @@
     "source": "McKinsey"
   },
   {
-    "title": "How Customer Retention Drives Growth",
-    "url": "https://hbr.org/2023/01/the-economics-of-customer-retention",
+    "title": "How to Build Sustainable Growth",
+    "url": "https://hbr.org/2023/01/sustainable-growth-strategies",
     "source": "Harvard Business Review"
   },
   {

@@ -42,8 +42,8 @@ When generating a new content JSON, use this process to populate `external_refer
 Based on the page's content type, industry, and subtype, identify 3-5 topic queries. Example for a resource page:
 
 ```
-- "ecommerce customer engagement strategies"
-- "customer retention best practices"
+- "customer engagement strategies"
+- "growth best practices"
 - "online business growth examples"
 ```
 
@@ -82,8 +82,8 @@ These domains block automated verification (WebFetch returns 403/timeout). URLs 
 | `mckinsey.com` | Timeouts on WebFetch |
 | `investopedia.com` | Blocked by WebSearch API |
 | `nrf.com` | Deep links frequently 404 |
-| `glossy.co`, `wwd.com`, `businessoffashion.com` | Block WebFetch |
-| `beautyindependent.com`, `fooddive.com` | Block WebFetch |
+| `glossy.co`, `wwd.com` | Block WebFetch |
+| Various industry publications | Block WebFetch |
 | `qsrmagazine.com` | Returns 403 on WebFetch |
 | `voguebusiness.com` | Blocks WebFetch |
 
@@ -210,7 +210,7 @@ The script catches structural issues. This skill catches *content* issues (fake 
 
 | Topic | Best search queries | Reliable domains |
 |-------|-------------------|-----------------|
-| Customer retention | "customer retention strategies" | hubspot.com, hbr.org, bain.com |
+| Business strategy | "growth strategies" | hubspot.com, hbr.org, bain.com |
 | Growth strategies | "business growth strategies" | hubspot.com, hbr.org |
 | Marketing | "marketing best practices" | hubspot.com, hbr.org |
 | Industry trends | "{industry} trends {year}" | hbr.org, industry-specific publications |

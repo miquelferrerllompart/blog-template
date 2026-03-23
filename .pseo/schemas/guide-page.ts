@@ -2,14 +2,13 @@
  * pSEO Blog Template — Guide Page Schema
  * ~24% of total pages (30 pages)
  *
- * Long-form educational content. Industry-specific how-to guides
- * for building programs on Your Platform.
+ * Long-form educational content. Industry-specific how-to guides.
  */
 
 interface GuidePage {
   meta: {
     content_type: 'guide';
-    subtype: 'build-loyalty' | 'retention-guide' | 'omnichannel-loyalty' | 'referral-setup' | 'wallet-guide' | 'tiered-loyalty' | 'marketing-guide' | 'churn-reduction';
+    subtype: 'how-to' | 'setup-guide' | 'strategy-guide' | 'marketing-guide' | 'optimization-guide' | 'comparison-guide';
     niche: string;                  // e.g., 'your-niche'
     industry: string;
     industry_display: string;
@@ -28,7 +27,7 @@ interface GuidePage {
   content: {
     intro: {
       hook: string;                // Industry-specific opening that names the problem
-      problem_statement: string;   // Why [industry] merchants specifically struggle with loyalty
+      problem_statement: string;   // Why [industry] specifically struggles with this topic
       what_youll_learn: string[];  // EXACTLY 5 takeaways
       reading_time: string;        // e.g., "12 min read"
     };
@@ -38,10 +37,10 @@ interface GuidePage {
       key_takeaway: string;        // 1-sentence summary
       actionable_tip: string;      // Specific action the reader can take today
       platform_integration?: string; // How this connects to platform features (POS, Flow, etc.)
-      product_angle?: string;  // How wallet passes enhance this strategy
+      product_angle?: string;  // How our product enhances this strategy
     }>;
     case_study_snippet: {          // Mini case study (real or realistic composite)
-      brand_type: string;          // e.g., "A mid-size fashion DTC brand"
+      brand_type: string;          // e.g., "A mid-size B2B company"
       challenge: string;
       solution: string;
       results: Array<{
@@ -80,16 +79,14 @@ interface GuidePage {
   };
 }
 
+// Customize per-niche during onboarding
 const guideTitleTemplates: Record<string, string> = {
-  'build-loyalty':       'How to Build a Program for Your {industry} Store',
-  'retention-guide':     'Complete Guide to {industry} Customer Retention on Your Platform',
-  'omnichannel-loyalty': 'Omnichannel Loyalty Guide for {industry} Brands',
-  // Health & Wellness niche templates
-  'referral-setup':    'How to Set Up a Referral Program for Your {industry}',
-  'churn-reduction':   'How to Reduce Churn and Retain Customers in Your {industry}',
-  'wallet-guide':      'How to Use Digital Wallet Passes for {industry} Loyalty',
-  'tiered-loyalty':    'How to Build a Tiered Program for {industry}',
-  'marketing-guide':   'Complete Guide to {industry} Marketing on Your Platform',
+  'how-to':              'How to {topic} for {industry}',
+  'setup-guide':         'How to Set Up {topic} for {industry}',
+  'strategy-guide':      'Complete {topic} Guide for {industry}',
+  'marketing-guide':     'Complete Guide to {industry} Marketing',
+  'optimization-guide':  'How to Optimize {topic} for {industry}',
+  'comparison-guide':    '{industry} {topic} Comparison Guide',
 };
 
 export type { GuidePage };

@@ -3,13 +3,13 @@
 ## Before / After
 
 **Before (no link):**
-> "Referral programs are effective for fashion brands."
+> "Growth strategies are effective for this industry."
 
 **After (with contextual link):**
-> "Referral programs are effective for fashion brands — see our <a href="/resources/referral-ideas-fashion-apparel">referral program ideas for fashion</a> for specific tactics."
+> "Growth strategies are effective for this industry — see our <a href="/resources/growth-ideas-your-industry">growth ideas for your industry</a> for specific tactics."
 
 ## Link text quality
 
-**Bad:** `<a href="/resources/vip-tiers-fashion-apparel">click here</a>`
-**Bad:** `<a href="/resources/vip-tiers-fashion-apparel">read more</a>`
-**Good:** `<a href="/resources/vip-tiers-fashion-apparel">VIP tier program</a>`
+**Bad:** `<a href="/resources/best-practices-your-industry">click here</a>`
+**Bad:** `<a href="/resources/best-practices-your-industry">read more</a>`
+**Good:** `<a href="/resources/best-practices-your-industry">best practices guide</a>`
