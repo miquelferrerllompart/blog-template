@@ -1,0 +1,33 @@
+<style>
+h2[id],h3[id],h4[id]{position:relative;cursor:pointer;padding-left:1.5em;margin-left:-1.5em}
+h2[id]:hover .anchor-link,h3[id]:hover .anchor-link,h4[id]:hover .anchor-link{opacity:1}
+.anchor-link{position:absolute;left:0;top:50%;transform:translateY(-50%);opacity:0;font-size:0.7em;color:var(--gray);transition:opacity 0.2s;text-decoration:none;width:1.5em;text-align:center}
+.anchor-link:hover{color:var(--accent);text-decoration:none}
+@media(max-width:768px){.anchor-link{position:static;transform:none;opacity:0.4;margin-left:0.3em}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    setTimeout(function(){
+        document.querySelectorAll('h2,h3,h4').forEach(function(h){
+            if(h.closest('.sg-wrap')||h.closest('.site-footer')||h.id) return;
+            var text=h.textContent.replace(/[^\w\s-]/g,'').trim().toLowerCase().replace(/\s+/g,'-').substring(0,60);
+            if(!text) return;
+            var id=text,i=1;
+            while(document.getElementById(id)){id=text+'-'+(i++)}
+            h.id=id;
+            var a=document.createElement('a');
+            a.className='anchor-link';
+            a.href='#'+id;
+            a.textContent='#';
+            a.setAttribute('aria-label','Link to this section');
+            a.addEventListener('click',function(e){
+                e.stopPropagation();
+                history.replaceState(null,null,'#'+id);
+                navigator.clipboard&&navigator.clipboard.writeText(window.location.href);
+            });
+            h.insertBefore(a,h.firstChild);
+        });
+        if(window.location.hash){var el=document.querySelector(window.location.hash);if(el)el.scrollIntoView({behavior:'smooth'})}
+    },100);
+});
+</script>

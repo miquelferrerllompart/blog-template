@@ -1,0 +1,52 @@
+.calc-wrap{display:grid;grid-template-columns:1fr;gap:var(--sp-24);margin-bottom:var(--sp-56)}
+.calc-inputs{background:var(--light);border:1px solid var(--gray-light);border-radius:var(--radius-xl);padding:var(--sp-36)}
+.calc-inputs h2{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--sp-24)}
+.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4) var(--sp-20)}
+.field{margin-bottom:var(--sp-16)}
+.field label{display:block;font-size:0.875rem;font-weight:600;margin-bottom:var(--sp-6)}
+.field .help{font-size:0.6875rem;color:var(--gray);margin-top:var(--sp-4);line-height:1.4}
+.field input,.field select{width:100%;padding:var(--sp-12) var(--sp-16);border:1px solid var(--gray-light);border-radius:var(--radius-md);font-size:0.875rem;font-family:var(--font-primary);transition:border 0.2s,box-shadow 0.2s;background:var(--light)}
+.field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+.calc-btn{width:100%;padding:var(--sp-16);background:var(--accent);color:white;border:none;border-radius:var(--radius-pill);font-size:0.9375rem;font-weight:700;font-family:var(--font-primary);cursor:pointer;transition:all 0.25s;margin-top:var(--sp-8)}
+.calc-btn:hover{background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 4px 12px rgba(112,0,255,0.25)}
+.calc-results{background:var(--dark);color:white;border-radius:var(--radius-xl);padding:var(--sp-36);display:none;flex-direction:column;justify-content:center}
+.calc-results.is-visible{display:flex}
+.calc-results h2{font-size:1.25rem;font-weight:800;margin-bottom:var(--sp-24);color:var(--accent-light);letter-spacing:-0.02em}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16)}
+.result-field{padding:var(--sp-16);background:rgba(255,255,255,0.06);border-radius:var(--radius-lg)}
+.rf-label{font-size:0.6875rem;color:rgba(255,255,255,0.6);margin-bottom:var(--sp-6);font-weight:500}
+.rf-value{font-family:var(--font-code);font-size:clamp(1rem,2.5vw,1.5rem);font-weight:700;color:var(--accent-light);letter-spacing:-0.02em;overflow-wrap:break-word;word-break:break-word}
+.rf-desc{font-size:0.8125rem;color:rgba(255,255,255,0.45);margin-top:var(--sp-6);line-height:1.4}
+.no-results{font-size:0.875rem;color:rgba(255,255,255,0.4);text-align:center;padding:var(--sp-40) 0}
+.how-to{background:var(--light-2);border-radius:var(--radius-xl);padding:var(--sp-36);margin-bottom:var(--sp-56)}
+.how-to h3{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--sp-20)}
+.how-to ol{list-style:none;counter-reset:steps}
+.how-to li{counter-increment:steps;padding:var(--sp-12) 0;font-size:0.9375rem;line-height:1.7;border-bottom:1px solid var(--gray-light);display:flex;gap:var(--sp-14);align-items:flex-start}
+.how-to li:last-child{border-bottom:none}
+.how-to li::before{content:counter(steps);font-family:var(--font-code);font-weight:700;color:white;background:var(--accent);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.75rem;margin-top:var(--sp-2)}
+.benchmarks{margin-bottom:var(--sp-56)}
+.benchmarks h3{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--sp-20)}
+.bench-table{width:100%;border-collapse:collapse;font-size:0.875rem}
+.bench-table th{background:var(--dark);color:white;padding:var(--sp-12) var(--sp-16);text-align:left;font-size:0.75rem;font-weight:700;letter-spacing:0.02em}
+.bench-table td{padding:var(--sp-12) var(--sp-16);border-bottom:1px solid var(--gray-light)}
+.bench-table tr:nth-child(even){background:var(--light-2)}
+.bench-table tr:hover{background:var(--accent-light)}
+.use-cases{margin-bottom:var(--sp-56)}
+.use-cases h3{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--sp-20)}
+.uc-card{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-20);padding:var(--sp-20);border:1px solid var(--gray-light);border-radius:var(--radius-lg);margin-bottom:var(--sp-14);background:var(--light);transition:border-color 0.2s}
+.uc-card:hover{border-color:var(--accent-light)}
+.uc-scenario{font-size:0.9375rem;font-weight:600;line-height:1.4}
+.uc-benefit{font-size:0.875rem;color:var(--gray);line-height:1.6}
+.examples{margin-bottom:var(--sp-56)}
+.examples h3{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--sp-20)}
+.example-card{border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-28);margin-bottom:var(--sp-16);background:var(--light-2)}
+.example-industry{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:var(--sp-10)}
+.example-narrative{font-size:0.9375rem;color:var(--dark-2);line-height:1.7;margin-bottom:var(--sp-16)}
+.example-data{display:flex;gap:var(--sp-28);flex-wrap:wrap}
+.example-data-col{flex:1;min-width:200px}
+.example-data-col h5{font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray);margin-bottom:var(--sp-8)}
+.example-data-col table{font-family:var(--font-code);font-size:0.8125rem;color:var(--dark-2);border-collapse:collapse;width:100%}
+.example-data-col td{padding:4px var(--sp-10) 4px 0}
+.example-data-col td:first-child{color:var(--gray);white-space:nowrap}
+.methodology{font-size:0.875rem;color:var(--gray);line-height:1.7;margin-bottom:var(--sp-48);padding:var(--sp-24);background:var(--light-3);border-radius:var(--radius-lg)}
+.methodology strong{color:var(--dark)}

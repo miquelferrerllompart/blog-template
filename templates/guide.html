@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <style>
+        {{@base-css}}
+
+        {{@header-css}}
+
+        .hero{position:relative;padding:var(--sp-80) var(--sp-48) var(--sp-60);background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(112,0,255,0.02) 20px,rgba(112,0,255,0.02) 40px),var(--light);border-bottom:1px solid var(--gray-light)}
+        .hero-icon{position:absolute;top:var(--sp-32);right:var(--sp-48);width:80px;height:80px;opacity:0.12}
+        .hero .breadcrumb{font-family:var(--font-code);font-size:0.8125rem;color:var(--gray);margin-bottom:var(--sp-20);letter-spacing:0.05em}
+        .hero .breadcrumb a{color:var(--accent);font-weight:600}
+        .hero .tag-row{display:flex;align-items:center;gap:var(--sp-12);margin-bottom:var(--sp-16)}
+        .hero .industry-tag{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);background:var(--accent-light);padding:var(--sp-4) var(--sp-14);border-radius:var(--radius-pill)}
+        .hero .reading-tag{font-family:var(--font-code);font-size:0.6875rem;color:var(--gray);background:var(--light-3);padding:var(--sp-4) var(--sp-12);border-radius:var(--radius-pill)}
+        .hero h1{font-size:2.25rem;font-weight:800;letter-spacing:-0.03em;line-height:1.15;max-width:800px;margin-bottom:var(--sp-16)}
+        .hero .hook{font-size:1.0625rem;color:var(--dark-2);max-width:700px;line-height:1.7;margin-bottom:var(--sp-24);font-weight:500}
+        .hero .problem{font-size:0.875rem;color:var(--gray);max-width:700px;line-height:1.7;margin-bottom:var(--sp-28)}
+        .hero .takeaways{display:flex;flex-wrap:wrap;gap:var(--sp-8)}
+        .hero .takeaway{font-size:0.8125rem;padding:var(--sp-6) var(--sp-14);background:white;border:1px solid var(--gray-light);border-radius:var(--radius-pill);color:var(--dark-2)}
+        .hero-inner{max-width:48.75rem;margin:0 auto}
+
+        .container{max-width:48.75rem;margin:0 auto;padding:var(--sp-56) var(--sp-24)}
+        .container a{text-decoration-line:underline;text-decoration-color:rgba(112,0,255,0.25);text-underline-offset:2px;transition:text-decoration-color 0.2s}
+        .container a:hover{text-decoration-color:var(--accent)}
+
+        /* Guide section */
+        .guide-section{margin-bottom:var(--sp-64);scroll-margin-top:var(--sp-80)}
+        .guide-section h2{font-size:1.5rem;font-weight:800;letter-spacing:-0.025em;margin-bottom:var(--sp-24);padding-bottom:var(--sp-12);border-bottom:2px solid var(--accent-light)}
+        .guide-body{font-size:0.9375rem;line-height:1.8;color:var(--dark-2);margin-bottom:var(--sp-24)}
+        .guide-body p{margin-bottom:var(--sp-20)}
+        .key-takeaway{background:white;padding:var(--sp-16) var(--sp-20) var(--sp-16) var(--sp-48);border-radius:var(--radius-md);font-size:0.875rem;font-weight:500;color:var(--dark-2);margin-bottom:var(--sp-16);line-height:1.65;position:relative}
+        .key-takeaway .callout-icon{position:absolute;left:var(--sp-16);top:var(--sp-16);width:20px;height:20px;--ic-1:var(--accent);--ic-2:transparent;--ic-3:var(--accent-dark)}
+        .actionable-tip{background:var(--light-2);border:1px solid var(--gray-light);padding:var(--sp-16) var(--sp-20) var(--sp-16) var(--sp-48);border-radius:var(--radius-md);font-size:0.875rem;color:var(--dark-2);margin-bottom:var(--sp-12);line-height:1.65;position:relative}
+        .actionable-tip .callout-icon{position:absolute;left:var(--sp-16);top:var(--sp-16);width:18px;height:18px;--ic-1:var(--dark);--ic-2:transparent;--ic-3:var(--dark-2)}
+        .platform-note{font-size:0.875rem;color:var(--gray);padding:var(--sp-12) var(--sp-20) var(--sp-12) var(--sp-48);background:var(--light-3);border-radius:var(--radius-md);margin-bottom:var(--sp-10);line-height:1.6;position:relative}
+        .platform-note .callout-icon{position:absolute;left:var(--sp-16);top:var(--sp-12);width:18px;height:18px}
+        .wallet-note{background:var(--light-2);border:1px solid var(--gray-light);padding:var(--sp-16) var(--sp-20) var(--sp-16) var(--sp-48);border-radius:var(--radius-md);font-size:0.875rem;color:var(--dark-2);margin-bottom:var(--sp-12);line-height:1.65;position:relative}
+        .wallet-note .callout-icon{position:absolute;left:var(--sp-16);top:var(--sp-16);width:18px;height:18px;--ic-1:var(--dark);--ic-2:transparent;--ic-3:var(--dark-2)}
+
+        /* Case study */
+        .case-study{background:var(--dark);color:white;border-radius:var(--radius-xl);padding:var(--sp-40);margin-bottom:var(--sp-48)}
+        .case-study .cs-label{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-light);margin-bottom:var(--sp-12)}
+        .case-study .cs-brand{font-size:1.25rem;font-weight:700;margin-bottom:var(--sp-16)}
+        .case-study .cs-text{font-size:0.875rem;line-height:1.7;opacity:0.85;margin-bottom:var(--sp-20)}
+        .case-study .results-grid{display:grid;grid-template-columns:1fr;gap:var(--sp-16)}
+        .case-study .result-item{text-align:center;padding:var(--sp-16);background:rgba(112,0,255,0.15);border-radius:var(--radius-md)}
+        .result-item .r-value{font-family:var(--font-code);font-size:1.5rem;font-weight:700;color:var(--accent-light)}
+        .result-item .r-label{font-size:0.6875rem;color:rgba(255,255,255,0.7);margin-top:var(--sp-4)}
+
+        {{@content-img-css}}
+
+        {{@faq-css}}
+
+        {{@cta-css}}
+
+        {{@related-css}}
+
+        {{@footer-css}}
+
+        @media(max-width:768px){
+            .hero{padding:var(--sp-48) var(--sp-24) var(--sp-40)}.hero h1{font-size:1.75rem}.hero-icon{display:none}
+            .case-study{padding:var(--sp-28) var(--sp-20)}.case-study .results-grid{grid-template-columns:1fr}
+        }
+    </style>
+    <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","url":"{{BLOG_URL}}/guides/{{SLUG}}","publisher":{"@type":"Organization","name":"{{BRAND_NAME}}","url":"{{SITE_URL}}","logo":{"@type":"ImageObject","url":"{{BLOG_URL}}/assets/logo.svg"}},"datePublished":"{{DATE_PUBLISHED}}","dateModified":"{{DATE_MODIFIED}}","mainEntityOfPage":{"@type":"WebPage","@id":"{{BLOG_URL}}/guides/{{SLUG}}"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"{{BLOG_URL}}"},{"@type":"ListItem","position":2,"name":"Guides","item":"{{BLOG_URL}}/guides/"},{"@type":"ListItem","position":3,"name":"{{TITLE}}"}]}]</script>
+</head>
+<body>
+{{>icons}}
+{{>header}}
+<div id="app"></div>
+<script>
+const DATA = {{DATA}};
+const industryIconIds = {'fashion-apparel':'ic-fashion','beauty-cosmetics':'ic-beauty','food-beverage':'ic-food','health-supplements':'ic-health','pet-supplies':'ic-pet','sports-outdoor':'ic-sports','jewelry-accessories':'ic-jewelry','home-decor':'ic-home','coffee-tea':'ic-coffee','baby-kids':'ic-baby','gyms-fitness-studios':'ic-sports','spas-salons-medspas':'ic-spa','health-coaching-personal-training':'ic-health-coaching','health-food-organic-stores':'ic-health-food','supplement-vitamin-brands':'ic-supplement','wellness-dtc-ecommerce':'ic-wellness','yoga-pilates-studios':'ic-yoga'};
+const heroIcon = industryIconIds[DATA.meta.industry] || 'ic-default';
+
+function renderImg(placement) {
+    if (!DATA.content.images) return '';
+    return DATA.content.images.filter(img => img.placement === placement).map(img =>
+        `<figure class="content-img"><img src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async">${img.caption ? `<figcaption>${img.caption}</figcaption>` : ''}</figure>`
+    ).join('');
+}
+
+document.getElementById('app').innerHTML = `
+    <div class="hero"><div class="hero-inner">
+        <svg class="hero-icon" viewBox="0 0 48 48"><use href="#${heroIcon}"></use></svg>
+        <div class="breadcrumb"><a href="/">Blog</a> / <a href="/guides/">Guides</a> / ${DATA.meta.industry_display}</div>
+        <div class="tag-row">
+            <span class="industry-tag">${DATA.meta.industry_display}</span>
+            <span class="reading-tag">${DATA.content.intro.reading_time || '12 min read'}</span>
+            <span class="reading-tag">${new Date(DATA.meta.date_published + 'T00:00:00').toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</span>
+        </div>
+        <h1>${DATA.seo.title}</h1>
+        <div class="hook">${DATA.content.intro.hook}</div>
+        <div class="problem">${DATA.content.intro.problem_statement}</div>
+        <div class="takeaways">
+            ${DATA.content.intro.what_youll_learn.map(t => `<span class="takeaway">✓ ${t}</span>`).join('')}
+        </div>
+    </div></div>
+
+    <div class="container">
+        ${renderImg('after:intro')}
+        ${DATA.content.sections.map((s, i) => `
+            <div class="guide-section" id="section-${i}">
+                <h2>${s.heading}</h2>
+                <div class="guide-body">${s.body.split(/\n/).map(p => p.trim() ? `<p>${p}</p>` : '').join('')}</div>
+                <div class="key-takeaway"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-lightbulb"></use></svg>${s.key_takeaway}</div>
+                <div class="actionable-tip"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-action"></use></svg>${s.actionable_tip}</div>
+                ${s.platform_integration ? `<div class="platform-note"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-platform"></use></svg>${s.platform_integration}</div>` : ''}
+                ${s.wallet_pass_angle ? `<div class="wallet-note"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-wallet"></use></svg>${s.wallet_pass_angle}</div>` : ''}
+                ${renderImg('after:' + s.heading)}
+            </div>
+        `).join('')}
+
+        ${DATA.content.case_study_snippet ? `
+        <div class="case-study">
+            <div class="cs-label">Mini Case Study</div>
+            <div class="cs-brand">${DATA.content.case_study_snippet.brand_type}</div>
+            <div class="cs-text"><strong>Challenge:</strong> ${DATA.content.case_study_snippet.challenge}</div>
+            <div class="cs-text"><strong>Solution:</strong> ${DATA.content.case_study_snippet.solution}</div>
+            <div class="results-grid">
+                ${DATA.content.case_study_snippet.results.map(r => `
+                    <div class="result-item">
+                        <div class="r-value">${r.value}</div>
+                        <div class="r-label">${r.metric}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        ` : ''}
+
+        ${DATA.content.conclusion ? `
+        <div style="font-size:0.9375rem;line-height:1.8;color:var(--dark-2);margin-bottom:32px">
+            <p>${DATA.content.conclusion.summary}</p>
+            <p style="margin-top:12px;font-weight:500">${DATA.content.conclusion.call_to_action}</p>
+        </div>
+        ` : ''}
+
+        <div class="faq-section">
+            <h3>FAQ</h3>
+            ${DATA.content.faq.map((f, i) => `
+                <details class="faq-item">
+                    <summary>${f.question}</summary>
+                    <div class="faq-a">${f.answer}</div>
+                </details>
+            `).join('')}
+        </div>
+
+        <div class="cta-block">
+            <h3>${DATA.brand_cta.headline}</h3>
+            <p>${DATA.brand_cta.subtext}</p>
+            <a href="${SITE.appUrl('cta','guide','bottom-cta')}" class="cta-btn">${DATA.brand_cta.cta_button}</a>
+        </div>
+
+        ${DATA.related?.internal_links?.length ? `
+        <div class="related">
+            <h3>Related Guides</h3>
+            <div class="related-links">
+                ${DATA.related.internal_links.map(slug => `<a class="related-link" href="/guides/${slug}">${slug.replace(/-/g,' ')}</a>`).join('')}
+            </div>
+        </div>
+        ` : ''}
+    </div>
+
+    {{>footer}}
+`;
+
+// FAQ schema
+const faqSchema = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":DATA.content.faq.map(f=>({"@type":"Question","name":f.question,"acceptedAnswer":{"@type":"Answer","text":f.answer}}))};
+const s = document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(faqSchema);document.head.appendChild(s);
+</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <style>
+        {{@base-css}}
+
+        {{@header-css}}
+
+        .hero{position:relative;padding:var(--sp-80) var(--sp-48) var(--sp-60);background:radial-gradient(circle at 90% 10%,rgba(112,0,255,0.08) 0%,transparent 40%),linear-gradient(180deg,var(--accent-light) 0%,var(--light) 100%);border-bottom:1px solid var(--gray-light)}
+        .hero-icon{position:absolute;top:var(--sp-32);right:var(--sp-48);width:80px;height:80px;opacity:0.12}
+        .hero .breadcrumb{font-family:var(--font-code);font-size:0.8125rem;color:var(--gray);margin-bottom:var(--sp-20)}
+        .hero .breadcrumb a{color:var(--accent);font-weight:600}
+        .hero .tag-row{display:flex;align-items:center;gap:var(--sp-12);margin-bottom:var(--sp-16)}
+        .hero .tag{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent)}
+        .hero .reading-tag{font-family:var(--font-code);font-size:0.6875rem;color:var(--gray);background:var(--light-3);padding:var(--sp-4) var(--sp-12);border-radius:var(--radius-pill)}
+        .hero h1{font-size:2.25rem;font-weight:800;letter-spacing:-0.03em;line-height:1.15;max-width:800px;margin-bottom:var(--sp-16)}
+        .hero .subtitle{font-size:0.9375rem;color:var(--gray);max-width:700px;line-height:1.7;margin-bottom:var(--sp-28)}
+        .hero .criteria-list{display:flex;flex-wrap:wrap;gap:var(--sp-8)}
+        .hero .criteria-chip{font-size:0.8125rem;padding:var(--sp-6) var(--sp-14);background:white;border:1px solid var(--gray-light);border-radius:var(--radius-pill);color:var(--dark-2)}
+        .hero-inner{max-width:56.25rem;margin:0 auto}
+
+        .container{max-width:53.75rem;margin:0 auto;padding:var(--sp-56) var(--sp-24)}
+        .container a{text-decoration-line:underline;text-decoration-color:rgba(112,0,255,0.25);text-underline-offset:2px;transition:text-decoration-color 0.2s}
+        .container a:hover{text-decoration-color:var(--accent)}
+        .alt-card a,.rec-card a,.comp-table a{text-decoration:none}.alt-card a:hover,.rec-card a:hover{text-decoration:underline}
+
+        /* Quick recommendations */
+        .recs{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-16);margin-bottom:var(--sp-48)}
+        .rec-card{padding:var(--sp-20);border:1px solid var(--gray-light);border-radius:var(--radius-lg);background:var(--light)}
+        .rec-label{font-family:var(--font-code);font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:var(--sp-8)}
+        .rec-name{font-size:1rem;font-weight:700;margin-bottom:var(--sp-4)}
+        .rec-reason{font-size:0.875rem;color:var(--gray);line-height:1.5}
+
+        /* Alternative card */
+        .alt-card{border:1px solid var(--gray-light);border-radius:var(--radius-xl);padding:var(--sp-32);margin-bottom:var(--sp-24);background:var(--light);transition:all 0.2s}
+        .alt-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.05)}
+        .alt-card.is-brand{border-color:var(--accent);border-width:2px;background:linear-gradient(to right,var(--accent-light),var(--light))}
+        .alt-header{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-8) var(--sp-16);margin-bottom:var(--sp-12);flex-wrap:wrap}
+        .alt-name{font-size:1.375rem;font-weight:700}
+        .alt-badges{display:flex;gap:var(--sp-6);flex-wrap:wrap}
+        .alt-badge{font-family:var(--font-code);font-size:0.625rem;font-weight:700;padding:3px var(--sp-10);border-radius:var(--radius-pill);text-transform:uppercase;letter-spacing:0.05em}
+        .alt-badge-wallet{background:#E8F5E9;color:#2E7D32}
+        .alt-badge-pos{background:#E3F2FD;color:#1565C0}
+        .alt-badge-integration{background:var(--accent-light);color:var(--accent)}
+        .alt-oneliner{font-size:0.9375rem;color:var(--gray);margin-bottom:var(--sp-14);font-style:italic;line-height:1.6}
+        .alt-best{font-size:0.875rem;color:var(--dark-2);margin-bottom:var(--sp-20);line-height:1.6}
+        .alt-best strong{color:var(--accent)}
+        .alt-details{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-20);margin-bottom:var(--sp-16)}
+        .pros-list,.cons-list{list-style:none;font-size:0.875rem;line-height:1.8}
+        .pros-list li::before{content:'✓ ';color:#2E7D32;font-weight:700}
+        .cons-list li::before{content:'✕ ';color:#C62828;font-weight:700}
+        .alt-footer{display:flex;justify-content:space-between;align-items:center;padding-top:var(--sp-16);border-top:1px solid var(--gray-light)}
+        .alt-pricing{font-size:0.875rem;color:var(--gray)}
+        .alt-differentiator{font-size:0.8125rem;color:var(--accent-dark);font-weight:600;max-width:50%;text-align:right}
+
+        /* Comparison table */
+        .comp-table-wrap{overflow-x:auto;margin-bottom:var(--sp-48)}
+        .comp-table{width:100%;border-collapse:collapse;font-size:0.875rem}
+        .comp-table th{background:var(--dark);color:white;padding:var(--sp-12) var(--sp-16);text-align:left;font-size:0.75rem;font-weight:600;position:sticky;top:0}
+        .comp-table td{padding:var(--sp-10) var(--sp-16);border-bottom:1px solid var(--gray-light)}
+        .comp-table tr:nth-child(even){background:var(--light-2)}
+        .comp-table tr:hover{background:var(--accent-light)}
+
+        .how-to-choose{background:var(--light-2);border-radius:var(--radius-xl);padding:var(--sp-36);margin-bottom:var(--sp-48);font-size:0.9375rem;line-height:1.8;color:var(--dark-2)}
+        .how-to-choose h3{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--sp-16)}
+
+        {{@content-img-css}}
+
+        {{@faq-css}}
+
+        {{@cta-css}}
+
+        {{@footer-css}}
+
+        @media(max-width:768px){.hero{padding:var(--sp-48) var(--sp-24)}.hero h1{font-size:1.75rem}.hero-icon{display:none}.recs{grid-template-columns:1fr}.alt-details{grid-template-columns:1fr}.alt-footer{flex-direction:column;gap:8px;align-items:flex-start}.alt-differentiator{max-width:100%;text-align:left}}
+    </style>
+    <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","url":"{{BLOG_URL}}/compare/{{SLUG}}","publisher":{"@type":"Organization","name":"{{BRAND_NAME}}","url":"{{SITE_URL}}","logo":{"@type":"ImageObject","url":"{{BLOG_URL}}/assets/logo.svg"}},"datePublished":"{{DATE_PUBLISHED}}","dateModified":"{{DATE_MODIFIED}}","mainEntityOfPage":{"@type":"WebPage","@id":"{{BLOG_URL}}/compare/{{SLUG}}"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"{{BLOG_URL}}"},{"@type":"ListItem","position":2,"name":"Compare","item":"{{BLOG_URL}}/compare/"},{"@type":"ListItem","position":3,"name":"{{TITLE}}"}]}]</script>
+</head>
+<body>
+{{>icons}}
+{{>header}}
+<div id="app"></div>
+<script>
+const DATA = {{DATA}};
+
+function renderImg(placement) {
+    if (!DATA.content.images) return '';
+    return DATA.content.images.filter(img => img.placement === placement).map(img =>
+        `<figure class="content-img"><img src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async">${img.caption ? `<figcaption>${img.caption}</figcaption>` : ''}</figure>`
+    ).join('');
+}
+
+document.getElementById('app').innerHTML = `
+    <div class="hero"><div class="hero-inner">
+        <svg class="hero-icon" viewBox="0 0 48 48"><use href="#ic-compare"></use></svg>
+        <div class="breadcrumb"><a href="/">Blog</a> / <a href="/compare/">Compare</a> / Alternatives</div>
+        <div class="tag-row">
+            <span class="tag">Alternatives</span>
+            <span class="reading-tag">${new Date(DATA.meta.date_published + 'T00:00:00').toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</span>
+        </div>
+        <h1>${DATA.seo.title}</h1>
+        <div class="subtitle">${DATA.content.intro.why_look_for_alternatives}</div>
+        <div class="criteria-list">
+            ${DATA.content.intro.evaluation_criteria.map(c => `<span class="criteria-chip">${c}</span>`).join('')}
+        </div>
+    </div></div>
+
+    <div class="container">
+        ${renderImg('after:intro')}
+        <h2 style="font-size:1.25rem;font-weight:700;margin-bottom:20px">Quick Recommendations</h2>
+        <div class="recs">
+            ${Object.entries(DATA.content.recommendation).map(([key, val]) => `
+                <div class="rec-card">
+                    <div class="rec-label">${key.replace(/_/g,' ')}</div>
+                    <div class="rec-name">${val.name}</div>
+                    <div class="rec-reason">${val.reason}</div>
+                </div>
+            `).join('')}
+        </div>
+
+        <h2 style="font-size:1.375rem;font-weight:700;margin-bottom:24px">${DATA.content.alternatives.length} Best ${DATA.meta.target_product} Alternatives</h2>
+        ${DATA.content.alternatives.map(alt => `
+            <div class="alt-card ${alt.is_brand ? 'is-brand' : ''}">
+                <div class="alt-header">
+                    <div class="alt-name">${alt.name}</div>
+                    <div class="alt-badges">
+                        ${alt.wallet_support ? '<span class="alt-badge alt-badge-wallet">Wallet</span>' : ''}
+                        ${alt.pos_support ? '<span class="alt-badge alt-badge-pos">POS</span>' : ''}
+                        <span class="alt-badge alt-badge-integration">${alt.platform_integration_depth}</span>
+                    </div>
+                </div>
+                <div class="alt-oneliner">${alt.one_liner}</div>
+                <div class="alt-best"><strong>Best for:</strong> ${alt.best_for}</div>
+                <div class="alt-details">
+                    <ul class="pros-list">${alt.pros.map(p => `<li>${p}</li>`).join('')}</ul>
+                    <ul class="cons-list">${alt.cons.map(c => `<li>${c}</li>`).join('')}</ul>
+                </div>
+                <div class="alt-footer">
+                    <div class="alt-pricing">${alt.pricing_summary}</div>
+                    <div class="alt-differentiator">${alt.key_differentiator}</div>
+                </div>
+            </div>
+        `).join('')}
+
+        ${DATA.content.comparison_table ? `
+        <h3 style="font-size:1.125rem;font-weight:700;margin:40px 0 16px">Quick Comparison</h3>
+        <div class="comp-table-wrap">
+            <table class="comp-table">
+                <thead><tr><th>Product</th>${DATA.content.comparison_table.criteria.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+                <tbody>${DATA.content.comparison_table.rows.map(r => `<tr><td><strong>${r.product}</strong></td>${r.values.map(v => `<td>${v}</td>`).join('')}</tr>`).join('')}</tbody>
+            </table>
+        </div>
+        ` : ''}
+
+        ${renderImg('after:recommendation')}
+
+        <div class="how-to-choose">
+            <h3>How to Choose the Right Alternative</h3>
+            ${DATA.content.how_to_choose}
+        </div>
+
+        ${DATA.content.faq?.length ? `
+        <div class="faq-section">
+            <h3>FAQ</h3>
+            ${DATA.content.faq.map(f => `
+                <details class="faq-item">
+                    <summary>${f.question}</summary>
+                    <div class="faq-a">${f.answer}</div>
+                </details>
+            `).join('')}
+        </div>
+        ` : ''}
+
+        <div class="cta-block">
+            <h3>${DATA.brand_cta.headline}</h3>
+            <p>${DATA.brand_cta.subtext}</p>
+            <a href="${SITE.appUrl('cta','alternatives','bottom-cta')}" class="cta-btn">${DATA.brand_cta.cta_button}</a>
+        </div>
+    </div>
+
+    {{>footer}}
+`;
+
+// FAQ schema
+if(DATA.content.faq){const fs={"@context":"https://schema.org","@type":"FAQPage","mainEntity":DATA.content.faq.map(f=>({"@type":"Question","name":f.question,"acceptedAnswer":{"@type":"Answer","text":f.answer}}))};const s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(fs);document.head.appendChild(s);}
+</script>
+</body>
+</html>

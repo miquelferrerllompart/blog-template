@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <style>
+        {{@base-css}}
+
+        {{@header-css}}
+
+        /* Hero */
+        .hero{position:relative;padding:var(--sp-80) var(--sp-48) var(--sp-60);background:radial-gradient(circle at 20% 20%,rgba(112,0,255,0.06) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(112,0,255,0.04) 0%,transparent 50%),var(--light);border-bottom:1px solid var(--gray-light)}
+        .hero-icon{position:absolute;top:var(--sp-32);right:var(--sp-48);width:80px;height:80px;opacity:0.12}
+        .hero .breadcrumb{font-family:var(--font-code);font-size:0.8125rem;color:var(--gray);margin-bottom:var(--sp-20);letter-spacing:0.05em}
+        .hero .breadcrumb a{color:var(--accent);font-weight:600}
+        .hero .tag-row{display:flex;align-items:center;gap:var(--sp-12);margin-bottom:var(--sp-16)}
+        .hero .industry-tag{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);background:var(--accent-light);padding:var(--sp-4) var(--sp-14);border-radius:var(--radius-pill)}
+        .hero .reading-tag{font-family:var(--font-code);font-size:0.6875rem;color:var(--gray);background:var(--light-3);padding:var(--sp-4) var(--sp-12);border-radius:var(--radius-pill)}
+        .hero h1{font-size:2.25rem;font-weight:800;letter-spacing:-0.03em;line-height:1.15;max-width:800px;margin-bottom:var(--sp-16)}
+        .hero .subtitle{font-size:1rem;color:var(--gray);max-width:700px;line-height:1.7;margin-bottom:var(--sp-24)}
+        .hero-inner{max-width:53.75rem;margin:0 auto}
+        .hero .stat-box{display:inline-flex;align-items:center;gap:var(--sp-16);background:var(--light-2);border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-16) var(--sp-24)}
+        .stat-box .stat-value{font-size:2rem;font-weight:800;color:var(--dark);font-family:var(--font-code)}
+        .stat-box .stat-desc{font-size:0.875rem;color:var(--gray);max-width:280px;line-height:1.4}
+        .stat-box .stat-source{font-size:0.6875rem;color:var(--gray);opacity:0.7;font-family:var(--font-code)}
+
+        .container{max-width:48.75rem;margin:0 auto;padding:var(--sp-56) var(--sp-24)}
+        .container a{text-decoration-line:underline;text-decoration-color:rgba(112,0,255,0.25);text-underline-offset:2px;transition:text-decoration-color 0.2s}
+        .container a:hover{text-decoration-color:var(--accent)}
+
+        .section{margin-bottom:var(--sp-64)}
+        .section-heading{font-size:1.5rem;font-weight:800;letter-spacing:-0.025em;margin-bottom:var(--sp-10);scroll-margin-top:var(--sp-80)}
+        .section-desc{font-size:0.9375rem;color:var(--gray);margin-bottom:var(--sp-28);line-height:1.75}
+        .section-desc p{margin-bottom:var(--sp-16)}
+        .section-desc p:last-child{margin-bottom:0}
+
+        .item-card{border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-28);margin-bottom:var(--sp-20);background:var(--light);transition:all 0.25s}
+        .item-card:hover{box-shadow:0 6px 24px rgba(0,0,0,0.06);border-color:var(--accent-light)}
+        .item-header{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-16);margin-bottom:var(--sp-14)}
+        .item-title{font-size:1.125rem;font-weight:700;letter-spacing:-0.015em;line-height:1.3}
+        .item-badges{display:flex;gap:var(--sp-6);flex-shrink:0}
+        .badge{font-family:var(--font-code);font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:3px var(--sp-10);border-radius:var(--radius-pill)}
+        .badge-impact-high{background:#E8F5E9;color:#2E7D32}
+        .badge-impact-medium{background:#FFF3E0;color:#E65100}
+        .badge-impact-standard{background:var(--light-3);color:var(--gray)}
+        .badge-difficulty{background:var(--accent-light);color:var(--accent)}
+        .item-desc{font-size:0.9375rem;color:var(--dark-2);line-height:1.75;margin-bottom:var(--sp-14)}
+        .item-example{font-size:0.875rem;color:var(--gray);line-height:1.65;padding:var(--sp-14) var(--sp-20);background:var(--light-2);border-radius:var(--radius-md);margin-bottom:var(--sp-10)}
+        .item-example strong{color:var(--dark);font-weight:600}
+        .item-wallet{font-size:0.875rem;color:var(--gray);line-height:1.6;padding:var(--sp-12) var(--sp-20) var(--sp-12) var(--sp-48);background:var(--light-2);border-radius:var(--radius-md);border-left:3px solid var(--gray-light);position:relative}
+        .item-wallet .callout-icon{position:absolute;left:var(--sp-16);top:var(--sp-12);width:18px;height:18px;--ic-1:var(--gray);--ic-2:transparent;--ic-3:var(--gray)}
+
+        .tips-section{background:var(--light-2);border-radius:var(--radius-xl);padding:var(--sp-40);margin-bottom:var(--sp-48)}
+        .tips-title{font-size:1.125rem;font-weight:700;margin-bottom:var(--sp-24);display:flex;align-items:center;gap:var(--sp-10)}
+        .tip-item{display:flex;gap:var(--sp-14);margin-bottom:var(--sp-16);font-size:0.9375rem;line-height:1.7}
+        .tip-num{font-family:var(--font-code);font-size:0.75rem;font-weight:700;color:var(--accent);background:var(--accent-light);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:var(--sp-2)}
+
+        .mistakes-section{border:2px solid #FFCDD2;border-radius:var(--radius-xl);padding:var(--sp-40);margin-bottom:var(--sp-48)}
+        .mistakes-title{font-size:1.125rem;font-weight:700;margin-bottom:var(--sp-24);color:#C62828}
+        .mistake-item{display:flex;gap:var(--sp-14);margin-bottom:var(--sp-16);font-size:0.9375rem;line-height:1.7;color:var(--dark-2)}
+        .mistake-icon{font-size:1rem;flex-shrink:0;margin-top:var(--sp-2)}
+
+        .benchmarks{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-16);margin-bottom:var(--sp-48)}
+        .bench-card{text-align:center;padding:var(--sp-28) var(--sp-20);background:var(--light-2);border-radius:var(--radius-lg);border:1px solid var(--gray-light)}
+        .bench-value{font-family:var(--font-code);font-size:1.25rem;font-weight:700;color:var(--dark);margin-bottom:var(--sp-4);letter-spacing:-0.02em}
+        .bench-label{font-size:0.875rem;color:var(--gray);line-height:1.4}
+
+        {{@content-img-css}}
+        {{@cta-css}}
+        {{@related-css}}
+        {{@footer-css}}
+
+        .faq-schema{display:none}
+
+        @media(max-width:768px){
+            .hero{padding:var(--sp-48) var(--sp-24) var(--sp-40)}
+            .hero h1{font-size:1.75rem}
+            .hero-icon{display:none}
+            .benchmarks{grid-template-columns:1fr}
+            .item-header{flex-direction:column}
+            .stat-box{flex-direction:column;align-items:flex-start}
+        }
+    </style>
+    <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","url":"{{BLOG_URL}}/resources/{{SLUG}}","publisher":{"@type":"Organization","name":"{{BRAND_NAME}}","url":"{{SITE_URL}}","logo":{"@type":"ImageObject","url":"{{BLOG_URL}}/assets/logo.svg"}},"datePublished":"{{DATE_PUBLISHED}}","dateModified":"{{DATE_MODIFIED}}","mainEntityOfPage":{"@type":"WebPage","@id":"{{BLOG_URL}}/resources/{{SLUG}}"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"{{BLOG_URL}}"},{"@type":"ListItem","position":2,"name":"Resources","item":"{{BLOG_URL}}/#resources"},{"@type":"ListItem","position":3,"name":"{{TITLE}}"}]}]</script>
+</head>
+<body>
+{{>icons}}
+{{>header}}
+<div id="app"></div>
+
+<script>
+const DATA = {{DATA}};
+
+const industryIconIds = {
+    'fashion-apparel':'ic-fashion','beauty-cosmetics':'ic-beauty','food-beverage':'ic-food',
+    'health-supplements':'ic-health','pet-supplies':'ic-pet','sports-outdoor':'ic-sports',
+    'jewelry-accessories':'ic-jewelry','home-decor':'ic-home','coffee-tea':'ic-coffee','baby-kids':'ic-baby',
+    'gyms-fitness-studios':'ic-sports','spas-salons-medspas':'ic-spa',
+    'health-coaching-personal-training':'ic-health-coaching','health-food-organic-stores':'ic-health-food',
+    'supplement-vitamin-brands':'ic-supplement','wellness-dtc-ecommerce':'ic-wellness','yoga-pilates-studios':'ic-yoga'
+};
+const heroIcon = industryIconIds[DATA.meta.industry] || 'ic-default';
+
+function renderImg(placement) {
+    if (!DATA.content.images) return '';
+    return DATA.content.images.filter(img => img.placement === placement).map(img =>
+        `<figure class="content-img"><img src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async">${img.caption ? `<figcaption>${img.caption}</figcaption>` : ''}</figure>`
+    ).join('');
+}
+
+function renderItems(items) {
+    return items.map(item => `
+        <div class="item-card">
+            <div class="item-header">
+                <div class="item-title">${item.title}</div>
+                <div class="item-badges">
+                    <span class="badge badge-impact-${item.impact}">${item.impact} impact</span>
+                    <span class="badge badge-difficulty">${item.difficulty}</span>
+                </div>
+            </div>
+            <div class="item-desc">${item.description}</div>
+            ${item.example ? `<div class="item-example"><strong>Example:</strong> ${item.example}</div>` : ''}
+            ${item.wallet_pass_angle ? `<div class="item-wallet"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-wallet"></use></svg>${item.wallet_pass_angle}</div>` : ''}
+        </div>
+    `).join('');
+}
+
+document.getElementById('app').innerHTML = `
+    <div class="hero"><div class="hero-inner">
+        <svg class="hero-icon" viewBox="0 0 48 48"><use href="#${heroIcon}"></use></svg>
+        <div class="breadcrumb"><a href="/">Blog</a> / <a href="/resources/">Resources</a> / ${DATA.meta.industry_display}</div>
+        <div class="tag-row">
+            <span class="industry-tag">${DATA.meta.industry_display}</span>
+            <span class="reading-tag">${new Date(DATA.meta.date_published + 'T00:00:00').toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</span>
+        </div>
+        <h1>${DATA.seo.title}</h1>
+        <div class="subtitle">${DATA.content.intro.context}</div>
+        ${DATA.content.intro.industry_stat ? `
+        <div class="stat-box">
+            <div class="stat-value">${DATA.content.intro.industry_stat.value}</div>
+            <div>
+                <div class="stat-desc">${DATA.content.intro.industry_stat.description}</div>
+                <div class="stat-source">${DATA.content.intro.industry_stat.source}</div>
+            </div>
+        </div>
+        ` : ''}
+    </div></div>
+
+    <div class="container">
+        ${renderImg('after:intro')}
+        ${DATA.content.sections.map((section, i) => `
+            <div class="section">
+                <h2 class="section-heading">${section.heading}</h2>
+                <div class="section-desc">${section.description.split(/\n/).map(p => p.trim() ? '<p>' + p + '</p>' : '').join('')}</div>
+                ${renderItems(section.items)}
+                ${renderImg('after:' + section.heading)}
+            </div>
+        `).join('')}
+
+        <div class="tips-section">
+            <div class="tips-title">Pro Tips for ${DATA.meta.industry_display}</div>
+            ${DATA.content.pro_tips.map((tip, i) => `
+                <div class="tip-item">
+                    <div class="tip-num">${i + 1}</div>
+                    <div>${tip}</div>
+                </div>
+            `).join('')}
+        </div>
+
+        <div class="mistakes-section">
+            <div class="mistakes-title">Common Mistakes to Avoid</div>
+            ${DATA.content.common_mistakes.map(m => `
+                <div class="mistake-item">
+                    <div class="mistake-icon">✕</div>
+                    <div>${m}</div>
+                </div>
+            `).join('')}
+        </div>
+
+        ${DATA.content.industry_benchmarks ? `
+        <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:16px">${DATA.meta.industry_display} Benchmarks</h3>
+        <div class="benchmarks">
+            <div class="bench-card">
+                <div class="bench-value">${DATA.content.industry_benchmarks.avg_repeat_purchase_rate}</div>
+                <div class="bench-label">Avg. Repeat Purchase Rate</div>
+            </div>
+            <div class="bench-card">
+                <div class="bench-value">${DATA.content.industry_benchmarks.avg_customer_lifetime_value}</div>
+                <div class="bench-label">Avg. Customer Lifetime Value</div>
+            </div>
+            <div class="bench-card">
+                <div class="bench-value">${DATA.content.industry_benchmarks.loyalty_program_adoption_rate}</div>
+                <div class="bench-label">Program Adoption Rate</div>
+            </div>
+        </div>
+        ` : ''}
+
+        <div class="cta-block">
+            <h3>${DATA.brand_cta.headline}</h3>
+            <p>${DATA.brand_cta.subtext}</p>
+            <a href="${SITE.appUrl('cta','resource','bottom-cta')}" class="cta-btn">${DATA.brand_cta.cta_button}</a>
+        </div>
+
+        ${DATA.external_references?.length ? `
+        <div class="related" style="margin-bottom:32px">
+            <h3>Sources & Further Reading</h3>
+            <div class="related-links">
+                ${DATA.external_references.map(ref => `<a class="related-link" href="${ref.url}" target="_blank" rel="noopener">${ref.title} <span style="font-size:0.6875rem;color:var(--gray)">(${ref.source})</span></a>`).join('')}
+            </div>
+        </div>
+        ` : ''}
+
+        ${DATA.related?.internal_links?.length ? `
+        <div class="related">
+            <h3>Related Resources</h3>
+            <div class="related-links">
+                ${DATA.related.internal_links.map(slug => `<a class="related-link" href="/resources/${slug}">${slug.replace(/-/g, ' ')}</a>`).join('')}
+            </div>
+        </div>
+        ` : ''}
+
+        ${DATA.content.next_steps ? `<p style="font-size:0.875rem;color:var(--gray);line-height:1.7;margin-bottom:40px">${DATA.content.next_steps}</p>` : ''}
+    </div>
+
+    {{>footer}}
+`;
+</script>
+</body>
+</html>

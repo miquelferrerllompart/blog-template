@@ -1,0 +1,215 @@
+{
+  "meta": {
+    "content_type": "resource",
+    "subtype": "tip-list",
+    "niche": "example",
+    "industry": "general",
+    "industry_display": "General Business",
+    "generated_at": "2026-03-23T00:00:00.000Z",
+    "date_published": "2026-03-23",
+    "date_modified": "2026-03-23",
+    "version": 1
+  },
+  "seo": {
+    "title": "10 Getting Started Tips for Growing Your Business in 2026",
+    "description": "Practical getting started tips to accelerate business growth. Actionable strategies for customer acquisition, retention, and revenue.",
+    "keywords": [
+      "getting started tips",
+      "business growth strategies",
+      "customer acquisition tips",
+      "customer retention basics",
+      "small business growth",
+      "revenue optimization",
+      "growth playbook",
+      "business launch checklist",
+      "startup growth tips",
+      "customer engagement strategies"
+    ],
+    "slug": "example-getting-started-tips",
+    "canonical_url": "https://blog.mybrand.com/resources/example-getting-started-tips"
+  },
+  "content": {
+    "intro": {
+      "hook": "Starting a new initiative is exciting, but knowing where to focus first can make the difference between steady growth and spinning your wheels.",
+      "context": "Businesses that follow a structured onboarding process see 2.5x faster time-to-value than those that wing it. A clear set of getting started tips helps you prioritize the actions that actually move the needle.",
+      "what_youll_find": "A curated list of actionable tips organized by growth phase, from initial setup to scaling your customer base.",
+      "industry_stat": {
+        "value": "68%",
+        "description": "of businesses that follow a structured growth playbook hit their first revenue milestone within 90 days",
+        "source": "McKinsey & Company, 2025"
+      }
+    },
+    "sections": [
+      {
+        "heading": "Foundation: Setting Up for Success",
+        "description": "Before you chase growth, nail the basics. These foundational tips ensure your infrastructure supports scale from day one.",
+        "items": [
+          {
+            "title": "Define Your Core Value Proposition",
+            "description": "Write a single sentence that explains what you do, who you serve, and why it matters. Test it with five people outside your company. If they cannot repeat it back, simplify further. This sentence drives every page, ad, and email you create.",
+            "difficulty": "beginner",
+            "impact": "high",
+            "example": "A SaaS startup refined their value prop from a 40-word paragraph to 'We help e-commerce brands reduce returns by 30% with AI-powered sizing' and saw demo requests double."
+          },
+          {
+            "title": "Set Up Analytics from Day One",
+            "description": "Install tracking before you launch, not after. You need baseline data to measure improvement. At minimum, track page views, conversion events, and traffic sources. Without data, every decision is a guess.",
+            "difficulty": "beginner",
+            "impact": "high",
+            "example": "A consulting firm installed analytics two months after launch and lost all early traffic data. They had no way to know which blog posts drove their first 50 signups."
+          },
+          {
+            "title": "Create a Content Calendar",
+            "description": "Plan your first 12 pieces of content before publishing any. Map each piece to a keyword and a buyer stage. Consistency beats volume every time. One post per week for three months outperforms a burst of ten posts followed by silence.",
+            "difficulty": "beginner",
+            "impact": "medium",
+            "example": "A B2B newsletter grew from 0 to 2,000 subscribers in 90 days by publishing every Tuesday at 8am without exception."
+          },
+          {
+            "title": "Build an Email List Early",
+            "description": "Start collecting emails before you have something to sell. Offer a simple lead magnet like a checklist, template, or mini-guide. Your email list is the one channel you fully own. Social algorithms change; your list does not.",
+            "difficulty": "beginner",
+            "impact": "high",
+            "example": "A fitness brand offered a free '7-Day Meal Plan PDF' and collected 500 emails in their first month, converting 12% into paying customers when they launched."
+          },
+          {
+            "title": "Choose Your Tech Stack Deliberately",
+            "description": "Pick tools that integrate well together rather than the trendiest options. A simple stack you understand beats a complex one you do not. Audit your tools quarterly and remove anything unused. For a detailed walkthrough, check our <a href=\"/guides/example-complete-guide\">complete guide to building your growth engine</a>.",
+            "difficulty": "intermediate",
+            "impact": "medium",
+            "example": "A marketing agency replaced six overlapping tools with three integrated ones, saving $400/month and cutting their workflow time by 35%."
+          }
+        ]
+      },
+      {
+        "heading": "Growth: Acquiring Your First Customers",
+        "description": "With your foundation in place, it is time to attract and convert your first customers. Focus on channels where your audience already spends time.",
+        "items": [
+          {
+            "title": "Start with One Acquisition Channel",
+            "description": "Master one channel before adding another. If your audience is on LinkedIn, go deep on LinkedIn. Spreading across five channels simultaneously means you are mediocre at all of them. Pick based on where your first 10 customers came from.",
+            "difficulty": "beginner",
+            "impact": "high",
+            "example": "A design tool startup focused exclusively on Twitter for six months, building a 15K following that drove 60% of their early signups."
+          },
+          {
+            "title": "Create a Referral Loop",
+            "description": "Happy customers are your best salespeople. Build a simple referral mechanism into your product or service from the start. It does not need to be complex, just a way for satisfied users to share with one click.",
+            "difficulty": "intermediate",
+            "impact": "high",
+            "example": "A project management app added 'Invite your team' as the final onboarding step and saw organic signups increase by 40% month-over-month."
+          },
+          {
+            "title": "Write for Search Intent, Not Keywords",
+            "description": "Google rewards pages that answer the actual question behind a search. Before writing, search your target keyword yourself. Look at what ranks. Create something more useful, more specific, and better structured than the top results.",
+            "difficulty": "intermediate",
+            "impact": "high",
+            "example": "A financial planning blog rewritten around 'how to save for a house in 2026' (intent-driven) outranked their older 'savings tips' post (keyword-stuffed) within six weeks."
+          },
+          {
+            "title": "Leverage Partnerships Early",
+            "description": "Find non-competing businesses that serve the same audience. Co-create content, cross-promote, or bundle offerings. Partnerships let you borrow trust and reach audiences that would take months to build organically.",
+            "difficulty": "intermediate",
+            "impact": "medium",
+            "example": "An email marketing tool partnered with a landing page builder for a joint webinar, each gaining 300 new qualified leads from the other's audience."
+          },
+          {
+            "title": "Ship Fast, Iterate Faster",
+            "description": "Perfectionism kills momentum. Launch your minimum viable offering, collect feedback, and improve weekly. The market will tell you what matters more reliably than any planning session. Set a weekly ship cycle and stick to it.",
+            "difficulty": "beginner",
+            "impact": "high",
+            "example": "A subscription box brand launched with just three products and a basic website. Customer feedback in month one shaped their next 10 product additions."
+          }
+        ]
+      },
+      {
+        "heading": "Retention: Keeping Customers Coming Back",
+        "description": "Acquisition gets the spotlight, but retention drives profitability. These tips help you turn first-time buyers into repeat customers and advocates.",
+        "items": [
+          {
+            "title": "Nail Your Onboarding Experience",
+            "description": "The first 48 hours after signup determine whether a customer stays. Map the journey from signup to first value moment and remove every friction point. Send a welcome sequence that guides rather than sells.",
+            "difficulty": "intermediate",
+            "impact": "high",
+            "example": "A CRM tool reduced churn by 25% by adding a guided setup wizard that got new users to their first contact import within 10 minutes."
+          },
+          {
+            "title": "Ask for Feedback Systematically",
+            "description": "Do not wait for complaints. Send NPS surveys at 30, 60, and 90 days. Follow up personally with detractors. The patterns in feedback reveal your biggest opportunities for improvement and retention.",
+            "difficulty": "beginner",
+            "impact": "medium",
+            "example": "An online course platform discovered through NPS surveys that students wanted more community interaction, leading to a forum feature that reduced refund requests by 18%."
+          },
+          {
+            "title": "Build Engagement Triggers",
+            "description": "Identify the actions that correlate with long-term retention and nudge users toward them. If users who complete three tasks in week one retain at 80%, design your UX to guide every user to those three tasks.",
+            "difficulty": "advanced",
+            "impact": "high",
+            "example": "A habit-tracking app found that users who set at least three habits in the first session had 3x higher 90-day retention. They redesigned onboarding around this insight."
+          },
+          {
+            "title": "Create Exclusive Value for Existing Customers",
+            "description": "Give your current customers something they cannot get elsewhere. Early access, loyalty perks, exclusive content, or insider pricing. The goal is to make leaving feel like a loss, not just a change.",
+            "difficulty": "intermediate",
+            "impact": "high",
+            "example": "A DTC coffee brand offered subscribers a monthly 'roaster's pick' blend unavailable for single purchase, reducing subscription cancellations by 30%."
+          },
+          {
+            "title": "Measure and Reduce Time to Value",
+            "description": "Track how long it takes new customers to experience their first win with your product. Then systematically reduce that time. Shorter time-to-value means higher activation and lower early churn.",
+            "difficulty": "advanced",
+            "impact": "high",
+            "example": "A reporting tool cut time-to-first-dashboard from 45 minutes to 8 minutes by offering pre-built templates, increasing 30-day retention from 42% to 67%."
+          }
+        ]
+      }
+    ],
+    "pro_tips": [
+      "Audit your entire funnel every 30 days: traffic source, landing page, conversion event, onboarding completion, and repeat purchase. One weak link tanks the whole chain.",
+      "Document every process as you build it. Future you (and your team) will thank present you when it is time to delegate or scale.",
+      "Set a 'north star metric' for each quarter. Revenue, signups, and retention all matter, but focusing on one at a time prevents decision paralysis.",
+      "Talk to five customers every month. Not surveys, actual conversations. The nuance you pick up in a 15-minute call beats a thousand form responses.",
+      "Automate the repetitive, personalize the meaningful. Use automation for scheduling and data entry, but keep human touch in support and onboarding."
+    ],
+    "common_mistakes": [
+      "Trying to be everywhere at once: launching on five social platforms, three ad networks, and a podcast simultaneously. Pick one, win there, then expand.",
+      "Ignoring existing customers while chasing new ones. Acquiring a new customer costs 5-7x more than retaining an existing one, yet most businesses spend 80% of their budget on acquisition.",
+      "Skipping validation: building a full product before confirming anyone will pay for it. A landing page with a waitlist takes a weekend and tells you more than three months of development."
+    ],
+    "industry_benchmarks": {
+      "avg_repeat_purchase_rate": "27%",
+      "avg_customer_lifetime_value": "$243",
+      "loyalty_program_adoption_rate": "34%",
+      "source": "Bain & Company, 2025"
+    },
+    "next_steps": "Pick the three tips that map to your biggest current bottleneck and implement them this week. Measure the impact after 30 days, then move to the next set. Growth compounds when you focus."
+  },
+  "external_references": [
+    {
+      "title": "The Value of Customer Retention",
+      "url": "https://hbr.org/2014/10/the-value-of-keeping-the-right-customers",
+      "source": "Harvard Business Review"
+    },
+    {
+      "title": "How to Build a Growth Engine",
+      "url": "https://www.reforge.com/blog/growth-loops",
+      "source": "Reforge"
+    },
+    {
+      "title": "The Lean Startup Methodology",
+      "url": "https://theleanstartup.com/principles",
+      "source": "The Lean Startup"
+    }
+  ],
+  "related": {
+    "internal_links": [
+      "example-complete-guide"
+    ],
+    "cross_industry_links": []
+  },
+  "brand_cta": {
+    "headline": "Ready to Accelerate Your Growth?",
+    "subtext": "Put these tips into action with the right tools and see results in weeks, not months.",
+    "cta_button": "Get Started Free"
+  }
+}

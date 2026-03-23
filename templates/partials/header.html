@@ -1,0 +1,29 @@
+<header class="site-header">
+    <a href="/" class="logo"><img src="/assets/logo.svg" alt="{{BRAND_NAME}}" width="142" height="35" fetchpriority="high"></a>
+    <nav class="header-nav">
+        <a href="/#resources">Resources</a>
+        <a href="/guides/">Guides</a>
+        <a href="/compare/">Compare</a>
+        <a href="/tools/">Tools</a>
+        <a id="nav-cta" class="header-cta">{{CTA_TEXT}}</a>
+    </nav>
+    <button class="burger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<div class="mobile-menu">
+    <a href="/#resources">Resources</a>
+    <a href="/guides/">Guides</a>
+    <a href="/compare/">Compare</a>
+    <a href="/tools/">Tools</a>
+    <a id="mobile-cta" class="header-cta">{{CTA_TEXT}}</a>
+</div>
+<script>
+(function(){
+    if(typeof SITE!=='undefined'){
+        document.getElementById('nav-cta').href=SITE.appUrl('nav','header','desktop-cta');
+        document.getElementById('mobile-cta').href=SITE.appUrl('nav','header','mobile-cta');
+    }
+    document.querySelector('.mobile-menu').addEventListener('click',function(e){if(e.target.tagName==='A')this.classList.remove('open')});
+})();
+</script>

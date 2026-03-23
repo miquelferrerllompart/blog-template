@@ -1,0 +1,22 @@
+<style>
+.mid-cta{display:flex;align-items:center;gap:var(--sp-20);background:var(--light-2);border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-20) var(--sp-24);margin:var(--sp-36) 0}
+.mid-cta-text{flex:1;font-size:0.875rem;line-height:1.55;color:var(--gray)}
+.mid-cta-text strong{color:var(--dark);font-weight:600}
+.mid-cta-btn{flex-shrink:0;display:inline-block;font-size:0.8125rem;font-weight:700;color:white;background:var(--accent);padding:var(--sp-10) var(--sp-20);border-radius:var(--radius-pill);text-decoration:none;white-space:nowrap;transition:all 0.2s}
+.mid-cta-btn:hover{background:var(--accent-dark);text-decoration:none;color:white;transform:scale(1.03)}
+@media(max-width:768px){
+    .mid-cta{flex-direction:column;gap:var(--sp-12);text-align:center;padding:var(--sp-20)}
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    var h2s=document.querySelectorAll('.container h2, .article-body h2, #app h2');
+    if(h2s.length<4) return;
+    var target=h2s[2];
+    var el=document.createElement('div');
+    el.className='mid-cta';
+    el.innerHTML='<div class="mid-cta-text"><strong>{{MID_CTA_HEADLINE}}</strong> {{MID_CTA_BODY}}</div>'
+        +'<a class="mid-cta-btn" href="'+(typeof SITE!=='undefined'?SITE.appUrl('mid-cta','article','inline'):'{{CTA_URL}}')+'">{{MID_CTA_BUTTON}}</a>';
+    target.parentNode.insertBefore(el,target);
+});
+</script>

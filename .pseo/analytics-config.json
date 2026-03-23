@@ -1,0 +1,17 @@
+{
+  "stale_hours": 24,
+  "posthog": {
+    "enabled": false,
+    "host": "eu.i.posthog.com",
+    "project_id": "",
+    "domain": "",
+    "period": "7d",
+    "top_pages_limit": 20
+  },
+  "gsc": {
+    "enabled": false,
+    "property": "",
+    "period": "28d",
+    "row_limit": 50
+  }
+}

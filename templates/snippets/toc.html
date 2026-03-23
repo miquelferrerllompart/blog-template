@@ -1,0 +1,96 @@
+<style>
+/* TOC — Desktop: sticky sidebar right of content */
+@media(min-width:1200px){
+    .toc-mobile{display:none}
+    .toc-desk{display:block;position:sticky;top:calc(80px + var(--sp-16));float:right;width:clamp(220px,calc((100vw - 900px)/2 - 40px),500px);margin-right:calc(-1 * clamp(220px,calc((100vw - 900px)/2 - 40px),500px) - 40px);margin-bottom:var(--sp-40);max-height:calc(100vh - 100px);overflow-y:auto;font-size:13px;padding:var(--sp-20);background:var(--light-2);border:1px solid var(--gray-light);border-radius:var(--radius-lg)}
+    .container.has-toc{--toc-w:clamp(220px,calc((100vw - 900px)/2 - 40px),500px);margin-left:calc((100vw - 900px - var(--toc-w) - 40px) / 2);margin-right:auto}
+    .toc-desk::-webkit-scrollbar{width:3px}
+    .toc-desk::-webkit-scrollbar-thumb{background:var(--gray-light);border-radius:3px}
+}
+/* TOC — Mobile/Tablet: collapsible block */
+@media(max-width:1199px){
+    .toc-desk{display:none}
+    .toc-mobile{display:block;margin-bottom:var(--sp-32);background:var(--light-2);border:1px solid var(--gray-light);border-radius:var(--radius-lg)}
+    .toc-mobile summary{padding:var(--sp-14) var(--sp-20);font-family:var(--font-code);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between}
+    .toc-mobile summary::-webkit-details-marker{display:none}
+    .toc-mobile summary::after{content:'▸';transition:transform 0.2s}
+    .toc-mobile[open] summary::after{transform:rotate(90deg)}
+    .toc-mobile .toc-list{padding:0 var(--sp-20) var(--sp-16)}
+}
+/* Anchor scroll offset — clear sticky nav + spacing */
+h2[id],h3[id],h4[id]{scroll-margin-top:calc(var(--sp-60) + var(--sp-32))}
+/* Shared TOC styles */
+.toc-label{font-family:var(--font-code);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:var(--sp-12)}
+.toc-list{list-style:none;padding:0;margin:0}
+.toc-list li{margin-bottom:var(--sp-2)}
+.toc-list a{display:block;padding:var(--sp-6) var(--sp-8);color:var(--dark-2);text-decoration:none;border-radius:var(--radius-sm);font-size:13px;line-height:1.4;transition:all 0.15s;border-left:2px solid transparent;cursor:pointer}
+.toc-list a:hover{color:var(--dark);background:var(--light-3)}
+.toc-list a.toc-h3{padding-left:var(--sp-20);font-size:12px;color:var(--gray)}
+.toc-list a.toc-active{color:var(--dark);border-left-color:transparent;background:white;border-radius:var(--radius-sm)}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    setTimeout(function(){
+        var app=document.getElementById('app');
+        if(!app) return;
+        var headings=app.querySelectorAll('h2[id],h3[id]');
+        if(headings.length<3) return;
+
+        // Only build TOC if not already pre-rendered by SSG
+        if(!app.querySelector('.toc-desk')){
+            // Build TOC list HTML
+            var html='';
+            headings.forEach(function(h){
+                if(h.closest('.faq-section')||h.closest('.site-footer')||h.closest('.cta-block')) return;
+                var cls=h.tagName==='H3'?' toc-h3':'';
+                html+='<li><a href="#'+h.id+'" class="toc-link'+cls+'" data-id="'+h.id+'">'+h.textContent.replace(/#/g,'').trim()+'</a></li>';
+            });
+            if(!html) return;
+            var listHTML='<ul class="toc-list">'+html+'</ul>';
+
+            // Desktop sidebar — insert at start of .container
+            var container=app.querySelector('.container');
+            if(!container) return;
+            var desk=document.createElement('nav');
+            desk.className='toc-desk';
+            desk.setAttribute('aria-label','Table of contents');
+            desk.innerHTML='<div class="toc-label">On this page</div>'+listHTML;
+            container.classList.add('has-toc');
+            container.insertBefore(desk,container.firstChild);
+
+            // Mobile collapsible — insert at start of .container (after desk)
+            var mob=document.createElement('details');
+            mob.className='toc-mobile';
+            mob.innerHTML='<summary>On this page</summary>'+listHTML;
+            container.insertBefore(mob,desk.nextSibling);
+        }
+
+        // Smooth scroll (always init — works for both SSG and client-rendered)
+        document.querySelectorAll('.toc-link').forEach(function(a){
+            a.addEventListener('click',function(e){
+                e.preventDefault();
+                var target=document.getElementById(this.dataset.id);
+                if(target){target.scrollIntoView({behavior:'smooth',block:'start'})}
+                history.replaceState(null,null,'#'+this.dataset.id);
+            });
+        });
+
+        // Active heading highlight via IntersectionObserver
+        if('IntersectionObserver' in window){
+            var links=document.querySelectorAll('.toc-desk .toc-link');
+            var obs=new IntersectionObserver(function(entries){
+                entries.forEach(function(entry){
+                    if(entry.isIntersecting){
+                        links.forEach(function(l){l.classList.remove('toc-active')});
+                        var active=document.querySelectorAll('.toc-desk a[data-id="'+entry.target.id+'"]');
+                        active.forEach(function(a){a.classList.add('toc-active')});
+                    }
+                });
+            },{rootMargin:'-80px 0px -70% 0px'});
+            headings.forEach(function(h){
+                if(!h.closest('.faq-section')&&!h.closest('.site-footer')&&!h.closest('.cta-block')) obs.observe(h);
+            });
+        }
+    },200);
+});
+</script>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <style>
+        {{@base-css}}
+
+        {{@header-css}}
+
+        .hero{position:relative;padding:var(--sp-80) var(--sp-48) var(--sp-60);background:linear-gradient(135deg,rgba(112,0,255,0.06) 0%,transparent 40%),linear-gradient(225deg,rgba(112,0,255,0.04) 0%,transparent 40%),var(--light);border-bottom:1px solid var(--gray-light)}
+        .hero-icon{width:72px;height:72px;margin-bottom:var(--sp-20);--ic-1:var(--accent);--ic-2:var(--accent-light);--ic-3:var(--accent-dark)}
+        .hero-inner{max-width:53.75rem;margin:0 auto}
+        .hero .breadcrumb{font-family:var(--font-code);font-size:0.8125rem;color:var(--gray);margin-bottom:var(--sp-20);letter-spacing:0.05em}
+        .hero .breadcrumb a{color:var(--accent);font-weight:600}
+        .hero .ind-badge{display:inline-block;font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:white;background:var(--accent);padding:var(--sp-4) var(--sp-14);border-radius:var(--radius-pill);margin-bottom:var(--sp-16)}
+        .hero h1{font-size:2.375rem;font-weight:800;letter-spacing:-0.03em;line-height:1.12;max-width:800px;margin-bottom:var(--sp-16)}
+        .hero .subheadline{font-size:1.0625rem;color:var(--dark-2);max-width:700px;line-height:1.7;font-weight:500}
+        .hero-stat{display:inline-flex;align-items:center;gap:var(--sp-16);background:var(--light-2);border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-16) var(--sp-24);margin-top:var(--sp-24)}
+        .hero-stat .stat-value{font-size:2rem;font-weight:800;color:var(--dark);font-family:var(--font-code)}
+        .hero-stat .stat-desc{font-size:0.875rem;color:var(--gray);max-width:280px;line-height:1.4}
+        .hero-stat .stat-source{font-size:0.6875rem;color:var(--gray);opacity:0.7;font-family:var(--font-code)}
+        .content-stats{display:flex;gap:var(--sp-20);margin-top:var(--sp-20)}
+        .content-stat{font-family:var(--font-code);font-size:0.75rem;color:var(--gray)}
+        .content-stat strong{color:var(--dark);font-size:1.125rem}
+
+        .container{max-width:53.75rem;margin:0 auto;padding:var(--sp-56) var(--sp-24)}
+        .container a{text-decoration-line:underline;text-decoration-color:rgba(112,0,255,0.25);text-underline-offset:2px;transition:text-decoration-color 0.2s}
+        .container a:hover{text-decoration-color:var(--accent)}
+        .content-card a,.cta-block a,a.content-card,.cta-block{text-decoration:none}
+
+        .overview{font-size:0.9375rem;line-height:1.8;color:var(--dark-2);margin-bottom:var(--sp-48)}
+        .overview p{margin-bottom:var(--sp-20)}
+
+        .pain-points{background:var(--light-2);border-radius:var(--radius-xl);padding:var(--sp-36);margin-bottom:var(--sp-48)}
+        .pain-points h2{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--sp-20)}
+        .pain-points ul{list-style:none}
+        .pain-points li{padding:var(--sp-10) 0;font-size:0.9375rem;line-height:1.7;border-bottom:1px solid var(--gray-light);color:var(--dark-2)}
+        .pain-points li:last-child{border-bottom:none}
+        .pain-points li::before{content:'→ ';color:var(--accent);font-weight:700}
+
+        /* Content grid */
+        .content-type-section{margin-bottom:var(--sp-48)}
+        .content-type-section h2{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--sp-20);padding-bottom:var(--sp-10);border-bottom:2px solid var(--accent-light)}
+        .content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--sp-16)}
+        .content-card{display:block;padding:var(--sp-20) var(--sp-24);border:1px solid var(--gray-light);border-radius:var(--radius-lg);background:var(--light);text-decoration:none;color:var(--dark);transition:all 0.2s}
+        .content-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(112,0,255,0.08);transform:translateY(-2px)}
+        .content-card .cc-type{font-family:var(--font-code);font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:var(--sp-8)}
+        .content-card .cc-title{font-size:0.875rem;font-weight:600;line-height:1.4;margin-bottom:var(--sp-6)}
+        .content-card .cc-desc{font-size:0.8125rem;color:var(--gray);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .content-card.cc-tool{background:var(--dark);color:var(--light);border-color:rgba(255,255,255,0.08)}
+        .content-card.cc-tool:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(112,0,255,0.15)}
+        .content-card.cc-tool .cc-type{color:var(--accent-light)}
+        .content-card.cc-tool .cc-desc{color:rgba(255,255,255,0.5)}
+
+        .wallet-angle{background:var(--accent-light);border-radius:var(--radius-xl);padding:var(--sp-36);margin-bottom:var(--sp-48);font-size:0.9375rem;line-height:1.8;color:var(--dark-2)}
+        .wallet-angle h2{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--sp-16);color:var(--accent-dark)}
+
+        {{@content-img-css}}
+
+        {{@faq-css}}
+
+        {{@cta-css}}
+
+        {{@footer-css}}
+
+        @media(max-width:768px){
+            .hero{padding:var(--sp-48) var(--sp-24) var(--sp-40)}.hero h1{font-size:1.75rem}.hero-icon{width:56px;height:56px}
+            .hero-stat{flex-direction:column;align-items:flex-start}
+            .content-stats{flex-direction:column;gap:var(--sp-8)}
+            .content-grid{grid-template-columns:1fr}
+        }
+    </style>
+    <script type="application/ld+json">[{"@context":"https://schema.org","@type":"CollectionPage","name":"{{TITLE}}","description":"{{DESCRIPTION}}","url":"{{BLOG_URL}}/industries/{{SLUG}}","publisher":{"@type":"Organization","name":"{{BRAND_NAME}}","url":"{{SITE_URL}}","logo":{"@type":"ImageObject","url":"{{BLOG_URL}}/assets/logo.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"{{BLOG_URL}}/industries/{{SLUG}}"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"{{BLOG_URL}}"},{"@type":"ListItem","position":2,"name":"Industries","item":"{{BLOG_URL}}/#industries"},{"@type":"ListItem","position":3,"name":"{{TITLE}}"}]}]</script>
+</head>
+<body>
+{{>icons}}
+{{>header}}
+<div id="app"></div>
+<script>
+const DATA = {{DATA}};
+const INDUSTRY_PAGES = {{INDUSTRY_PAGES}};
+const industryIconIds = {'fashion-apparel':'ic-fashion','beauty-cosmetics':'ic-beauty','food-beverage':'ic-food','health-supplements':'ic-health','pet-supplies':'ic-pet','sports-outdoor':'ic-sports','jewelry-accessories':'ic-jewelry','home-decor':'ic-home','coffee-tea':'ic-coffee','baby-kids':'ic-baby','gyms-fitness-studios':'ic-sports','spas-salons-medspas':'ic-spa','health-coaching-personal-training':'ic-health-coaching','health-food-organic-stores':'ic-health-food','supplement-vitamin-brands':'ic-supplement','wellness-dtc-ecommerce':'ic-wellness','yoga-pilates-studios':'ic-yoga'};
+const heroIconId = industryIconIds[DATA.meta.industry] || 'ic-default';
+const urlPrefixes = {resource:'/resources/',guide:'/guides/',alternatives:'/compare/',comparison:'/compare/',tool:'/tools/'};
+const typeLabels = {tool:'Free Tool',guide:'Guide',resource:'Resource',alternatives:'Alternatives',comparison:'Comparison'};
+const typeOrder = {tool:0,guide:1,resource:2,alternatives:3,comparison:4};
+
+// Filter pages for this industry
+const industryPages = INDUSTRY_PAGES.filter(p => p.industry === DATA.meta.industry);
+const pagesByType = {};
+industryPages.forEach(p => {
+    if (!pagesByType[p.type]) pagesByType[p.type] = [];
+    pagesByType[p.type].push(p);
+});
+const sortedTypes = Object.keys(pagesByType).sort((a,b) => (typeOrder[a]??5) - (typeOrder[b]??5));
+const totalPages = industryPages.length;
+
+function renderImg(placement) {
+    if (!DATA.content.images) return '';
+    return DATA.content.images.filter(img => img.placement === placement).map(img =>
+        `<figure class="content-img"><img src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async">${img.caption ? `<figcaption>${img.caption}</figcaption>` : ''}</figure>`
+    ).join('');
+}
+
+document.getElementById('app').innerHTML = `
+    <div class="hero"><div class="hero-inner">
+        <svg class="hero-icon" viewBox="0 0 48 48"><use href="#${heroIconId}"></use></svg>
+        <div class="breadcrumb"><a href="/">Blog</a> / <a href="/#industries">Industries</a> / ${DATA.meta.industry_display}</div>
+        <span class="ind-badge">${DATA.meta.industry_display}</span>
+        <h1>${DATA.content.hero.headline}</h1>
+        <div class="subheadline">${DATA.content.hero.subheadline}</div>
+        ${DATA.content.hero_stat ? `
+        <div class="hero-stat">
+            <div class="stat-value">${DATA.content.hero_stat.value}</div>
+            <div>
+                <div class="stat-desc">${DATA.content.hero_stat.description}</div>
+                <div class="stat-source">${DATA.content.hero_stat.source}</div>
+            </div>
+        </div>
+        ` : ''}
+        ${totalPages > 0 ? `
+        <div class="content-stats">
+            ${sortedTypes.map(t => `<div class="content-stat"><strong>${pagesByType[t].length}</strong> ${typeLabels[t] || t}${pagesByType[t].length !== 1 ? 's' : ''}</div>`).join('')}
+        </div>
+        ` : ''}
+    </div></div>
+
+    <div class="container">
+        <div class="overview">${DATA.content.overview.split(/\n/).map(p => p.trim() ? '<p>' + p + '</p>' : '').join('')}</div>
+        ${renderImg('after:overview')}
+
+        <div class="pain-points">
+            <h2>Common Challenges for ${DATA.meta.industry_display} Merchants</h2>
+            <ul>${DATA.content.pain_points.map(p => '<li>' + p + '</li>').join('')}</ul>
+        </div>
+
+        ${renderImg('after:pain_points')}
+
+        ${sortedTypes.map(type => `
+        <div class="content-type-section">
+            <h2>${typeLabels[type] || type}s for ${DATA.meta.industry_display}</h2>
+            <div class="content-grid">
+                ${pagesByType[type].map(p => `
+                    <a class="content-card ${type === 'tool' ? 'cc-tool' : ''}" href="${urlPrefixes[p.type] || '/'}${p.slug}">
+                        <div class="cc-type">${typeLabels[p.type] || p.type}</div>
+                        <div class="cc-title">${p.title}</div>
+                        <div class="cc-desc">${p.description}</div>
+                    </a>
+                `).join('')}
+            </div>
+        </div>
+        `).join('')}
+
+        ${DATA.content.wallet_pass_angle ? `
+        <div class="wallet-angle">
+            <h2>How Mobile Passes Help ${DATA.meta.industry_display} Brands</h2>
+            ${DATA.content.wallet_pass_angle}
+        </div>
+        ` : ''}
+
+        <div class="faq-section">
+            <h3>FAQ</h3>
+            ${DATA.content.faq.map(f => `
+                <details class="faq-item">
+                    <summary>${f.question}</summary>
+                    <div class="faq-a">${f.answer}</div>
+                </details>
+            `).join('')}
+        </div>
+
+        ${DATA.external_references?.length ? `
+        <div style="margin-bottom:48px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:12px">Sources & Further Reading</h3>
+            <ul style="font-size:0.875rem;color:var(--gray);line-height:1.8;padding-left:20px">
+                ${DATA.external_references.map(ref => '<li><a href="' + ref.url + '" target="_blank" rel="noopener" style="color:var(--accent)">' + ref.title + '</a> <span style="opacity:0.7">(' + ref.source + ')</span></li>').join('')}
+            </ul>
+        </div>
+        ` : ''}
+
+        <div class="nl-banner" style="border-radius:var(--radius-xl);padding:var(--sp-40) var(--sp-24);margin-bottom:var(--sp-48)">
+            <h3 class="nl-banner-title">More repeat customers, less guesswork</h3>
+            <p class="nl-banner-desc">{{NL_BANNER_DESC}}</p>
+            <form class="nl-form" data-source="banner">
+                <input type="email" placeholder="Email address" required>
+                <button type="submit" aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </form>
+            <div class="nl-done">Thanks for subscribing!</div>
+        </div>
+
+        <div class="cta-block">
+            <h3>${DATA.brand_cta.headline}</h3>
+            <p>${DATA.brand_cta.subtext}</p>
+            <a href="${SITE.appUrl('cta','industry','bottom-cta')}" class="cta-btn">${DATA.brand_cta.cta_button}</a>
+        </div>
+    </div>
+
+    {{>footer}}
+`;
+
+// FAQ schema
+const faqSchema = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":DATA.content.faq.map(f=>({"@type":"Question","name":f.question,"acceptedAnswer":{"@type":"Answer","text":f.answer}}))};
+const s = document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(faqSchema);document.head.appendChild(s);
+</script>
+</body>
+</html>

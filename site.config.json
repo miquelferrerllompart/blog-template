@@ -1,0 +1,61 @@
+{
+  "brand": {
+    "name": "My Brand",
+    "tagline": "Your tagline here",
+    "description": "One-sentence description for schema.org and llms.txt",
+    "domain": "blog.mybrand.com",
+    "site_url": "https://www.mybrand.com",
+    "site_name": "My Brand Blog",
+    "copyright": "My Brand"
+  },
+  "cta": {
+    "url": "https://mybrand.com/signup",
+    "text": "Get Started →",
+    "utm_medium": "blog_mybrand_com",
+    "mid_headline": "Ready to get started?",
+    "mid_body": "Try My Brand today.",
+    "mid_button": "Get Started →"
+  },
+  "design": {
+    "accent": "#7000FF",
+    "accent_light": "#F1E5FF",
+    "accent_dark": "#5200CC",
+    "dark": "#171717",
+    "light": "#FBFAF5"
+  },
+  "analytics": {
+    "posthog_enabled": false,
+    "posthog_key": "",
+    "posthog_host": ""
+  },
+  "listings": {
+    "tools": {
+      "title": "Free Tools & Calculators",
+      "description": "Interactive calculators and tools to help you measure and improve your metrics.",
+      "headline": "Free Tools",
+      "subtitle": "Interactive calculators and free tools."
+    },
+    "guides": {
+      "title": "Guides",
+      "description": "Step-by-step guides to help you build, launch, and scale.",
+      "headline": "Guides",
+      "subtitle": "Step-by-step playbooks and how-to guides."
+    },
+    "compare": {
+      "title": "Comparisons & Alternatives",
+      "description": "Side-by-side comparisons to help you choose the right solution.",
+      "headline": "Comparisons & Alternatives",
+      "subtitle": "Side-by-side reviews and alternatives."
+    }
+  },
+  "newsletter": {
+    "sidebar_label": "Stay updated"
+  },
+  "dashboard_password": "admin2026",
+  "index": {
+    "title": "My Brand Blog",
+    "description": "Guides, tools, and resources to help you grow.",
+    "hero_headline": "Welcome to My Brand Blog",
+    "hero_subtitle": "Resources to help you grow."
+  }
+}

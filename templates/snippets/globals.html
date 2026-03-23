@@ -1,0 +1,12 @@
+<script>
+window.SITE = {
+    CTA_URL: '{{CTA_URL}}',
+    UTM: { medium: '{{UTM_MEDIUM}}' },
+    appUrl: function(source, campaign, content) {
+        var u = this.CTA_URL + '?utm_medium=' + this.UTM.medium + '&utm_source=' + source;
+        if (campaign) u += '&utm_campaign=' + campaign;
+        if (content) u += '&utm_content=' + content;
+        return u;
+    }
+};
+</script>

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Guide — {{BRAND_NAME}} Blog</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        {{@base-css}}
+        body{background:var(--light-2)}
+
+        /* Style Guide Layout */
+        .sg-wrap{max-width:1100px;margin:0 auto;padding:var(--sp-40) var(--sp-24) var(--sp-80)}
+        .sg-title{font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:var(--sp-8)}
+        .sg-subtitle{font-size:14px;color:var(--gray);margin-bottom:var(--sp-48)}
+        .sg-section{margin-bottom:var(--sp-56)}
+        .sg-section-title{font-family:var(--font-code);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:var(--sp-20);padding-bottom:var(--sp-8);border-bottom:2px solid var(--accent-light)}
+        .sg-row{display:flex;gap:var(--sp-16);flex-wrap:wrap;margin-bottom:var(--sp-20);align-items:flex-start}
+        .sg-label{font-family:var(--font-code);font-size:11px;color:var(--gray);margin-top:var(--sp-8);text-align:center}
+        .sg-note{font-size:13px;color:var(--gray);margin-bottom:var(--sp-16);line-height:1.6}
+        .sg-code{font-family:var(--font-code);font-size:12px;background:var(--dark);color:#a0f0a0;padding:var(--sp-12) var(--sp-16);border-radius:var(--radius-md);margin-bottom:var(--sp-16);overflow-x:auto}
+        .sg-demo{background:var(--light);border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-32);margin-bottom:var(--sp-12)}
+        .sg-demo-dark{background:var(--dark);border-color:var(--dark-2)}
+
+        /* Color swatches */
+        .swatch{width:80px;height:80px;border-radius:var(--radius-md);border:1px solid var(--gray-light);display:flex;align-items:flex-end;padding:var(--sp-6)}
+        .swatch span{font-family:var(--font-code);font-size:9px;color:var(--light);background:rgba(0,0,0,0.4);padding:var(--sp-2) var(--sp-6);border-radius:3px}
+
+        {{@header-css}}
+
+        /* Hero (resource-style for demo) */
+        .hero{position:relative;padding:var(--sp-80) var(--sp-48) var(--sp-60);background:radial-gradient(circle at 20% 20%,rgba(112,0,255,0.06) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(112,0,255,0.04) 0%,transparent 50%),var(--light);border-bottom:1px solid var(--gray-light)}
+        .hero-inner{max-width:860px;margin:0 auto}
+        .hero-icon{position:absolute;top:var(--sp-32);right:var(--sp-48);width:80px;height:80px;opacity:0.12}
+        .hero .breadcrumb{font-family:var(--font-code);font-size:12px;color:var(--gray);margin-bottom:var(--sp-20);letter-spacing:0.05em}
+        .hero .breadcrumb a{color:var(--accent);font-weight:600}
+        .hero .industry-tag{display:inline-block;font-family:var(--font-code);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);background:var(--accent-light);padding:var(--sp-4) var(--sp-14);border-radius:var(--radius-pill);margin-bottom:var(--sp-16)}
+        .hero h1{font-size:36px;font-weight:800;letter-spacing:-0.03em;line-height:1.15;max-width:800px;margin-bottom:var(--sp-16)}
+        .hero .subtitle{font-size:16px;color:var(--gray);max-width:700px;line-height:1.7}
+        .stat-box{display:inline-flex;align-items:center;gap:var(--sp-16);background:var(--light-2);border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-16) var(--sp-24);margin-top:var(--sp-24)}
+        .stat-box .stat-value{font-size:32px;font-weight:800;color:var(--accent);font-family:var(--font-code)}
+        .stat-box .stat-desc{font-size:13px;color:var(--gray);max-width:280px;line-height:1.4}
+        .stat-box .stat-source{font-size:11px;color:var(--gray);opacity:0.7;font-family:var(--font-code)}
+
+        /* Index cards */
+        .card{break-inside:avoid;margin-bottom:var(--sp-20);border:1px solid var(--gray-light);border-radius:var(--radius-lg);overflow:hidden;transition:all 0.25s;cursor:pointer;display:block;color:var(--dark)}
+        .card:hover{box-shadow:0 6px 24px rgba(0,0,0,0.06);border-color:var(--accent-light);transform:translateY(-2px);text-decoration:none;color:var(--dark)}
+        .card-tool:hover{color:var(--light)}
+        .card-accent:hover{color:var(--light)}
+        .card-text{background:var(--light);padding:var(--sp-24)}
+        .card-text .card-type{font-family:var(--font-code);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray);margin-bottom:var(--sp-10)}
+        .card-text .card-title{font-size:16px;font-weight:700;letter-spacing:-0.02em;line-height:1.3;margin-bottom:var(--sp-8)}
+        .card-text .card-desc{font-size:13px;color:var(--gray);line-height:1.6;margin-bottom:var(--sp-12)}
+        .card-text .card-tag{display:inline-block;font-family:var(--font-code);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);background:var(--accent-light);padding:3px var(--sp-10);border-radius:var(--radius-pill)}
+        .card-accent{background:var(--accent);padding:var(--sp-28);color:var(--light)}
+        .card-accent .card-type{font-family:var(--font-code);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;opacity:0.7;margin-bottom:var(--sp-10)}
+        .card-accent .card-title{font-size:18px;font-weight:700;letter-spacing:-0.02em;line-height:1.3;margin-bottom:var(--sp-8);color:var(--light)}
+        .card-accent .card-desc{font-size:13px;opacity:0.85;line-height:1.6}
+        .card-featured .card-thumb{position:relative;padding:var(--sp-32) var(--sp-24);min-height:180px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+        .card-featured .card-thumb .card-pictogram{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:80px;opacity:0.1}
+        .card-featured .card-thumb .card-tag{position:relative;z-index:1;display:inline-block;font-family:var(--font-code);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--light);background:rgba(255,255,255,0.2);padding:3px var(--sp-10);border-radius:var(--radius-pill);backdrop-filter:blur(4px);width:fit-content;margin-bottom:var(--sp-8)}
+        .card-featured .card-thumb .card-title{font-size:18px;font-weight:700;color:var(--light);letter-spacing:-0.02em;line-height:1.3;position:relative;z-index:1}
+        .card-featured .card-body{padding:var(--sp-16) var(--sp-24) var(--sp-20)}
+        .card-featured .card-body .card-desc{font-size:13px;color:var(--gray);line-height:1.6}
+        .card-tool{background:var(--dark);padding:var(--sp-24);color:var(--light)}
+        .card-tool .card-type{font-family:var(--font-code);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-light);opacity:0.7;margin-bottom:var(--sp-10)}
+        .card-tool .card-title{font-size:16px;font-weight:700;letter-spacing:-0.02em;line-height:1.3;margin-bottom:var(--sp-8);color:var(--light)}
+        .card-tool .card-desc{font-size:13px;opacity:0.6;line-height:1.6}
+        .card-tool .card-icon{font-size:28px;margin-bottom:var(--sp-12)}
+        .thumb-fashion{background:radial-gradient(circle at 30% 30%,rgba(233,30,99,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(112,0,255,0.12) 0%,transparent 50%),var(--ind-fashion)}
+        .thumb-default{background:radial-gradient(circle at 30% 30%,rgba(112,0,255,0.12) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(82,0,204,0.1) 0%,transparent 50%),var(--accent)}
+
+        /* Topic cards (hub categories) */
+        .topic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-16)}
+        .topic-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--sp-12);padding:var(--sp-32) var(--sp-20);border-radius:var(--radius-lg);border:1px solid var(--gray-light);background:var(--light);transition:all 0.25s;text-decoration:none;color:var(--dark);position:relative;overflow:hidden}
+        .topic-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);opacity:0;transition:opacity 0.25s}
+        .topic-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(112,0,255,0.08);text-decoration:none;color:var(--dark)}
+        .topic-card:hover::before{opacity:1}
+        .topic-icon{width:48px;height:48px}
+        .topic-name{font-size:0.9375rem;font-weight:700;letter-spacing:-0.02em}
+        .topic-count{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px var(--sp-10);border-radius:var(--radius-pill)}
+        .topic-desc{font-size:0.8125rem;color:var(--gray);line-height:1.5}
+
+        /* Content item cards */
+        .item-card{border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-28);margin-bottom:var(--sp-20);background:var(--light);transition:all 0.2s}
+        .item-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.05);border-color:var(--accent-light)}
+        .item-header{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-16);margin-bottom:var(--sp-12)}
+        .item-title{font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.3}
+        .item-badges{display:flex;gap:var(--sp-6);flex-shrink:0}
+        .badge{font-family:var(--font-code);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:3px var(--sp-10);border-radius:var(--radius-pill)}
+        .badge-impact-high{background:#E8F5E9;color:#2E7D32}
+        .badge-impact-medium{background:#FFF3E0;color:#E65100}
+        .badge-impact-standard{background:var(--light-3);color:var(--gray)}
+        .badge-difficulty{background:var(--accent-light);color:var(--accent)}
+        .item-desc{font-size:14px;color:var(--dark-2);line-height:1.7;margin-bottom:var(--sp-12)}
+        .item-example{font-size:13px;color:var(--gray);line-height:1.6;padding:var(--sp-12) var(--sp-16);background:var(--light-2);border-radius:var(--radius-md);margin-bottom:var(--sp-8)}
+        .item-example strong{color:var(--dark);font-weight:600}
+        .item-wallet{font-size:13px;color:var(--gray);line-height:1.5;padding:var(--sp-10) var(--sp-16) var(--sp-10) var(--sp-48);background:var(--light-2);border-radius:var(--radius-md);border-left:3px solid var(--gray-light);position:relative}
+        .item-wallet .callout-icon{position:absolute;left:var(--sp-16);top:var(--sp-10);width:18px;height:18px;--ic-1:var(--gray);--ic-2:transparent;--ic-3:var(--gray)}
+
+        /* Pro tips */
+        .tips-section{background:var(--light-2);border-radius:var(--radius-xl);padding:var(--sp-36)}
+        .tips-title{font-size:18px;font-weight:700;margin-bottom:var(--sp-20);display:flex;align-items:center;gap:var(--sp-10)}
+        .tip-item{display:flex;gap:var(--sp-12);margin-bottom:var(--sp-14);font-size:14px;line-height:1.6}
+        .tip-num{font-family:var(--font-code);font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-light);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:var(--sp-2)}
+
+        /* Mistakes */
+        .mistakes-section{border:2px solid #FFCDD2;border-radius:var(--radius-xl);padding:var(--sp-36)}
+        .mistakes-title{font-size:18px;font-weight:700;margin-bottom:var(--sp-20);color:#C62828}
+        .mistake-item{display:flex;gap:var(--sp-12);margin-bottom:var(--sp-14);font-size:14px;line-height:1.6;color:var(--dark-2)}
+        .mistake-icon{font-size:16px;flex-shrink:0;margin-top:var(--sp-2)}
+
+        /* Benchmarks */
+        .benchmarks{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-16)}
+        .bench-card{text-align:center;padding:var(--sp-24) var(--sp-16);background:var(--light-2);border-radius:var(--radius-lg);border:1px solid var(--gray-light)}
+        .bench-value{font-family:var(--font-code);font-size:24px;font-weight:700;color:var(--accent);margin-bottom:var(--sp-4)}
+        .bench-label{font-size:12px;color:var(--gray);line-height:1.4}
+
+        /* Shared component styles from templates */
+        {{@tool-css}}
+        {{@cta-css}}
+        {{@faq-css}}
+        {{@footer-css}}
+        {{@related-css}}
+
+        /* Filter buttons */
+        .filter-btn{font-family:var(--font-code);font-size:12px;font-weight:600;padding:7px var(--sp-16);border:1px solid var(--gray-light);border-radius:var(--radius-pill);background:var(--light);color:var(--gray);cursor:pointer;transition:all 0.2s;letter-spacing:0.02em}
+        .filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+
+        /* Search */
+        .search-bar{position:relative;max-width:460px}
+        .search-bar input{width:100%;padding:var(--sp-14) var(--sp-20) var(--sp-14) 44px;font-family:var(--font-primary);font-size:14px;border:1px solid var(--gray-light);border-radius:var(--radius-pill);outline:none;background:var(--light);transition:border-color 0.2s}
+        .search-bar input:focus{border-color:var(--accent)}
+        .search-bar input::placeholder{color:#B0B0B0}
+        .search-icon{position:absolute;left:var(--sp-16);top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--gray)}
+
+        /* Load more */
+        .load-more{font-family:var(--font-primary);font-size:13px;font-weight:700;color:var(--accent);background:var(--accent-light);border:none;padding:var(--sp-12) var(--sp-32);border-radius:var(--radius-pill);cursor:pointer;transition:all 0.2s}
+        .load-more:hover{background:var(--accent);color:var(--light)}
+
+        /* Icon showcase */
+        .icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:var(--sp-16)}
+        .icon-cell{display:flex;flex-direction:column;align-items:center;gap:var(--sp-8);padding:var(--sp-16) var(--sp-8);border:1px solid var(--gray-light);border-radius:var(--radius-md);background:var(--light)}
+        .icon-cell svg{width:48px;height:48px}
+        .icon-cell .sg-label{margin-top:0}
+        .icon-cell-dark{background:var(--dark);border-color:var(--dark-2);--ic-1:#F1E5FF;--ic-2:rgba(241,229,255,0.12);--ic-3:rgba(255,255,255,0.5)}
+        .icon-cell-dark .sg-label{color:var(--gray-light)}
+        .icon-themed{--ic-1:#E91E63;--ic-2:rgba(233,30,99,0.1);--ic-3:#AD1457}
+        .icon-themed-green{--ic-1:#00897B;--ic-2:rgba(0,137,123,0.1);--ic-3:#004D40}
+        .icon-themed-gold{--ic-1:#F9A825;--ic-2:rgba(249,168,37,0.1);--ic-3:#F57F17}
+
+        @media(max-width:768px){
+            .sg-row{flex-direction:column}
+            .benchmarks{grid-template-columns:1fr}
+            .icon-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr))}
+        }
+    </style>
+</head>
+<body>
+{{>icons}}
+{{>header}}
+<div class="sg-wrap">
+    <h1 class="sg-title">Style Guide</h1>
+    <p class="sg-subtitle">{{BRAND_NAME}} Blog — Visual component reference (noindex)</p>
+
+    <!-- COLORS -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Colors</h2>
+        <div class="sg-row">
+            <div><div class="swatch" style="background:var(--accent)"><span>#7000FF</span></div><div class="sg-label">accent</div></div>
+            <div><div class="swatch" style="background:var(--accent-light)"><span style="color:var(--dark)">#F1E5FF</span></div><div class="sg-label">accent-light</div></div>
+            <div><div class="swatch" style="background:var(--accent-dark)"><span>#5200CC</span></div><div class="sg-label">accent-dark</div></div>
+            <div><div class="swatch" style="background:var(--dark)"><span>#171717</span></div><div class="sg-label">dark</div></div>
+            <div><div class="swatch" style="background:var(--dark-2)"><span>#2E2E2E</span></div><div class="sg-label">dark-2</div></div>
+            <div><div class="swatch" style="background:var(--gray)"><span>#747474</span></div><div class="sg-label">gray</div></div>
+            <div><div class="swatch" style="background:var(--gray-light);border-color:var(--gray)"><span style="color:var(--dark)">#E8E8E8</span></div><div class="sg-label">gray-light</div></div>
+            <div><div class="swatch" style="background:var(--light);border-color:var(--gray)"><span style="color:var(--dark)">#FFFFFF</span></div><div class="sg-label">light</div></div>
+            <div><div class="swatch" style="background:var(--light-2);border-color:var(--gray)"><span style="color:var(--dark)">#F2F1EB</span></div><div class="sg-label">light-2</div></div>
+            <div><div class="swatch" style="background:var(--light-3);border-color:var(--gray)"><span style="color:var(--dark)">#E6E3DA</span></div><div class="sg-label">light-3</div></div>
+        </div>
+
+        <h3 style="font-size:16px;font-weight:700;margin:var(--sp-24) 0 var(--sp-12)">Industry Palette</h3>
+        <div class="sg-row">
+            <div><div class="swatch" style="background:var(--ind-fashion)"><span>Fashion</span></div><div class="sg-label">ind-fashion</div></div>
+            <div><div class="swatch" style="background:var(--ind-beauty)"><span>Beauty</span></div><div class="sg-label">ind-beauty</div></div>
+            <div><div class="swatch" style="background:var(--ind-food)"><span>Food</span></div><div class="sg-label">ind-food</div></div>
+            <div><div class="swatch" style="background:var(--ind-health)"><span>Health</span></div><div class="sg-label">ind-health</div></div>
+            <div><div class="swatch" style="background:var(--ind-pet)"><span>Pet</span></div><div class="sg-label">ind-pet</div></div>
+            <div><div class="swatch" style="background:var(--ind-sports)"><span>Sports</span></div><div class="sg-label">ind-sports</div></div>
+            <div><div class="swatch" style="background:var(--ind-jewelry)"><span>Jewelry</span></div><div class="sg-label">ind-jewelry</div></div>
+            <div><div class="swatch" style="background:var(--ind-home)"><span>Home</span></div><div class="sg-label">ind-home</div></div>
+            <div><div class="swatch" style="background:var(--ind-coffee)"><span>Coffee</span></div><div class="sg-label">ind-coffee</div></div>
+            <div><div class="swatch" style="background:var(--ind-baby)"><span>Baby</span></div><div class="sg-label">ind-baby</div></div>
+        </div>
+    </div>
+
+    <!-- TYPOGRAPHY -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Typography</h2>
+        <div class="sg-demo">
+            <p style="font-family:var(--font-heading);font-size:56px;letter-spacing:-0.015em;line-height:1;margin-bottom:16px">Display — Milling 56px</p>
+            <p style="font-family:var(--font-heading);font-size:32px;letter-spacing:-0.02em;line-height:1.1;margin-bottom:16px">Heading L — Milling 32px</p>
+            <p style="font-family:var(--font-heading);font-size:24px;letter-spacing:-0.01em;line-height:1.18;margin-bottom:16px">Heading M — Milling 24px</p>
+            <p style="font-family:var(--font-heading);font-size:16px;line-height:1.25;margin-bottom:16px">Heading S — Milling 16px</p>
+            <p style="font-size:16px;font-weight:500;line-height:1.25;margin-bottom:16px">Card Title — General Sans 500, 16px</p>
+            <p style="font-size:14px;font-weight:500;line-height:1.7;margin-bottom:16px;max-width:600px">Body text — General Sans 500, 14px. Used for descriptions and main content paragraphs. Line height is 1.7 for readability.</p>
+            <p style="font-size:13px;font-weight:500;color:var(--gray);line-height:1.6;margin-bottom:16px">Secondary text — General Sans 500, 13px, gray. Descriptions, captions, meta info.</p>
+            <p style="font-family:var(--font-code);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray)">LABEL — Inconsolata 700, 12px uppercase</p>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Header / Nav</h2>
+        <p style="font-size:13px;color:var(--gray);margin-bottom:var(--sp-8)">Live header is rendered above via <code>{{">header}}</code> partial. Sticky, with burger menu on mobile.</p>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Buttons</h2>
+        <div class="sg-demo">
+            <div class="sg-row" style="align-items:center">
+                <div>
+                    <a href="#" class="header-cta">{{CTA_TEXT}}</a>
+                    <div class="sg-label">Nav CTA (dark bg)</div>
+                </div>
+                <div>
+                    <a href="#" class="cta-btn" style="color:var(--accent);border:2px solid var(--accent)">{{CTA_TEXT}}</a>
+                    <div class="sg-label">CTA Button (on accent bg)</div>
+                </div>
+                <div>
+                    <button class="load-more">Load more</button>
+                    <div class="sg-label">Load More</div>
+                </div>
+                <div>
+                    <button class="filter-btn">Resources</button>
+                    <div class="sg-label">Filter (default)</div>
+                </div>
+                <div>
+                    <button class="filter-btn active">Guides</button>
+                    <div class="sg-label">Filter (active)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Search</h2>
+        <div class="sg-demo">
+            <div class="search-bar">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" placeholder="Search articles...">
+            </div>
+        </div>
+    </div>
+
+    <!-- BADGES -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Badges / Tags</h2>
+        <div class="sg-demo">
+            <div class="sg-row" style="align-items:center">
+                <span class="badge badge-impact-high">high impact</span>
+                <span class="badge badge-impact-medium">medium impact</span>
+                <span class="badge badge-impact-standard">standard impact</span>
+                <span class="badge badge-difficulty">easy</span>
+                <span class="card-tag" style="display:inline-block;font-family:var(--font-code);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:var(--radius-pill)">Fashion & Apparel</span>
+                <span style="display:inline-block;font-family:var(--font-code);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);background:var(--accent-light);padding:4px 14px;border-radius:var(--radius-pill)">Industry Tag</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- INDEX CARDS -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Index Cards</h2>
+        <div class="sg-demo">
+            <div style="columns:3;column-gap:20px">
+                <a class="card card-text" href="#" style="display:block">
+                    <div class="card-type">Resource</div>
+                    <div class="card-title">Retention Ideas for Fashion Brands</div>
+                    <div class="card-desc">Discover proven strategies tailored for fashion and apparel merchants.</div>
+                    <span class="card-tag">Fashion & Apparel</span>
+                </a>
+                <a class="card card-featured" href="#" style="display:block">
+                    <div class="card-thumb thumb-fashion">
+                        <svg class="card-pictogram" viewBox="0 0 48 48" style="width:80px;height:80px"><use href="#ic-fashion"></use></svg>
+                        <div class="card-tag">Guide</div>
+                        <div class="card-title">How to Set Up Your Retention Program</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-desc">Step-by-step guide to launching a retention program for your store.</div>
+                    </div>
+                </a>
+                <a class="card card-accent" href="#" style="display:block">
+                    <div class="card-type">Resource · Beauty & Cosmetics</div>
+                    <div class="card-title">VIP Tier Strategies That Work</div>
+                    <div class="card-desc">Build exclusive tiers that keep your best customers coming back.</div>
+                </a>
+                <a class="card card-tool" href="#" style="display:block">
+                    <div class="card-icon"><svg viewBox="0 0 48 48" style="width:28px;height:28px"><use href="#ic-roi"></use></svg></div>
+                    <div class="card-type">Interactive Tool</div>
+                    <div class="card-title">ROI Calculator</div>
+                    <div class="card-desc">Estimate your program return on investment.</div>
+                </a>
+                <a class="card card-text" href="#" style="display:block">
+                    <div class="card-type">Comparison</div>
+                    <div class="card-title">{{BRAND_NAME}} vs Competitor</div>
+                    <div class="card-desc">Compare features, pricing, and platform support side-by-side.</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC CARDS (Hub categories) -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Topic Cards</h2>
+        <p class="sg-note">Used on the homepage to link to hub topic groups on the /guides/ listing. Each card shows an icon, topic name, hub count, and short description. Accent bar reveals on hover.</p>
+        <div class="sg-demo">
+            <div class="topic-grid">
+                <a class="topic-card" href="#">
+                    <svg class="topic-icon" viewBox="0 0 48 48"><use href="#ic-topic-loyalty"></use></svg>
+                    <div class="topic-name">Programs</div>
+                    <span class="topic-count">7 hubs</span>
+                    <div class="topic-desc">Points, tiers, punch cards, and program design</div>
+                </a>
+                <a class="topic-card" href="#">
+                    <svg class="topic-icon" viewBox="0 0 48 48"><use href="#ic-topic-referral"></use></svg>
+                    <div class="topic-name">Referral</div>
+                    <span class="topic-count">4 hubs</span>
+                    <div class="topic-desc">Referral programs and word-of-mouth growth</div>
+                </a>
+                <a class="topic-card" href="#">
+                    <svg class="topic-icon" viewBox="0 0 48 48"><use href="#ic-topic-retention"></use></svg>
+                    <div class="topic-name">Retention</div>
+                    <span class="topic-count">4 hubs</span>
+                    <div class="topic-desc">Retention strategies, formulas, and frameworks</div>
+                </a>
+                <a class="topic-card" href="#">
+                    <svg class="topic-icon" viewBox="0 0 48 48"><use href="#ic-topic-marketing"></use></svg>
+                    <div class="topic-name">Marketing</div>
+                    <span class="topic-count">6 hubs</span>
+                    <div class="topic-desc">Industry-specific marketing and promotion</div>
+                </a>
+            </div>
+        </div>
+        <div class="sg-code">&lt;a class="topic-card" href="/guides/#topic"&gt;&lt;svg class="topic-icon"&gt;&lt;use href="#ic-topic-loyalty"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;div class="topic-name"&gt;...&lt;/div&gt;&lt;span class="topic-count"&gt;7 hubs&lt;/span&gt;&lt;div class="topic-desc"&gt;...&lt;/div&gt;&lt;/a&gt;</div>
+    </div>
+
+    <!-- CONTENT PAGE: ITEM CARD -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Content Item Cards</h2>
+        <div class="sg-demo">
+            <div class="item-card">
+                <div class="item-header">
+                    <div class="item-title">Birthday Surprise Rewards</div>
+                    <div class="item-badges">
+                        <span class="badge badge-impact-high">high impact</span>
+                        <span class="badge badge-difficulty">easy</span>
+                    </div>
+                </div>
+                <div class="item-desc">Send customers a personalized birthday reward they can redeem in-store or online. Automated and highly personal.</div>
+                <div class="item-example"><strong>Example:</strong> "Happy Birthday! Here's 20% off your next order — redeem at checkout."</div>
+                <div class="item-wallet"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-wallet"></use></svg>Push a birthday notification directly to the customer with a limited-time offer.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Hero (Content Pages)</h2>
+        <div class="sg-demo" style="padding:0;overflow:hidden;border-radius:var(--radius-lg)">
+            <div class="hero"><div class="hero-inner">
+                <svg class="hero-icon" viewBox="0 0 48 48"><use href="#ic-fashion"></use></svg>
+                <div class="breadcrumb"><a href="#">Blog</a> / <a href="#">Resources</a> / Fashion & Apparel</div>
+                <div class="industry-tag">Fashion & Apparel</div>
+                <h1>Retention Ideas for Fashion & Apparel Brands</h1>
+                <div class="subtitle">Proven strategies to turn first-time shoppers into loyal brand advocates.</div>
+                <div class="stat-box">
+                    <div class="stat-value">67%</div>
+                    <div>
+                        <div class="stat-desc">of fashion shoppers join rewards programs when offered digitally</div>
+                        <div class="stat-source">Source: Industry Report 2025</div>
+                    </div>
+                </div>
+            </div></div>
+        </div>
+    </div>
+
+    <!-- PRO TIPS -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Pro Tips Block</h2>
+        <div class="sg-demo">
+            <div class="tips-section">
+                <div class="tips-title">Pro Tips for Fashion & Apparel</div>
+                <div class="tip-item">
+                    <div class="tip-num">1</div>
+                    <div>Use seasonal collections as reward milestones — offer early access to new arrivals for VIP members.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-num">2</div>
+                    <div>Send push notifications 48 hours before a sale starts for VIP members only.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-num">3</div>
+                    <div>Pair referral bonuses with social sharing — fashion customers love sharing their style finds.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MISTAKES -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Mistakes Block</h2>
+        <div class="sg-demo">
+            <div class="mistakes-section">
+                <div class="mistakes-title">Common Mistakes to Avoid</div>
+                <div class="mistake-item">
+                    <div class="mistake-icon">✕</div>
+                    <div>Setting point expiration too short — fashion purchases are often seasonal with longer gaps between orders.</div>
+                </div>
+                <div class="mistake-item">
+                    <div class="mistake-icon">✕</div>
+                    <div>Offering only percentage discounts — experiential rewards drive more engagement in fashion.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BENCHMARKS -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Benchmarks Grid</h2>
+        <div class="sg-demo">
+            <div class="benchmarks">
+                <div class="bench-card">
+                    <div class="bench-value">28%</div>
+                    <div class="bench-label">Avg. Repeat Purchase Rate</div>
+                </div>
+                <div class="bench-card">
+                    <div class="bench-value">$245</div>
+                    <div class="bench-label">Avg. Customer Lifetime Value</div>
+                </div>
+                <div class="bench-card">
+                    <div class="bench-value">42%</div>
+                    <div class="bench-label">Program Adoption Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA BLOCK -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">CTA Block</h2>
+        <div class="sg-demo" style="background:transparent;border:none;padding:0">
+            <div class="cta-block">
+                <h3>Keep more customers coming back</h3>
+                <p>{{STYLEGUIDE_CTA_BODY}}</p>
+                <a href="#" class="cta-btn">Start free &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">FAQ Accordion</h2>
+        <div class="sg-demo">
+            <div class="faq-section" style="margin-bottom:0">
+                <h3>FAQ</h3>
+                <details class="faq-item">
+                    <summary>What is a digital rewards program?</summary>
+                    <div class="faq-a">A digital rewards program uses mobile-friendly cards and passes, enabling push notifications and real-time updates.</div>
+                </details>
+                <details class="faq-item">
+                    <summary>How do customers join?</summary>
+                    <div class="faq-a">Customers simply tap a link or scan a QR code to join the program — no app download required.</div>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <!-- RELATED LINKS -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Related Links</h2>
+        <div class="sg-demo">
+            <div class="related" style="margin-bottom:0">
+                <h3>Related Resources</h3>
+                <div class="related-links">
+                    <a class="related-link" href="#">retention ideas beauty cosmetics</a>
+                    <a class="related-link" href="#">retention ideas food beverage</a>
+                    <a class="related-link" href="#">rewards program setup guide</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CALCULATOR (Tools) -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Calculator (Tool Pages)</h2>
+        <div class="sg-demo" style="padding:0;overflow:hidden;border-radius:var(--radius-lg)">
+            <div style="padding:32px">
+                <div class="calc-wrap">
+                    <div class="calc-inputs">
+                        <h2>Enter Your Data</h2>
+                        <div class="fields-grid">
+                            <div class="field">
+                                <label>Monthly Customers <span style="color:#C62828">*</span></label>
+                                <input type="number" placeholder="e.g. 1000" value="1000">
+                                <div class="help">Total unique customers per month</div>
+                            </div>
+                            <div class="field">
+                                <label>Avg. Order Value <span style="color:#C62828">*</span></label>
+                                <input type="number" placeholder="e.g. 65" value="65">
+                                <div class="help">Average order value in dollars</div>
+                            </div>
+                            <div class="field">
+                                <label>Repeat Rate</label>
+                                <input type="number" placeholder="e.g. 25" value="25">
+                                <div class="help">Current repeat purchase rate (%)</div>
+                            </div>
+                            <div class="field">
+                                <label>Industry</label>
+                                <select><option>Fashion & Apparel</option><option>Beauty & Cosmetics</option><option>Food & Beverage</option></select>
+                                <div class="help">Select your industry vertical</div>
+                            </div>
+                        </div>
+                        <button class="calc-btn">Calculate</button>
+                    </div>
+                    <div class="calc-results">
+                        <h2>Results</h2>
+                        <div class="results-grid">
+                            <div class="result-field">
+                                <div class="rf-label">Projected Revenue Lift</div>
+                                <div class="rf-value">$18,200</div>
+                                <div class="rf-desc">Additional monthly revenue from program</div>
+                            </div>
+                            <div class="result-field">
+                                <div class="rf-label">New Repeat Rate</div>
+                                <div class="rf-value">38.5%</div>
+                                <div class="rf-desc">Expected repeat rate with program</div>
+                            </div>
+                            <div class="result-field">
+                                <div class="rf-label">ROI</div>
+                                <div class="rf-value">340%</div>
+                                <div class="rf-desc">Return on program investment</div>
+                            </div>
+                            <div class="result-field">
+                                <div class="rf-label">Payback Period</div>
+                                <div class="rf-value">2.1 mo</div>
+                                <div class="rf-desc">Time to recoup setup costs</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HOW-TO STEPS (Tools) -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">How-to Steps (Tool Pages)</h2>
+        <div class="sg-demo">
+            <div class="how-to">
+                <h3>How to Use This Calculator</h3>
+                <ol>
+                    <li><span>Enter your average monthly customer count from your store dashboard.</span></li>
+                    <li><span>Input your average order value — you can find this under Analytics → Reports.</span></li>
+                    <li><span>Set your current repeat purchase rate (if unknown, use the industry default).</span></li>
+                    <li><span>Click Calculate to see your projected program ROI.</span></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- BENCHMARK TABLE (Tools) -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Benchmark Table (Tool Pages)</h2>
+        <div class="sg-demo">
+            <table class="bench-table">
+                <thead><tr><th>Industry</th><th>Typical Range</th><th>Good Target</th></tr></thead>
+                <tbody>
+                    <tr><td>Fashion & Apparel</td><td>20–30%</td><td style="color:var(--accent);font-weight:600">35%+</td></tr>
+                    <tr><td>Beauty & Cosmetics</td><td>25–35%</td><td style="color:var(--accent);font-weight:600">40%+</td></tr>
+                    <tr><td>Food & Beverage</td><td>30–45%</td><td style="color:var(--accent);font-weight:600">50%+</td></tr>
+                    <tr><td>Health & Supplements</td><td>35–50%</td><td style="color:var(--accent);font-weight:600">55%+</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- USE CASES (Tools) -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Use Cases (Tool Pages)</h2>
+        <div class="sg-demo">
+            <div class="uc-card">
+                <div class="uc-scenario">Launching a new rewards program</div>
+                <div class="uc-benefit">Estimate expected ROI before committing resources, helping justify the investment to stakeholders.</div>
+            </div>
+            <div class="uc-card">
+                <div class="uc-scenario">Comparing platforms</div>
+                <div class="uc-benefit">Run calculations with different cost structures to compare which platform delivers the best return.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXAMPLE CALCULATION (Tools) -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Example Calculation (Tool Pages)</h2>
+        <div class="sg-demo">
+            <div class="example-card">
+                <div class="example-industry">Fashion & Apparel</div>
+                <div class="example-narrative">A mid-size fashion brand with 2,000 monthly customers wants to understand the impact of adding a rewards program.</div>
+                <div class="example-data">
+                    <div class="example-data-col">
+                        <h5>Inputs</h5>
+                        <table>
+                            <tr><td>monthly customers</td><td>2,000</td></tr>
+                            <tr><td>avg order value</td><td>$72</td></tr>
+                            <tr><td>repeat rate</td><td>22%</td></tr>
+                        </table>
+                    </div>
+                    <div class="example-data-col">
+                        <h5>Results</h5>
+                        <table>
+                            <tr><td>revenue lift</td><td>$28,800</td></tr>
+                            <tr><td>new repeat rate</td><td>34%</td></tr>
+                            <tr><td>ROI</td><td>420%</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- METHODOLOGY (Tools) -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Methodology Block (Tool Pages)</h2>
+        <div class="sg-demo">
+            <div class="methodology"><strong>Methodology:</strong> This calculator uses industry-standard formulas based on published merchant data and program benchmarks. Revenue lift projections assume a conservative 40-60% increase in repeat purchase rate, calibrated by industry vertical.</div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Footer</h2>
+        <div class="sg-demo" style="padding:0;overflow:hidden;border-radius:var(--radius-lg)">
+            {{>footer}}
+        </div>
+    </div>
+
+    <!-- ICON LIBRARY -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Icon Library</h2>
+        <p class="sg-note">Custom SVG pictograms using <code>&lt;symbol&gt;</code> + <code>&lt;use href="#id"&gt;</code>. Included via <code>{{">icons"}}</code> partial. Themed with 3 CSS custom properties that cascade into the sprite.</p>
+        <div class="sg-code">--ic-1: primary stroke/fill (default: var(--accent))<br>--ic-2: background fill (default: var(--accent-light))<br>--ic-3: secondary detail (default: var(--accent-dark))</div>
+
+        <h3 style="font-size:16px;font-weight:700;margin:var(--sp-24) 0 var(--sp-12)">Industry Icons</h3>
+        <div class="icon-grid">
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-fashion"></use></svg><div class="sg-label">ic-fashion</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-beauty"></use></svg><div class="sg-label">ic-beauty</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-food"></use></svg><div class="sg-label">ic-food</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-health"></use></svg><div class="sg-label">ic-health</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-pet"></use></svg><div class="sg-label">ic-pet</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-sports"></use></svg><div class="sg-label">ic-sports</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-jewelry"></use></svg><div class="sg-label">ic-jewelry</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-home"></use></svg><div class="sg-label">ic-home</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-coffee"></use></svg><div class="sg-label">ic-coffee</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-baby"></use></svg><div class="sg-label">ic-baby</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-spa"></use></svg><div class="sg-label">ic-spa</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-health-coaching"></use></svg><div class="sg-label">ic-health-coaching</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-health-food"></use></svg><div class="sg-label">ic-health-food</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-supplement"></use></svg><div class="sg-label">ic-supplement</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-wellness"></use></svg><div class="sg-label">ic-wellness</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-yoga"></use></svg><div class="sg-label">ic-yoga</div></div>
+        </div>
+
+        <h3 style="font-size:16px;font-weight:700;margin:var(--sp-24) 0 var(--sp-12)">Tool Icons</h3>
+        <div class="icon-grid">
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-roi"></use></svg><div class="sg-label">ic-roi</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-retention"></use></svg><div class="sg-label">ic-retention</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-clv"></use></svg><div class="sg-label">ic-clv</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-referral"></use></svg><div class="sg-label">ic-referral</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-compare"></use></svg><div class="sg-label">ic-compare</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-points"></use></svg><div class="sg-label">ic-points</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-push-email"></use></svg><div class="sg-label">ic-push-email</div></div>
+        </div>
+
+        <h3 style="font-size:16px;font-weight:700;margin:var(--sp-24) 0 var(--sp-12)">Fallback Icons</h3>
+        <div class="icon-grid" style="max-width:240px">
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-default"></use></svg><div class="sg-label">ic-default</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-tool-default"></use></svg><div class="sg-label">ic-tool-default</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-action"></use></svg><div class="sg-label">ic-action</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-wallet"></use></svg><div class="sg-label">ic-wallet</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-lightbulb"></use></svg><div class="sg-label">ic-lightbulb</div></div>
+            <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-platform"></use></svg><div class="sg-label">ic-platform</div></div>
+        </div>
+    </div>
+
+    <!-- ICON THEMING -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Icon Theming</h2>
+        <p class="sg-note">Override <code>--ic-1</code>, <code>--ic-2</code>, <code>--ic-3</code> on any parent to recolor icons. Useful for dark backgrounds, industry-specific sections, or hover states.</p>
+
+        <h3 style="font-size:16px;font-weight:700;margin:var(--sp-24) 0 var(--sp-12)">On Dark Background</h3>
+        <div class="sg-demo sg-demo-dark" style="padding:var(--sp-24)">
+            <div class="icon-grid" style="max-width:560px">
+                <div class="icon-cell icon-cell-dark"><svg viewBox="0 0 48 48"><use href="#ic-roi"></use></svg><div class="sg-label">ic-roi</div></div>
+                <div class="icon-cell icon-cell-dark"><svg viewBox="0 0 48 48"><use href="#ic-retention"></use></svg><div class="sg-label">ic-retention</div></div>
+                <div class="icon-cell icon-cell-dark"><svg viewBox="0 0 48 48"><use href="#ic-clv"></use></svg><div class="sg-label">ic-clv</div></div>
+                <div class="icon-cell icon-cell-dark"><svg viewBox="0 0 48 48"><use href="#ic-points"></use></svg><div class="sg-label">ic-points</div></div>
+            </div>
+            <div class="sg-code" style="margin-top:var(--sp-16)">--ic-1: #F1E5FF;<br>--ic-2: rgba(241,229,255,0.12);<br>--ic-3: rgba(255,255,255,0.5);</div>
+        </div>
+
+        <h3 style="font-size:16px;font-weight:700;margin:var(--sp-24) 0 var(--sp-12)">Custom Color Themes</h3>
+        <div class="sg-demo" style="padding:var(--sp-24)">
+            <div class="sg-row" style="gap:var(--sp-24)">
+                <div>
+                    <div class="icon-grid icon-themed" style="max-width:240px">
+                        <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-beauty"></use></svg><div class="sg-label">Pink</div></div>
+                        <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-fashion"></use></svg><div class="sg-label">Pink</div></div>
+                    </div>
+                    <div class="sg-code" style="margin-top:var(--sp-8);font-size:11px">--ic-1:#E91E63; --ic-2:rgba(233,30,99,0.1); --ic-3:#AD1457;</div>
+                </div>
+                <div>
+                    <div class="icon-grid icon-themed-green" style="max-width:240px">
+                        <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-health"></use></svg><div class="sg-label">Teal</div></div>
+                        <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-food"></use></svg><div class="sg-label">Teal</div></div>
+                    </div>
+                    <div class="sg-code" style="margin-top:var(--sp-8);font-size:11px">--ic-1:#00897B; --ic-2:rgba(0,137,123,0.1); --ic-3:#004D40;</div>
+                </div>
+                <div>
+                    <div class="icon-grid icon-themed-gold" style="max-width:240px">
+                        <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-jewelry"></use></svg><div class="sg-label">Gold</div></div>
+                        <div class="icon-cell"><svg viewBox="0 0 48 48"><use href="#ic-points"></use></svg><div class="sg-label">Gold</div></div>
+                    </div>
+                    <div class="sg-code" style="margin-top:var(--sp-8);font-size:11px">--ic-1:#F9A825; --ic-2:rgba(249,168,37,0.1); --ic-3:#F57F17;</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="font-size:16px;font-weight:700;margin:var(--sp-24) 0 var(--sp-12)">Usage</h3>
+        <div class="sg-code">&lt;!-- Include sprite once per page --&gt;<br>{{">icons"}}<br><br>&lt;!-- Use any icon --&gt;<br>&lt;svg viewBox="0 0 48 48"&gt;&lt;use href="#ic-fashion"&gt;&lt;/use&gt;&lt;/svg&gt;<br><br>&lt;!-- Override colors on parent --&gt;<br>&lt;div style="--ic-1:#E91E63; --ic-2:rgba(233,30,99,0.1); --ic-3:#AD1457"&gt;<br>&nbsp;&nbsp;&lt;svg viewBox="0 0 48 48"&gt;&lt;use href="#ic-fashion"&gt;&lt;/use&gt;&lt;/svg&gt;<br>&lt;/div&gt;</div>
+    </div>
+
+    <!-- THUMBNAIL PATTERNS -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Thumbnail Backgrounds (Industry Verticals)</h2>
+        <div class="sg-row">
+            <div><div class="swatch" style="width:100px;height:100px;background:radial-gradient(circle at 30% 30%,rgba(233,30,99,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(112,0,255,0.12) 0%,transparent 50%),var(--accent)"></div><div class="sg-label">Fashion</div></div>
+            <div><div class="swatch" style="width:100px;height:100px;background:radial-gradient(circle at 20% 40%,rgba(255,64,129,0.15) 0%,transparent 60%),radial-gradient(circle at 70% 60%,rgba(170,0,255,0.12) 0%,transparent 50%),#9C27B0"></div><div class="sg-label">Beauty</div></div>
+            <div><div class="swatch" style="width:100px;height:100px;background:radial-gradient(circle at 30% 30%,rgba(255,152,0,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(255,87,34,0.12) 0%,transparent 50%),#E65100"></div><div class="sg-label">Food</div></div>
+            <div><div class="swatch" style="width:100px;height:100px;background:radial-gradient(circle at 20% 40%,rgba(0,200,83,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(0,150,136,0.12) 0%,transparent 50%),#00897B"></div><div class="sg-label">Health</div></div>
+            <div><div class="swatch" style="width:100px;height:100px;background:radial-gradient(circle at 30% 30%,rgba(121,85,72,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(255,152,0,0.12) 0%,transparent 50%),#6D4C41"></div><div class="sg-label">Pet</div></div>
+            <div><div class="swatch" style="width:100px;height:100px;background:radial-gradient(circle at 20% 40%,rgba(33,150,243,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(0,188,212,0.12) 0%,transparent 50%),#1565C0"></div><div class="sg-label">Sports</div></div>
+            <div><div class="swatch" style="width:100px;height:100px;background:radial-gradient(circle at 30% 30%,rgba(255,215,0,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(112,0,255,0.1) 0%,transparent 50%),#4A148C"></div><div class="sg-label">Jewelry</div></div>
+            <div><div class="swatch" style="width:100px;height:100px;background:radial-gradient(circle at 20% 40%,rgba(121,85,72,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(76,175,80,0.12) 0%,transparent 50%),#33691E"></div><div class="sg-label">Home</div></div>
+            <div><div class="swatch" style="width:100px;height:100px;background:radial-gradient(circle at 30% 30%,rgba(141,110,99,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(62,39,35,0.12) 0%,transparent 50%),#3E2723"></div><div class="sg-label">Coffee</div></div>
+            <div><div class="swatch" style="width:100px;height:100px;background:radial-gradient(circle at 20% 40%,rgba(236,64,122,0.12) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(126,87,194,0.12) 0%,transparent 50%),#7B1FA2"></div><div class="sg-label">Baby</div></div>
+        </div>
+    </div>
+
+    <!-- BORDER RADIUS -->
+    <div class="sg-section">
+        <h2 class="sg-section-title">Border Radius</h2>
+        <div class="sg-row">
+            <div><div style="width:60px;height:60px;background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius-sm)"></div><div class="sg-label">sm (4px)</div></div>
+            <div><div style="width:60px;height:60px;background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius-md)"></div><div class="sg-label">md (8px)</div></div>
+            <div><div style="width:60px;height:60px;background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius-lg)"></div><div class="sg-label">lg (16px)</div></div>
+            <div><div style="width:60px;height:60px;background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius-xl)"></div><div class="sg-label">xl (24px)</div></div>
+            <div><div style="width:100px;height:40px;background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius-pill)"></div><div class="sg-label">pill (50px)</div></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

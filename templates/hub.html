@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <style>
+        {{@base-css}}
+
+        {{@header-css}}
+
+        .hero{position:relative;padding:var(--sp-80) var(--sp-48) var(--sp-60);background:linear-gradient(135deg,rgba(112,0,255,0.06) 0%,transparent 40%),linear-gradient(225deg,rgba(112,0,255,0.04) 0%,transparent 40%),var(--light);border-bottom:1px solid var(--gray-light)}
+        .hero-icon{position:absolute;top:var(--sp-32);right:var(--sp-48);width:80px;height:80px;opacity:0.12}
+        .hero-inner{max-width:48.75rem;margin:0 auto}
+        .hero .breadcrumb{font-family:var(--font-code);font-size:0.8125rem;color:var(--gray);margin-bottom:var(--sp-20);letter-spacing:0.05em}
+        .hero .breadcrumb a{color:var(--accent);font-weight:600}
+        .hero .hub-badge{display:inline-block;font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:white;background:var(--accent);padding:var(--sp-4) var(--sp-14);border-radius:var(--radius-pill);margin-bottom:var(--sp-16)}
+        .hero .reading-tag{font-family:var(--font-code);font-size:0.6875rem;color:var(--gray);background:var(--light-3);padding:var(--sp-4) var(--sp-12);border-radius:var(--radius-pill);margin-left:var(--sp-10)}
+        .hero h1{font-size:2.375rem;font-weight:800;letter-spacing:-0.03em;line-height:1.12;max-width:800px;margin-bottom:var(--sp-16)}
+        .hero .hook{font-size:1.0625rem;color:var(--dark-2);max-width:700px;line-height:1.7;margin-bottom:var(--sp-24);font-weight:500}
+        .hero .problem{font-size:0.875rem;color:var(--gray);max-width:700px;line-height:1.7;margin-bottom:var(--sp-28)}
+        .hero .takeaways{display:flex;flex-wrap:wrap;gap:var(--sp-8)}
+        .hero .takeaway{font-size:0.8125rem;padding:var(--sp-6) var(--sp-14);background:white;border:1px solid var(--gray-light);border-radius:var(--radius-pill);color:var(--dark-2)}
+        .hero-stat{display:inline-flex;align-items:center;gap:var(--sp-16);background:var(--light-2);border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-16) var(--sp-24);margin-bottom:var(--sp-24)}
+        .hero-stat .stat-value{font-size:2rem;font-weight:800;color:var(--dark);font-family:var(--font-code)}
+        .hero-stat .stat-desc{font-size:0.875rem;color:var(--gray);max-width:280px;line-height:1.4}
+        .hero-stat .stat-source{font-size:0.6875rem;color:var(--gray);opacity:0.7;font-family:var(--font-code)}
+
+        .container{max-width:48.75rem;margin:0 auto;padding:var(--sp-56) var(--sp-24)}
+        .container a{text-decoration-line:underline;text-decoration-color:rgba(112,0,255,0.25);text-underline-offset:2px;transition:text-decoration-color 0.2s}
+        .container a:hover{text-decoration-color:var(--accent)}
+        .spoke-card a,.hub-link,.tool-link,.cta-block a{text-decoration:none}
+
+        /* Guide sections */
+        .guide-section{margin-bottom:var(--sp-64);scroll-margin-top:var(--sp-80)}
+        .guide-section h2{font-size:1.5rem;font-weight:800;letter-spacing:-0.025em;margin-bottom:var(--sp-24);padding-bottom:var(--sp-12);border-bottom:2px solid var(--accent-light)}
+        .guide-body{font-size:0.9375rem;line-height:1.8;color:var(--dark-2);margin-bottom:var(--sp-24)}
+        .guide-body p{margin-bottom:var(--sp-20)}
+        .key-takeaway{background:white;padding:var(--sp-16) var(--sp-20) var(--sp-16) var(--sp-48);border-radius:var(--radius-md);font-size:0.875rem;font-weight:500;color:var(--dark-2);margin-bottom:var(--sp-16);line-height:1.65;position:relative}
+        .key-takeaway .callout-icon{position:absolute;left:var(--sp-16);top:var(--sp-16);width:20px;height:20px;--ic-1:var(--accent);--ic-2:transparent;--ic-3:var(--accent-dark)}
+        .actionable-tip{background:var(--light-2);border:1px solid var(--gray-light);padding:var(--sp-16) var(--sp-20) var(--sp-16) var(--sp-48);border-radius:var(--radius-md);font-size:0.875rem;color:var(--dark-2);margin-bottom:var(--sp-12);line-height:1.65;position:relative}
+        .actionable-tip .callout-icon{position:absolute;left:var(--sp-16);top:var(--sp-16);width:18px;height:18px;--ic-1:var(--dark);--ic-2:transparent;--ic-3:var(--dark-2)}
+        .platform-note{font-size:0.875rem;color:var(--gray);padding:var(--sp-12) var(--sp-20) var(--sp-12) var(--sp-48);background:var(--light-3);border-radius:var(--radius-md);margin-bottom:var(--sp-10);line-height:1.6;position:relative}
+        .platform-note .callout-icon{position:absolute;left:var(--sp-16);top:var(--sp-12);width:18px;height:18px}
+        .wallet-note{background:var(--light-2);border:1px solid var(--gray-light);padding:var(--sp-16) var(--sp-20) var(--sp-16) var(--sp-48);border-radius:var(--radius-md);font-size:0.875rem;color:var(--dark-2);margin-bottom:var(--sp-12);line-height:1.65;position:relative}
+        .wallet-note .callout-icon{position:absolute;left:var(--sp-16);top:var(--sp-16);width:18px;height:18px;--ic-1:var(--dark);--ic-2:transparent;--ic-3:var(--dark-2)}
+
+        /* Case study */
+        .case-study{background:var(--dark);color:white;border-radius:var(--radius-xl);padding:var(--sp-40);margin-bottom:var(--sp-48)}
+        .case-study .cs-label{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-light);margin-bottom:var(--sp-12)}
+        .case-study .cs-brand{font-size:1.25rem;font-weight:700;margin-bottom:var(--sp-16)}
+        .case-study .cs-text{font-size:0.875rem;line-height:1.7;opacity:0.85;margin-bottom:var(--sp-20)}
+        .case-study .results-grid{display:grid;grid-template-columns:1fr;gap:var(--sp-16)}
+        .result-item{text-align:center;padding:var(--sp-16);background:rgba(112,0,255,0.15);border-radius:var(--radius-md)}
+        .result-item .r-value{font-family:var(--font-code);font-size:1.5rem;font-weight:700;color:var(--accent-light)}
+        .result-item .r-label{font-size:0.6875rem;color:rgba(255,255,255,0.7);margin-top:var(--sp-4)}
+
+        /* Spoke grid */
+        .spoke-section{margin-bottom:var(--sp-48)}
+        .spoke-section h3{font-size:1.25rem;font-weight:700;margin-bottom:var(--sp-6)}
+        .spoke-section .spoke-desc{font-size:0.875rem;color:var(--gray);margin-bottom:var(--sp-20);line-height:1.6}
+        .spoke-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--sp-14)}
+        .spoke-card{display:block;padding:var(--sp-20) var(--sp-24);border:1px solid var(--gray-light);border-radius:var(--radius-lg);background:var(--light);text-decoration:none;color:var(--dark);transition:all 0.2s}
+        .spoke-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(112,0,255,0.08);transform:translateY(-2px)}
+        .spoke-card .spoke-industry{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:var(--sp-6)}
+        .spoke-card .spoke-title{font-size:0.875rem;font-weight:600;line-height:1.4;color:var(--dark-2)}
+
+        /* Sibling hubs + tools */
+        .related-hubs{margin-bottom:var(--sp-40)}
+        .related-hubs h3{font-size:1.125rem;font-weight:700;margin-bottom:var(--sp-16)}
+        .hub-links{display:flex;flex-wrap:wrap;gap:var(--sp-10)}
+        .hub-link{display:inline-flex;align-items:center;gap:var(--sp-8);padding:var(--sp-10) var(--sp-20);border:1px solid var(--accent-light);border-radius:var(--radius-pill);font-size:0.875rem;font-weight:600;color:var(--accent-dark);text-decoration:none;background:var(--accent-light);transition:all 0.2s}
+        .hub-link:hover{background:var(--accent);color:white;border-color:var(--accent)}
+        .tool-links{display:flex;flex-wrap:wrap;gap:var(--sp-10);margin-bottom:var(--sp-40)}
+        .tool-link{display:inline-flex;align-items:center;gap:var(--sp-8);padding:var(--sp-10) var(--sp-20);border:1px solid var(--gray-light);border-radius:var(--radius-pill);font-size:0.875rem;font-weight:600;color:var(--dark-2);text-decoration:none;background:var(--light-2);transition:all 0.2s}
+        .tool-link:hover{border-color:var(--accent);color:var(--accent)}
+
+        {{@faq-css}}
+
+        {{@cta-css}}
+
+        {{@footer-css}}
+
+        @media(max-width:768px){
+            .hero{padding:var(--sp-48) var(--sp-24) var(--sp-40)}.hero h1{font-size:1.75rem}.hero-icon{display:none}
+            .hero-stat{flex-direction:column;align-items:flex-start}
+            .spoke-grid{grid-template-columns:1fr}
+            .case-study{padding:var(--sp-28) var(--sp-20)}.case-study .results-grid{grid-template-columns:1fr}
+        }
+    </style>
+    <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","url":"{{CANONICAL}}","publisher":{"@type":"Organization","name":"{{BRAND_NAME}}","url":"{{SITE_URL}}","logo":{"@type":"ImageObject","url":"{{BLOG_URL}}/assets/logo.svg"}},"datePublished":"{{DATE_PUBLISHED}}","dateModified":"{{DATE_MODIFIED}}","mainEntityOfPage":{"@type":"WebPage","@id":"{{CANONICAL}}"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"{{BLOG_URL}}"},{"@type":"ListItem","position":2,"name":"{{BREADCRUMB_SECTION}}","item":"{{BLOG_URL}}/{{BREADCRUMB_ANCHOR}}/"},{"@type":"ListItem","position":3,"name":"{{TITLE}}"}]}]</script>
+</head>
+<body>
+{{>icons}}
+{{>header}}
+<div id="app"></div>
+<script>
+const DATA = {{DATA}};
+const hubType = DATA.meta.hub_type;
+const industryIconIds = {'fashion-apparel':'ic-fashion','beauty-cosmetics':'ic-beauty','food-beverage':'ic-food','health-supplements':'ic-health','pet-supplies':'ic-pet','sports-outdoor':'ic-sports','jewelry-accessories':'ic-jewelry','home-decor':'ic-home','coffee-tea':'ic-coffee','baby-kids':'ic-baby','gyms-fitness-studios':'ic-sports','spas-salons-medspas':'ic-spa','health-coaching-personal-training':'ic-health-coaching','health-food-organic-stores':'ic-health-food','supplement-vitamin-brands':'ic-supplement','wellness-dtc-ecommerce':'ic-wellness','yoga-pilates-studios':'ic-yoga'};
+const heroIconId = industryIconIds[DATA.meta.industry] || 'ic-default';
+const urlPrefix = hubType === 'guide' ? '/guides/' : '/resources/';
+const sectionLabel = hubType === 'guide' ? 'Guides' : 'Resources';
+
+document.getElementById('app').innerHTML = `
+    <div class="hero"><div class="hero-inner">
+        <svg class="hero-icon" viewBox="0 0 48 48"><use href="#${heroIconId}"></use></svg>
+        <div class="breadcrumb"><a href="/">Blog</a> / <a href="/${hubType === 'guide' ? 'guides' : 'resources'}/">${sectionLabel}</a></div>
+        <div>
+            <span class="hub-badge">Complete Guide</span>
+            <span class="reading-tag">${DATA.content.intro.reading_time || '15 min read'}</span>
+            <span class="reading-tag">${new Date(DATA.meta.date_published + 'T00:00:00').toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</span>
+        </div>
+        <h1>${DATA.seo.title}</h1>
+        <div class="hook">${DATA.content.intro.hook}</div>
+        ${DATA.content.intro.hero_stat ? `
+        <div class="hero-stat">
+            <div class="stat-value">${DATA.content.intro.hero_stat.value}</div>
+            <div>
+                <div class="stat-desc">${DATA.content.intro.hero_stat.description}</div>
+                <div class="stat-source">${DATA.content.intro.hero_stat.source}</div>
+            </div>
+        </div>
+        ` : ''}
+        <div class="problem">${DATA.content.intro.problem_statement}</div>
+        <div class="takeaways">
+            ${DATA.content.intro.what_youll_learn.map(t => '<span class="takeaway">' + t + '</span>').join('')}
+        </div>
+    </div></div>
+
+    <div class="container">
+        ${DATA.content.sections.map((s, i) => `
+            <div class="guide-section" id="section-${i}">
+                <h2>${s.heading}</h2>
+                <div class="guide-body">${s.body.split(/\n/).map(p => p.trim() ? '<p>' + p + '</p>' : '').join('')}</div>
+                <div class="key-takeaway"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-lightbulb"></use></svg>${s.key_takeaway}</div>
+                <div class="actionable-tip"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-action"></use></svg>${s.actionable_tip}</div>
+                ${s.platform_integration ? '<div class="platform-note"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-platform"></use></svg>' + s.platform_integration + '</div>' : ''}
+                ${s.wallet_pass_angle ? '<div class="wallet-note"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-wallet"></use></svg>' + s.wallet_pass_angle + '</div>' : ''}
+            </div>
+        `).join('')}
+
+        ${DATA.content.case_study_snippet ? `
+        <div class="case-study">
+            <div class="cs-label">Case Study</div>
+            <div class="cs-brand">${DATA.content.case_study_snippet.brand_type}</div>
+            <div class="cs-text"><strong>Challenge:</strong> ${DATA.content.case_study_snippet.challenge}</div>
+            <div class="cs-text"><strong>Solution:</strong> ${DATA.content.case_study_snippet.solution}</div>
+            <div class="results-grid">
+                ${DATA.content.case_study_snippet.results.map(r => `
+                    <div class="result-item">
+                        <div class="r-value">${r.value}</div>
+                        <div class="r-label">${r.metric}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        ` : ''}
+
+        ${DATA.spoke_pages && DATA.spoke_pages.length ? `
+        <div class="spoke-section">
+            <h3>Industry-Specific Guides</h3>
+            <p class="spoke-desc">Dive deeper into strategies tailored for your specific industry.</p>
+            <div class="spoke-grid">
+                ${DATA.spoke_pages.map(sp => `
+                    <a class="spoke-card" href="/${sp.type === 'guide' ? 'guides' : 'resources'}/${sp.slug}">
+                        <div class="spoke-industry">${sp.industry}</div>
+                        <div class="spoke-title">${sp.title}</div>
+                    </a>
+                `).join('')}
+            </div>
+        </div>
+        ` : ''}
+
+        ${DATA.sibling_hubs && DATA.sibling_hubs.length ? `
+        <div class="related-hubs">
+            <h3>Related Guides</h3>
+            <div class="hub-links">
+                ${DATA.sibling_hubs.map(h => `
+                    <a class="hub-link" href="/${h.type === 'guide' ? 'guides' : 'resources'}/${h.slug}">${h.title}</a>
+                `).join('')}
+            </div>
+        </div>
+        ` : ''}
+
+        ${DATA.related_tools && DATA.related_tools.length ? `
+        <div class="related-hubs">
+            <h3>Free Tools</h3>
+            <div class="tool-links">
+                ${DATA.related_tools.map(t => `
+                    <a class="tool-link" href="/tools/${t.slug}">${t.title}</a>
+                `).join('')}
+            </div>
+        </div>
+        ` : ''}
+
+        ${DATA.content.conclusion ? `
+        <div style="font-size:0.9375rem;line-height:1.8;color:var(--dark-2);margin-bottom:32px">
+            <p>${DATA.content.conclusion.summary}</p>
+            <p style="margin-top:12px;font-weight:500">${DATA.content.conclusion.call_to_action}</p>
+        </div>
+        ` : ''}
+
+        <div class="faq-section">
+            <h3>FAQ</h3>
+            ${DATA.content.faq.map(f => `
+                <details class="faq-item">
+                    <summary>${f.question}</summary>
+                    <div class="faq-a">${f.answer}</div>
+                </details>
+            `).join('')}
+        </div>
+
+        <div class="nl-banner" style="border-radius:var(--radius-xl);padding:var(--sp-40) var(--sp-24);margin-bottom:var(--sp-48)">
+            <h3 class="nl-banner-title">More repeat customers, less guesswork</h3>
+            <p class="nl-banner-desc">{{NL_BANNER_DESC}}</p>
+            <form class="nl-form" data-source="banner">
+                <input type="email" placeholder="Email address" required>
+                <button type="submit" aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </form>
+            <div class="nl-done">Thanks for subscribing!</div>
+        </div>
+
+        <div class="cta-block">
+            <h3>${DATA.brand_cta.headline}</h3>
+            <p>${DATA.brand_cta.subtext}</p>
+            <a href="${SITE.appUrl('cta','hub','bottom-cta')}" class="cta-btn">${DATA.brand_cta.cta_button}</a>
+        </div>
+
+        ${DATA.external_references?.length ? `
+        <div style="margin-top:32px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:12px">Sources & Further Reading</h3>
+            <ul style="font-size:0.875rem;color:var(--gray);line-height:1.8;padding-left:20px">
+                ${DATA.external_references.map(ref => '<li><a href="' + ref.url + '" target="_blank" rel="noopener" style="color:var(--accent)">' + ref.title + '</a> <span style="opacity:0.7">(' + ref.source + ')</span></li>').join('')}
+            </ul>
+        </div>
+        ` : ''}
+    </div>
+
+    {{>footer}}
+`;
+
+// FAQ schema
+const faqSchema = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":DATA.content.faq.map(f=>({"@type":"Question","name":f.question,"acceptedAnswer":{"@type":"Answer","text":f.answer}}))};
+const s = document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(faqSchema);document.head.appendChild(s);
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+# Build output (Cloudflare builds from source)
+public/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.local
+
+# MCP config (contains API keys)
+.mcp.json
+
+# Generated briefs (regenerate with: node scripts/research-brief.js --all)
+.pseo/briefs/
+
+# Node
+node_modules/
+
+# Agent workspaces
+.context/
+.agents/
+.claude/

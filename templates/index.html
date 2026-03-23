@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{INDEX_TITLE}}</title>
+    <meta name="description" content="{{INDEX_DESCRIPTION}}">
+    <link rel="canonical" href="{{INDEX_CANONICAL}}">
+    <style>
+        {{@base-css}}
+        {{@header-css}}
+        {{@footer-css}}
+
+        /* ─── Layout ─── */
+        .pw{max-width:68.75rem;margin:0 auto;padding:0 var(--sp-48)}
+
+        /* ─── Hero ─── */
+        .hero-wrap{background:radial-gradient(circle at 15% 30%,rgba(112,0,255,0.05) 0%,transparent 50%),radial-gradient(circle at 85% 70%,rgba(112,0,255,0.03) 0%,transparent 50%),var(--light);border-bottom:1px solid var(--gray-light)}
+        .hero{padding:var(--sp-64) var(--sp-48) var(--sp-56);max-width:68.75rem;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:var(--sp-48)}
+        .hero-text{max-width:560px}
+        .hero h1{font-size:2.625rem;font-weight:800;letter-spacing:-0.04em;line-height:1.08;margin-bottom:var(--sp-14)}
+        .hero h1 span{color:var(--accent)}
+        .hero p{font-size:0.9375rem;color:var(--gray);line-height:1.7;margin-bottom:var(--sp-28)}
+        .hero-search{position:relative;max-width:420px}
+        .hero-search input{width:100%;padding:var(--sp-14) var(--sp-20) var(--sp-14) 44px;font-family:var(--font-primary);font-size:0.875rem;border:1px solid var(--gray-light);border-radius:var(--radius-pill);outline:none;background:var(--light);transition:border-color 0.2s}
+        .hero-search input:focus{border-color:var(--accent)}
+        .hero-search input::placeholder{color:#B0B0B0}
+        .hero-search-icon{position:absolute;left:var(--sp-16);top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--gray)}
+        .hero-stats{display:flex;gap:var(--sp-32);margin-top:var(--sp-20)}
+        .hero-stat{text-align:left}
+        .hero-stat-num{font-size:1.75rem;font-weight:800;color:var(--dark);letter-spacing:-0.03em;line-height:1}
+        .hero-stat-label{font-family:var(--font-code);font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-top:var(--sp-4)}
+
+        /* Search results overlay */
+        .search-results{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--light);border:1px solid var(--gray-light);border-radius:var(--radius-lg);box-shadow:0 12px 40px rgba(0,0,0,0.1);z-index:50;max-height:400px;overflow-y:auto}
+        .search-results.active{display:block}
+        .search-result-item{display:flex;align-items:center;gap:var(--sp-12);padding:var(--sp-12) var(--sp-20);border-bottom:1px solid var(--gray-light);color:var(--dark);transition:background 0.15s;text-decoration:none}
+        .search-result-item:last-child{border-bottom:none}
+        .search-result-item:hover{background:var(--light-2);text-decoration:none;color:var(--dark)}
+        .sr-type{font-family:var(--font-code);font-size:0.5625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);background:var(--accent-light);padding:2px var(--sp-8);border-radius:var(--radius-pill);white-space:nowrap}
+        .sr-title{font-size:0.875rem;font-weight:600;line-height:1.3}
+        .search-no-results{padding:var(--sp-24) var(--sp-20);text-align:center;color:var(--gray);font-size:0.875rem}
+
+        /* ─── Section shared ─── */
+        .section{padding:var(--sp-56) 0}
+        .section-alt{background:var(--light-2)}
+        .section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:var(--sp-28)}
+        .section-title{font-size:1.375rem;font-weight:800;letter-spacing:-0.03em;color:var(--dark)}
+        .section-subtitle{font-size:0.875rem;color:var(--gray);margin-top:var(--sp-4)}
+        .section-link{font-family:var(--font-code);font-size:0.75rem;font-weight:700;color:var(--accent);letter-spacing:0.02em;white-space:nowrap}
+        .section-link:hover{text-decoration:underline}
+
+        /* ─── Tools strip ─── */
+        .tools-section{background:var(--dark);padding:var(--sp-48) 0}
+        .tools-section .section-title{color:var(--light)}
+        .tools-section .section-subtitle{color:rgba(255,255,255,0.5)}
+        .tools-section .section-link{color:var(--accent-light)}
+        .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--sp-14)}
+        .tool-card{display:block;background:var(--dark-2);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);padding:var(--sp-24) var(--sp-20);transition:all 0.25s;color:var(--light);text-decoration:none}
+        .tool-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(112,0,255,0.15);text-decoration:none;color:var(--light)}
+        .tool-card{--ic-1:#F1E5FF;--ic-2:rgba(241,229,255,0.12);--ic-3:rgba(255,255,255,0.5)}
+        .tool-icon{width:40px;height:40px;margin-bottom:var(--sp-12)}
+        .tool-label{font-family:var(--font-code);font-size:0.5625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-light);opacity:0.6;margin-bottom:var(--sp-8)}
+        .tool-name{font-size:0.875rem;font-weight:700;letter-spacing:-0.02em;line-height:1.3}
+
+        /* ─── Industries ─── */
+        .ind-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--sp-12)}
+        .ind-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--sp-8);padding:var(--sp-24) var(--sp-12);border-radius:var(--radius-lg);border:1px solid var(--gray-light);background:var(--light);cursor:pointer;transition:all 0.25s;text-decoration:none;color:var(--dark)}
+        .ind-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.06);text-decoration:none;color:var(--dark)}
+        .ind-icon{width:44px;height:44px}
+        .ind-name{font-size:0.8125rem;font-weight:700;text-align:center;letter-spacing:-0.01em}
+        .ind-count{font-family:var(--font-code);font-size:0.625rem;color:var(--gray)}
+        .ind-card.active{border-color:var(--accent);background:var(--accent-light)}
+
+        /* ─── Guides editorial ─── */
+        .guides-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-20)}
+        .guide-main{grid-row:span 2;display:flex;flex-direction:column;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--gray-light);transition:all 0.25s;text-decoration:none;color:var(--dark)}
+        .guide-main:hover{border-color:var(--accent);box-shadow:0 8px 28px rgba(0,0,0,0.06);text-decoration:none;color:var(--dark)}
+        .guide-main-thumb{flex:1;min-height:200px;padding:var(--sp-32) var(--sp-28);display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+        .guide-main-thumb .gm-tag{font-family:var(--font-code);font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--light);background:rgba(255,255,255,0.2);padding:3px var(--sp-10);border-radius:var(--radius-pill);backdrop-filter:blur(4px);width:fit-content;margin-bottom:var(--sp-10);position:relative;z-index:1}
+        .guide-main-thumb .gm-title{font-size:1.25rem;font-weight:800;color:var(--light);letter-spacing:-0.02em;line-height:1.25;position:relative;z-index:1}
+        .guide-main-body{padding:var(--sp-20) var(--sp-28)}
+        .guide-main-body .gm-desc{font-size:0.875rem;color:var(--gray);line-height:1.6}
+        .guide-sm{display:flex;gap:var(--sp-16);border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-20);transition:all 0.25s;text-decoration:none;color:var(--dark);align-items:center}
+        .guide-sm:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,0.04);text-decoration:none;color:var(--dark)}
+        .guide-sm-icon{width:48px;height:48px;flex-shrink:0}
+        .guide-sm-content{flex:1;min-width:0}
+        .guide-sm-type{font-family:var(--font-code);font-size:0.5625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:var(--sp-4)}
+        .guide-sm-title{font-size:0.875rem;font-weight:700;letter-spacing:-0.02em;line-height:1.3;margin-bottom:var(--sp-4)}
+        .guide-sm-desc{font-size:0.8125rem;color:var(--gray);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+        /* ─── Topic Cards (Hub categories) ─── */
+        .topic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-16)}
+        .topic-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--sp-12);padding:var(--sp-32) var(--sp-20);border-radius:var(--radius-lg);border:1px solid var(--gray-light);background:var(--light);transition:all 0.25s;text-decoration:none;color:var(--dark);position:relative;overflow:hidden}
+        .topic-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);opacity:0;transition:opacity 0.25s}
+        .topic-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(112,0,255,0.08);text-decoration:none;color:var(--dark)}
+        .topic-card:hover::before{opacity:1}
+        .topic-icon{width:48px;height:48px}
+        .topic-name{font-size:0.9375rem;font-weight:700;letter-spacing:-0.02em}
+        .topic-count{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px var(--sp-10);border-radius:var(--radius-pill)}
+        .topic-desc{font-size:0.8125rem;color:var(--gray);line-height:1.5}
+
+        /* ─── Resources compact grid ─── */
+        .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-16)}
+        .res-card{display:block;border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-20);transition:all 0.25s;text-decoration:none;color:var(--dark)}
+        .res-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.04);text-decoration:none;color:var(--dark)}
+        .res-type{font-family:var(--font-code);font-size:0.5625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:var(--sp-8)}
+        .res-title{font-size:0.875rem;font-weight:700;letter-spacing:-0.02em;line-height:1.3;margin-bottom:var(--sp-6)}
+        .res-desc{font-size:0.8125rem;color:var(--gray);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .res-tag{display:inline-block;font-family:var(--font-code);font-size:0.5625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);background:var(--accent-light);padding:2px var(--sp-8);border-radius:var(--radius-pill);margin-top:var(--sp-10)}
+
+        /* ─── Compare grid ─── */
+        .compare-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-16)}
+        .compare-card{display:block;border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-20);transition:all 0.25s;text-decoration:none;color:var(--dark)}
+        .compare-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,0.04);text-decoration:none;color:var(--dark)}
+        .compare-type{font-family:var(--font-code);font-size:0.5625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:var(--sp-8)}
+        .compare-title{font-size:0.875rem;font-weight:700;letter-spacing:-0.02em;line-height:1.3;margin-bottom:var(--sp-6)}
+        .compare-desc{font-size:0.8125rem;color:var(--gray);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+        /* ─── CTA block ─── */
+        {{@cta-css}}
+        .home-cta{margin:0}
+
+        /* ─── "View all" button ─── */
+        .view-all-wrap{text-align:center;margin-top:var(--sp-28)}
+        .view-all-btn{font-family:var(--font-primary);font-size:0.875rem;font-weight:700;color:var(--accent);background:var(--accent-light);border:none;padding:var(--sp-10) var(--sp-28);border-radius:var(--radius-pill);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block}
+        .view-all-btn:hover{background:var(--accent);color:var(--light);text-decoration:none}
+
+        /* ─── Thumb backgrounds ─── */
+        .thumb-fashion{background:radial-gradient(circle at 30% 30%,rgba(233,30,99,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(112,0,255,0.12) 0%,transparent 50%),var(--ind-fashion)}
+        .thumb-beauty{background:radial-gradient(circle at 20% 40%,rgba(255,64,129,0.15) 0%,transparent 60%),radial-gradient(circle at 70% 60%,rgba(170,0,255,0.12) 0%,transparent 50%),var(--ind-beauty)}
+        .thumb-food{background:radial-gradient(circle at 30% 30%,rgba(178,130,200,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(112,0,255,0.1) 0%,transparent 50%),var(--ind-food)}
+        .thumb-health{background:radial-gradient(circle at 20% 40%,rgba(149,117,205,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(112,0,255,0.1) 0%,transparent 50%),var(--ind-health)}
+        .thumb-pet{background:radial-gradient(circle at 30% 30%,rgba(188,170,164,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(161,136,127,0.12) 0%,transparent 50%),var(--ind-pet)}
+        .thumb-sports{background:radial-gradient(circle at 20% 40%,rgba(100,120,180,0.15) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(112,0,255,0.1) 0%,transparent 50%),var(--ind-sports)}
+        .thumb-jewelry{background:radial-gradient(circle at 30% 30%,rgba(206,186,224,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(112,0,255,0.1) 0%,transparent 50%),var(--ind-jewelry)}
+        .thumb-home{background:radial-gradient(circle at 20% 40%,rgba(176,170,164,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(140,130,120,0.12) 0%,transparent 50%),var(--ind-home)}
+        .thumb-coffee{background:radial-gradient(circle at 30% 30%,rgba(200,188,176,0.2) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(160,140,120,0.12) 0%,transparent 50%),var(--ind-coffee)}
+        .thumb-baby{background:radial-gradient(circle at 20% 40%,rgba(236,64,122,0.12) 0%,transparent 60%),radial-gradient(circle at 80% 60%,rgba(126,87,194,0.12) 0%,transparent 50%),var(--ind-baby)}
+        .thumb-default{background:radial-gradient(circle at 30% 30%,rgba(112,0,255,0.12) 0%,transparent 60%),radial-gradient(circle at 80% 70%,rgba(82,0,204,0.1) 0%,transparent 50%),var(--accent)}
+
+        /* ─── Responsive ─── */
+        @media(max-width:1024px){
+            .topic-grid{grid-template-columns:repeat(2,1fr)}
+            .ind-grid{grid-template-columns:repeat(3,1fr)}
+        }
+        @media(max-width:768px){
+            .pw{padding:0 var(--sp-20)}
+            .hero{padding:var(--sp-40) var(--sp-20) var(--sp-36);flex-direction:column;gap:var(--sp-24)}
+            .hero h1{font-size:1.75rem}
+            .hero-stats{gap:var(--sp-24)}
+            .hero-stat-num{font-size:1.375rem}
+            .tools-section{padding:var(--sp-36) 0}
+            .tools-grid{grid-template-columns:repeat(2,1fr)}
+            .section{padding:var(--sp-40) 0}
+            .ind-grid{grid-template-columns:repeat(2,1fr)}
+            .guides-grid{grid-template-columns:1fr}
+            .guide-main{grid-row:span 1}
+            .topic-grid{grid-template-columns:1fr 1fr}
+            .res-grid{grid-template-columns:1fr}
+            .compare-grid{grid-template-columns:1fr}
+            .site-footer{padding:var(--sp-24) var(--sp-20)}
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "{{INDEX_BLOG_NAME}}",
+        "description": "{{INDEX_DESCRIPTION}}",
+        "url": "{{INDEX_CANONICAL}}",
+        "publisher": {
+            "@type": "Organization",
+            "name": "{{BRAND_NAME}}",
+            "url": "{{SITE_URL}}"
+        }
+    }
+    </script>
+</head>
+<body>
+
+{{>header}}
+{{>icons}}
+
+<!-- ═══ Hero ═══ -->
+<div class="hero-wrap">
+    <div class="hero">
+        <div class="hero-text">
+            <h1>{{INDEX_HERO_TITLE}}</h1>
+            <p>{{INDEX_HERO_SUBTITLE}}</p>
+            <div class="hero-search" id="searchWrap">
+                <svg class="hero-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="searchInput" placeholder="Search articles, tools, guides..." autocomplete="off">
+                <div class="search-results" id="searchResults"></div>
+            </div>
+        </div>
+        <div class="hero-stats" id="heroStats"></div>
+    </div>
+</div>
+
+<!-- ═══ Tools ═══ -->
+<div class="tools-section">
+    <div class="pw">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Interactive Tools</div>
+                <div class="section-subtitle">Free calculators to measure your ROI</div>
+            </div>
+            <a href="/tools/" class="section-link">View all tools &rarr;</a>
+        </div>
+        <div class="tools-grid" id="toolsGrid"></div>
+    </div>
+</div>
+
+<!-- ═══ Browse by Industry ═══ -->
+<div class="section">
+    <div class="pw">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Browse by Industry</div>
+                <div class="section-subtitle">Find strategies for your vertical</div>
+            </div>
+        </div>
+        <div class="ind-grid" id="indGrid"></div>
+    </div>
+</div>
+
+<!-- ═══ Guides ═══ -->
+<div class="section section-alt" id="guidesSection">
+    <div class="pw">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Guides</div>
+                <div class="section-subtitle">Step-by-step playbooks for success</div>
+            </div>
+            <a href="/guides/" class="section-link">View all guides &rarr;</a>
+        </div>
+        <div class="guides-grid" id="guidesGrid"></div>
+    </div>
+</div>
+
+<!-- ═══ Hub Pages ═══ -->
+<div class="section" id="hubsSection">
+    <div class="pw">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Topic Hubs</div>
+                <div class="section-subtitle">Deep-dive collections by topic</div>
+            </div>
+        </div>
+        <div id="hubsContainer"></div>
+    </div>
+</div>
+
+<!-- ═══ Resources ═══ -->
+<div class="section section-alt" id="resourcesSection">
+    <div class="pw">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Resources</div>
+                <div class="section-subtitle">Ideas, benchmarks, and inspiration</div>
+            </div>
+            <a href="/#resources" class="section-link">View all resources &rarr;</a>
+        </div>
+        <div class="res-grid" id="resGrid"></div>
+    </div>
+</div>
+
+<!-- ═══ Comparisons & Alternatives ═══ -->
+<div class="section" id="compareSection">
+    <div class="pw">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Comparisons & Alternatives</div>
+                <div class="section-subtitle">Side-by-side reviews to find the best fit</div>
+            </div>
+            <a href="/compare/" class="section-link">View all &rarr;</a>
+        </div>
+        <div class="compare-grid" id="compareGrid"></div>
+    </div>
+</div>
+
+<!-- ═══ Newsletter ═══ -->
+<div class="nl-banner">
+    <div class="pw">
+        <h3 class="nl-banner-title">More repeat customers, less guesswork</h3>
+        <p class="nl-banner-desc">{{INDEX_NL_DESC}}</p>
+        <form class="nl-form" data-source="banner">
+            <input type="email" placeholder="Email address" required>
+            <button type="submit" aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </form>
+        <div class="nl-done">Thanks for subscribing!</div>
+    </div>
+</div>
+
+<!-- ═══ CTA ═══ -->
+<div class="section">
+    <div class="pw">
+        <div class="cta-block home-cta">
+            <h3>Keep more customers coming back</h3>
+            <p>{{INDEX_CTA_BODY}}</p>
+            <a id="home-cta" class="cta-btn">Start free &rarr;</a>
+        </div>
+    </div>
+</div>
+
+{{>footer}}
+
+<script>
+const PAGES = {{PAGES}};
+
+const urlPrefixes = {resource:'/resources/',guide:'/guides/',alternatives:'/compare/',comparison:'/compare/',tool:'/tools/',industry:'/industries/'};
+const typeLabels = {resource:'Resource',guide:'Guide',alternatives:'Alternatives',comparison:'Comparison',tool:'Tool',industry:'Industry'};
+const thumbClasses = {
+    'fashion-apparel':'thumb-fashion','beauty-cosmetics':'thumb-beauty','food-beverage':'thumb-food',
+    'health-supplements':'thumb-health','pet-supplies':'thumb-pet','sports-outdoor':'thumb-sports',
+    'jewelry-accessories':'thumb-jewelry','home-decor':'thumb-home','coffee-tea':'thumb-coffee','baby-kids':'thumb-baby'
+};
+
+// ─── Icon helpers (SVG sprite via <use>) ───
+const indIconIds = {
+    'fashion-apparel':'ic-fashion','beauty-cosmetics':'ic-beauty','food-beverage':'ic-food',
+    'health-supplements':'ic-health','pet-supplies':'ic-pet','sports-outdoor':'ic-sports',
+    'jewelry-accessories':'ic-jewelry','home-decor':'ic-home','coffee-tea':'ic-coffee','baby-kids':'ic-baby',
+    'gyms-fitness-studios':'ic-sports','spas-salons-medspas':'ic-spa',
+    'health-coaching-personal-training':'ic-health-coaching','health-food-organic-stores':'ic-health-food',
+    'supplement-vitamin-brands':'ic-supplement','wellness-dtc-ecommerce':'ic-wellness','yoga-pilates-studios':'ic-yoga'
+};
+const toolIconIds = {
+    'loyalty-roi-calculator':'ic-roi','retention-rate-calculator':'ic-retention',
+    'referral-roi-calculator':'ic-referral',
+    'loyalty-cost-comparison':'ic-compare','points-value-calculator':'ic-points',
+    'push-vs-email-roi':'ic-push-email'
+};
+function icon(id,cls){return `<svg class="${cls||''}" viewBox="0 0 48 48"><use href="#${id}"></use></svg>`;}
+function indIcon(key){return icon(indIconIds[key]||'ic-default','ind-icon');}
+function toolIcon(slug){return icon(toolIconIds[slug]||'ic-tool-default','tool-icon');}
+function href(p){ return (urlPrefixes[p.type]||'/') + p.slug; }
+
+// ─── Hero stats ───
+const stats = {tools:0,guides:0,resources:0,total:0};
+PAGES.forEach(p => {
+    stats.total++;
+    if(p.type==='tool') stats.tools++;
+    else if(p.type==='guide') stats.guides++;
+    else if(p.type==='resource') stats.resources++;
+});
+document.getElementById('heroStats').innerHTML =
+    `<div class="hero-stat"><div class="hero-stat-num">${stats.tools}</div><div class="hero-stat-label">Free tools</div></div>` +
+    `<div class="hero-stat"><div class="hero-stat-num">${stats.guides}</div><div class="hero-stat-label">Guides</div></div>` +
+    `<div class="hero-stat"><div class="hero-stat-num">${stats.total}</div><div class="hero-stat-label">Articles</div></div>`;
+
+// ─── Search ───
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+searchInput.addEventListener('input', function(){
+    const q = this.value.toLowerCase().trim();
+    if(q.length < 2){ searchResults.classList.remove('active'); return; }
+    const matches = PAGES.filter(p => (p.title+' '+p.description+' '+(p.industry_display||'')).toLowerCase().includes(q)).slice(0,8);
+    if(matches.length === 0){
+        searchResults.innerHTML = '<div class="search-no-results">No results found</div>';
+    } else {
+        searchResults.innerHTML = matches.map(p =>
+            `<a class="search-result-item" href="${href(p)}"><span class="sr-type">${typeLabels[p.type]||p.type}</span><span class="sr-title">${p.title}</span></a>`
+        ).join('');
+    }
+    searchResults.classList.add('active');
+});
+document.addEventListener('click', function(e){ if(!document.getElementById('searchWrap').contains(e.target)) searchResults.classList.remove('active'); });
+
+// ─── Tools ───
+const tools = PAGES.filter(p => p.type==='tool');
+document.getElementById('toolsGrid').innerHTML = tools.map(p =>
+    `<a class="tool-card" href="${href(p)}">${toolIcon(p.slug)}<div class="tool-label">Interactive tool</div><div class="tool-name">${p.title.replace(/ Calculator| Tool/i,'')}</div></a>`
+).join('');
+
+// ─── Industries ───
+const indCounts = {};
+PAGES.forEach(p => { if(p.industry){ indCounts[p.industry] = indCounts[p.industry]||{count:0,display:''}; indCounts[p.industry].count++; indCounts[p.industry].display = p.industry_display||p.industry; }});
+const indKeys = Object.keys(indCounts).sort((a,b) => indCounts[b].count - indCounts[a].count);
+document.getElementById('indGrid').innerHTML = indKeys.map(k =>
+    `<a class="ind-card" href="/industries/${k}" data-ind="${k}">${indIcon(k)}<span class="ind-name">${indCounts[k].display}</span><span class="ind-count">${indCounts[k].count} articles</span></a>`
+).join('');
+
+// ─── Guides (editorial: 1 big + 2 small) ───
+const guides = PAGES.filter(p => p.type==='guide');
+const guideMain = guides[0];
+const guideSm = guides.slice(1,3);
+if(guideMain){
+    const tc = thumbClasses[guideMain.industry]||'thumb-default';
+    let html = `<a class="guide-main" href="${href(guideMain)}"><div class="guide-main-thumb ${tc}"><div class="gm-tag">Guide${guideMain.industry_display?' · '+guideMain.industry_display:''}</div><div class="gm-title">${guideMain.title}</div></div><div class="guide-main-body"><div class="gm-desc">${guideMain.description}</div></div></a>`;
+    html += guideSm.map(p => {
+        return `<a class="guide-sm" href="${href(p)}">${icon(indIconIds[p.industry]||'ic-default','guide-sm-icon')}<div class="guide-sm-content"><div class="guide-sm-type">Guide${p.industry_display?' · '+p.industry_display:''}</div><div class="guide-sm-title">${p.title}</div><div class="guide-sm-desc">${p.description}</div></div></a>`;
+    }).join('');
+    document.getElementById('guidesGrid').innerHTML = html;
+}
+
+// ─── Hubs (topic cards) ───
+const hubs = PAGES.filter(p => p.is_hub);
+const hubTopicMap = {
+    'best-loyalty-programs':'Loyalty Programs','ecommerce-loyalty-program':'Loyalty Programs','loyalty-program-examples':'Loyalty Programs',
+    'loyalty-program-small-business':'Loyalty Programs','tiered-loyalty-program':'Loyalty Programs','digital-punch-card':'Loyalty Programs','omnichannel-loyalty-program':'Loyalty Programs',
+    'ecommerce-referral-program':'Referral','referral-program-examples':'Referral','referral-program-ideas':'Referral',
+    'customer-retention-program':'Retention','customer-retention-strategies-ecommerce':'Retention','how-to-retain-customers':'Retention','retention-rate-formula':'Retention',
+    'fitness-studio-marketing':'Marketing','salon-marketing-ideas':'Marketing','spa-marketing-ideas':'Marketing','yoga-studio-marketing':'Marketing',
+    'coffee-shop-loyalty-program':'Marketing','salon-loyalty-program':'Marketing'
+};
+const hubsByTopic = {};
+hubs.forEach(p => {
+    const topic = hubTopicMap[p.slug] || 'Other';
+    if(!hubsByTopic[topic]) hubsByTopic[topic] = [];
+    hubsByTopic[topic].push(p);
+});
+const hubTopics = [
+    {id:'Loyalty Programs', anchor:'loyalty-programs', icon:'ic-topic-loyalty', desc:'Points, tiers, and program design'},
+    {id:'Referral', anchor:'referral', icon:'ic-topic-referral', desc:'Referral programs and word-of-mouth growth'},
+    {id:'Retention', anchor:'retention', icon:'ic-topic-retention', desc:'Retention strategies, formulas, and frameworks'},
+    {id:'Marketing', anchor:'marketing', icon:'ic-topic-marketing', desc:'Industry-specific marketing and promotion'}
+];
+let hubsHTML = '<div class="topic-grid">';
+hubTopics.forEach(t => {
+    const count = (hubsByTopic[t.id] || []).length;
+    hubsHTML += `<a class="topic-card" href="/guides/#${t.anchor}">${icon(t.icon,'topic-icon')}<div class="topic-name">${t.id}</div><span class="topic-count">${count} hubs</span><div class="topic-desc">${t.desc}</div></a>`;
+});
+hubsHTML += '</div>';
+document.getElementById('hubsContainer').innerHTML = hubsHTML;
+
+// ─── Resources ───
+const resources = PAGES.filter(p => p.type==='resource').slice(0,6);
+document.getElementById('resGrid').innerHTML = resources.map(p =>
+    `<a class="res-card" href="${href(p)}"><div class="res-type">Resource</div><div class="res-title">${p.title}</div><div class="res-desc">${p.description}</div>${p.industry_display?`<span class="res-tag">${p.industry_display}</span>`:''}</a>`
+).join('');
+
+// ─── Comparisons & Alternatives ───
+const compare = PAGES.filter(p => p.type==='alternatives'||p.type==='comparison').slice(0,6);
+document.getElementById('compareGrid').innerHTML = compare.map(p =>
+    `<a class="compare-card" href="${href(p)}"><div class="compare-type">${typeLabels[p.type]||p.type}</div><div class="compare-title">${p.title}</div><div class="compare-desc">${p.description}</div></a>`
+).join('') + `<div style="grid-column:1/-1" class="view-all-wrap"><a class="view-all-btn" href="/compare/">View all comparisons</a></div>`;
+
+// ─── CTA URL ───
+if(typeof SITE!=='undefined') document.getElementById('home-cta').href = SITE.appUrl('blog','home','cta');
+
+// ─── Hash navigation ───
+function handleNavHash(){
+    const hash = window.location.hash.replace('#','');
+    const sectionMap = {resources:'resourcesSection',guides:'guidesSection',compare:'compareSection',tools:'toolsGrid'};
+    const el = document.getElementById(sectionMap[hash]);
+    if(el){ el.scrollIntoView({behavior:'smooth',block:'start'}); }
+    document.querySelector('.mobile-menu')?.classList.remove('open');
+}
+window.addEventListener('hashchange', handleNavHash);
+if(window.location.hash) setTimeout(handleNavHash, 100);
+</script>
+</body>
+</html>

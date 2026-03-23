@@ -1,0 +1,29 @@
+.site-footer{background:var(--dark);padding:var(--sp-56) var(--sp-48) var(--sp-36);border-top:none;color:rgba(255,255,255,0.5);font-size:0.8125rem;line-height:1.6}
+.footer-inner{max-width:68.75rem;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-48);align-items:start}
+.footer-brand .footer-logo{display:block;margin-bottom:var(--sp-14)}
+.footer-brand .footer-logo img{height:28px;filter:brightness(0) invert(1);opacity:0.9}
+.footer-brand .footer-tagline{font-size:0.8125rem;color:rgba(255,255,255,0.45);line-height:1.6;max-width:260px}
+.footer-nav{display:flex;flex-direction:column;gap:var(--sp-10)}
+.footer-nav-title{font-size:0.6875rem;font-family:var(--font-code);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-bottom:var(--sp-6)}
+.footer-nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.8125rem;transition:color 0.2s}
+.footer-nav a:hover{color:white}
+.footer-nl .footer-nav-title{margin-bottom:var(--sp-6)}
+.footer-nl .footer-nl-desc{font-size:0.8125rem;color:rgba(255,255,255,0.45);margin-bottom:var(--sp-14);line-height:1.5}
+.footer-nl .nl-form{display:flex;border-bottom:1px solid rgba(255,255,255,0.2)}
+.footer-nl .nl-form input[type="email"]{flex:1;padding:var(--sp-10) 0;background:transparent;border:none;color:white;font-family:var(--font-primary);font-size:0.8125rem;outline:none}
+.footer-nl .nl-form input[type="email"]::placeholder{color:rgba(255,255,255,0.3)}
+.footer-nl .nl-form button{padding:var(--sp-10) var(--sp-4);background:transparent;border:none;cursor:pointer;color:rgba(255,255,255,0.5);transition:all 0.2s;display:flex;align-items:center;opacity:0;pointer-events:none}
+.footer-nl .nl-form button:hover{color:white}
+.footer-nl .nl-form button svg{width:14px;height:14px}
+.footer-nl .nl-form.has-value button{opacity:1;pointer-events:auto}
+.footer-nl .nl-done{color:var(--accent-light)}
+.footer-nl .footer-cta-link{display:inline-block;margin-top:var(--sp-20);font-size:0.8125rem;font-weight:700;color:var(--accent-light);text-decoration:none;transition:color 0.2s}
+.footer-nl .footer-cta-link:hover{color:white}
+.footer-bottom{max-width:68.75rem;margin:var(--sp-36) auto 0;padding-top:var(--sp-24);border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.75rem;color:rgba(255,255,255,0.3)}
+.footer-bottom a{color:rgba(255,255,255,0.4);text-decoration:none}
+.footer-bottom a:hover{color:rgba(255,255,255,0.7)}
+@media(max-width:768px){
+    .site-footer{padding:var(--sp-40) var(--sp-20) var(--sp-28)}
+    .footer-inner{grid-template-columns:1fr;gap:var(--sp-32)}
+    .footer-brand .footer-tagline{max-width:none}
+}

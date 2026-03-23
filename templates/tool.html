@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <style>
+        {{@base-css}}
+
+        {{@header-css}}
+
+        .hero{padding:var(--sp-80) var(--sp-48) var(--sp-60);background:radial-gradient(circle at 20% 20%,rgba(112,0,255,0.06) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(112,0,255,0.04) 0%,transparent 50%),var(--light);position:relative;border-bottom:1px solid var(--gray-light)}
+        .hero-icon{position:absolute;top:var(--sp-32);right:var(--sp-48);width:80px;height:80px;opacity:0.12}
+        .hero .breadcrumb{font-family:var(--font-code);font-size:0.8125rem;color:var(--gray);margin-bottom:var(--sp-20)}
+        .hero .breadcrumb a{color:var(--accent);font-weight:600}
+        .hero .tag-row{display:flex;align-items:center;gap:var(--sp-12);margin-bottom:var(--sp-16)}
+        .hero .tag{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent)}
+        .hero .reading-tag{font-family:var(--font-code);font-size:0.6875rem;color:var(--gray);background:var(--light-3);padding:var(--sp-4) var(--sp-12);border-radius:var(--radius-pill)}
+        .hero h1{font-size:2.25rem;font-weight:800;letter-spacing:-0.03em;line-height:1.15;max-width:700px;margin-bottom:var(--sp-12);color:var(--dark)}
+        .hero .subtitle{font-size:0.9375rem;color:var(--gray);max-width:600px;line-height:1.7}
+        .hero-inner{max-width:56.25rem;margin:0 auto}
+
+        .container{max-width:53.75rem;margin:0 auto;padding:var(--sp-56) var(--sp-24)}
+        .container a{text-decoration-line:underline;text-decoration-color:rgba(112,0,255,0.25);text-underline-offset:2px;transition:text-decoration-color 0.2s}
+        .container a:hover{text-decoration-color:var(--accent)}
+        .calc-wrap a,.cta-block a{text-decoration:none}
+
+        {{@tool-css}}
+
+        {{@content-img-css}}
+
+        {{@faq-css}}
+
+        {{@cta-css}}
+
+        {{@footer-css}}
+
+        @media(max-width:768px){.hero{padding:var(--sp-48) var(--sp-24)}.hero h1{font-size:1.75rem}.hero-icon{display:none}.fields-grid{grid-template-columns:1fr}.results-grid{grid-template-columns:1fr}.uc-card{grid-template-columns:1fr}.example-data{flex-direction:column}}
+    </style>
+    <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebApplication","name":"{{TITLE}}","description":"{{DESCRIPTION}}","url":"{{BLOG_URL}}/tools/{{SLUG}}","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"datePublished":"{{DATE_PUBLISHED}}","dateModified":"{{DATE_MODIFIED}}","publisher":{"@type":"Organization","name":"{{BRAND_NAME}}","url":"{{SITE_URL}}"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"{{BLOG_URL}}"},{"@type":"ListItem","position":2,"name":"Tools","item":"{{BLOG_URL}}/tools/"},{"@type":"ListItem","position":3,"name":"{{TITLE}}"}]}]</script>
+</head>
+<body>
+{{>icons}}
+{{>header}}
+<div id="app"></div>
+<script>
+const DATA = {{DATA}};
+const toolIconIds = {
+    'loyalty-roi-calculator':'ic-roi','retention-rate-calculator':'ic-retention',
+    'referral-roi-calculator':'ic-referral',
+    'loyalty-cost-comparison':'ic-compare','points-value-calculator':'ic-points',
+    'push-vs-email-roi':'ic-push-email'
+};
+const heroIconId = toolIconIds['{{SLUG}}'] || 'ic-tool-default';
+
+function buildInputHTML(input) {
+    if (input.field_type === 'select' && input.options) {
+        return `<select id="${input.field_name}">${input.options.map(o => `<option value="${o}" ${input.default_value === o ? 'selected' : ''}>${o}</option>`).join('')}</select>`;
+    }
+    const type = input.field_type === 'currency' || input.field_type === 'number' || input.field_type === 'range' ? 'number' : 'text';
+    return `<input type="${type}" id="${input.field_name}" placeholder="${input.placeholder}" value="${input.default_value || ''}" ${input.validation?.min !== undefined ? `min="${input.validation.min}"` : ''} ${input.validation?.max !== undefined ? `max="${input.validation.max}"` : ''}>`;
+}
+
+function formatResult(value, format) {
+    if (format === 'currency') return '$' + Number(value).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    if (format === 'percentage') return Number(value).toFixed(1) + '%';
+    if (format === 'number') return Number(value).toLocaleString('en-US');
+    return value;
+}
+
+document.getElementById('app').innerHTML = `
+    <div class="hero"><div class="hero-inner">
+        <svg class="hero-icon" viewBox="0 0 48 48"><use href="#${heroIconId}"></use></svg>
+        <div class="breadcrumb"><a href="/">Blog</a> / <a href="/tools/">Tools</a></div>
+        <div class="tag-row">
+            <span class="tag">Free Tool</span>
+            <span class="reading-tag">${new Date(DATA.meta.date_published + 'T00:00:00').toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</span>
+        </div>
+        <h1>${DATA.seo.title}</h1>
+        <div class="subtitle">${DATA.tool.purpose}</div>
+    </div></div>
+
+    <div class="container">
+        <div class="calc-wrap">
+            <div class="calc-inputs">
+                <h2>Enter Your Data</h2>
+                <div class="fields-grid">
+                ${DATA.tool.inputs.map(inp => `
+                    <div class="field">
+                        <label for="${inp.field_name}">${inp.label} ${inp.validation?.required ? '<span style="color:#C62828">*</span>' : ''}</label>
+                        ${buildInputHTML(inp)}
+                        <div class="help">${inp.help_text}</div>
+                    </div>
+                `).join('')}
+                </div>
+                <button class="calc-btn" onclick="calculate()">Calculate</button>
+            </div>
+            <div class="calc-results" id="calc-results">
+                <h2>Results</h2>
+                <div id="results-container"></div>
+            </div>
+        </div>
+
+        <p style="font-size:0.9375rem;line-height:1.8;color:var(--dark-2);margin-bottom:40px">${DATA.content.intro}</p>
+
+        ${(function(){if(!DATA.content.images)return '';return DATA.content.images.filter(function(img){return img.placement==='after:intro'}).map(function(img){return '<figure class="content-img"><img src="'+img.src+'" alt="'+img.alt+'" loading="lazy" decoding="async">'+(img.caption?'<figcaption>'+img.caption+'</figcaption>':'')+'</figure>'}).join('')})()}
+
+        <div class="how-to">
+            <h3>How to Use This ${DATA.tool.name}</h3>
+            <ol>${DATA.content.how_to_use.map(step => `<li><span>${step}</span></li>`).join('')}</ol>
+        </div>
+
+        ${DATA.content.interpretation_guide ? `<p style="font-size:0.875rem;line-height:1.7;color:var(--dark-2);margin-bottom:40px;padding:20px;background:var(--accent-light);border-radius:var(--radius-md)"><strong>How to interpret:</strong> ${DATA.content.interpretation_guide}</p>` : ''}
+
+        ${DATA.content.industry_benchmarks?.length ? `
+        <div class="benchmarks">
+            <h3>Industry Benchmarks</h3>
+            <table class="bench-table">
+                <thead><tr><th>Industry</th><th>Typical Range</th><th>Good Target</th></tr></thead>
+                <tbody>${DATA.content.industry_benchmarks.map(b => `<tr><td>${b.industry}</td><td>${b.typical_range}</td><td style="color:var(--dark);font-weight:600">${b.good_target}</td></tr>`).join('')}</tbody>
+            </table>
+        </div>
+        ` : ''}
+
+        ${DATA.tool.examples?.length ? `
+        <div class="examples">
+            <h3>Example Calculations</h3>
+            ${DATA.tool.examples.map(ex => `
+                <div class="example-card">
+                    <div class="example-industry">${ex.industry}</div>
+                    <div class="example-narrative">${ex.narrative}</div>
+                    <div class="example-data">
+                        <div class="example-data-col">
+                            <h5>Inputs</h5>
+                            <table>${Object.entries(ex.input_values).map(([k,v]) => `<tr><td>${k.replace(/_/g,' ')}</td><td>${typeof v==='number'?v.toLocaleString():v}</td></tr>`).join('')}</table>
+                        </div>
+                        <div class="example-data-col">
+                            <h5>Results</h5>
+                            <table>${Object.entries(ex.expected_output).map(([k,v]) => `<tr><td>${k.replace(/_/g,' ')}</td><td>${typeof v==='number'?(v>=1000?v.toLocaleString(undefined,{maximumFractionDigits:2}):v.toFixed(2)):v}</td></tr>`).join('')}</table>
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+        ` : ''}
+
+        ${DATA.content.use_cases?.length ? `
+        <div class="use-cases">
+            <h3>When to Use This Tool</h3>
+            ${DATA.content.use_cases.map(uc => `
+                <div class="uc-card">
+                    <div class="uc-scenario">${uc.scenario}</div>
+                    <div class="uc-benefit">${uc.benefit}</div>
+                </div>
+            `).join('')}
+        </div>
+        ` : ''}
+
+        <div class="faq-section">
+            <h3>FAQ</h3>
+            ${DATA.content.faq.map(f => `
+                <details class="faq-item">
+                    <summary>${f.question}</summary>
+                    <div class="faq-a">${f.answer}</div>
+                </details>
+            `).join('')}
+        </div>
+
+        <div class="methodology"><strong>Methodology:</strong> ${DATA.content.methodology}</div>
+
+        ${DATA.external_references?.length ? `
+        <div style="margin-bottom:48px">
+            <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:16px">Sources & Further Reading</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+                ${DATA.external_references.map(ref => `<a href="${ref.url}" target="_blank" rel="noopener" style="font-size:0.875rem;padding:8px 16px;border:1px solid var(--gray-light);border-radius:var(--radius-pill);color:var(--dark);transition:all 0.2s">${ref.title} <span style="font-size:0.6875rem;color:var(--gray)">(${ref.source})</span></a>`).join('')}
+            </div>
+        </div>
+        ` : ''}
+
+        <div class="cta-block">
+            <h3>${DATA.brand_cta.headline}</h3>
+            <p>${DATA.brand_cta.subtext}</p>
+            <a href="${SITE.appUrl('cta','tool','bottom-cta')}" class="cta-btn">${DATA.brand_cta.cta_button}</a>
+        </div>
+    </div>
+
+    {{>footer}}
+`;
+
+function calculate() {
+    const inputs = {};
+    DATA.tool.inputs.forEach(inp => {
+        const el = document.getElementById(inp.field_name);
+        inputs[inp.field_name] = inp.field_type === 'number' || inp.field_type === 'currency' || inp.field_type === 'range' ? parseFloat(el.value) || 0 : el.value;
+    });
+
+    // Execute calculation logic — inject input values as local variables
+    let results = {};
+    try {
+        const varDecls = Object.entries(inputs).map(([k, v]) => 'var ' + k + ' = ' + JSON.stringify(v) + ';').join('\n');
+        const fn = new Function(varDecls + '\nvar results = {};\n' + DATA.tool.calculation_logic.formula + ';\nreturn results;');
+        results = fn();
+    } catch(e) {
+        console.error('Calculation error:', e);
+        results = {};
+        DATA.tool.output.fields.forEach(f => { results[f.label] = 'N/A'; });
+    }
+
+    document.getElementById('calc-results').classList.add('is-visible');
+    document.getElementById('results-container').innerHTML = '<div class="results-grid">' + DATA.tool.output.fields.map(f => `
+        <div class="result-field">
+            <div class="rf-label">${f.label}</div>
+            <div class="rf-value">${results[f.label] !== undefined ? formatResult(results[f.label], f.format) : 'N/A'}</div>
+            <div class="rf-desc">${f.description}</div>
+        </div>
+    `).join('') + '</div>';
+}
+
+// FAQ schema
+const faqSchema={"@context":"https://schema.org","@type":"FAQPage","mainEntity":DATA.content.faq.map(f=>({"@type":"Question","name":f.question,"acceptedAnswer":{"@type":"Answer","text":f.answer}}))};
+const s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(faqSchema);document.head.appendChild(s);
+</script>
+</body>
+</html>

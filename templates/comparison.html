@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <style>
+        {{@base-css}}
+
+        {{@header-css}}
+
+        .hero{padding:var(--sp-80) var(--sp-48) var(--sp-60);background:radial-gradient(circle at 20% 20%,rgba(112,0,255,0.06) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(112,0,255,0.04) 0%,transparent 50%),var(--light);position:relative;overflow:hidden;border-bottom:1px solid var(--gray-light)}
+        .hero::before{content:'VS';position:absolute;right:var(--sp-48);top:50%;transform:translateY(-50%);font-size:10rem;font-weight:900;opacity:0.04;font-family:var(--font-code);color:var(--accent)}
+        .hero .breadcrumb{font-family:var(--font-code);font-size:0.8125rem;color:var(--gray);margin-bottom:var(--sp-20)}
+        .hero .breadcrumb a{color:var(--accent);font-weight:600}
+        .hero .tag-row{display:flex;align-items:center;gap:var(--sp-12);margin-bottom:var(--sp-16)}
+        .hero .tag{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent)}
+        .hero .reading-tag{font-family:var(--font-code);font-size:0.6875rem;color:var(--gray);background:var(--light-3);padding:var(--sp-4) var(--sp-12);border-radius:var(--radius-pill)}
+        .hero h1{font-size:2.25rem;font-weight:800;letter-spacing:-0.03em;line-height:1.15;max-width:700px;margin-bottom:var(--sp-16);color:var(--dark)}
+        .hero .subtitle{font-size:0.9375rem;color:var(--gray);max-width:600px;line-height:1.7}
+        .hero-inner{max-width:56.25rem;margin:0 auto}
+
+        .container{max-width:53.75rem;margin:0 auto;padding:var(--sp-56) var(--sp-24)}
+        .container a{text-decoration-line:underline;text-decoration-color:rgba(112,0,255,0.25);text-underline-offset:2px;transition:text-decoration-color 0.2s}
+        .container a:hover{text-decoration-color:var(--accent)}
+        .product-card a,.criteria-item a,.tier a,.fv-choice a,.v-choice a{text-decoration:none}
+
+        /* Quick verdict */
+        .verdict-box{background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius-xl);padding:var(--sp-32);margin-bottom:var(--sp-48)}
+        .verdict-label{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:var(--sp-12)}
+        .verdict-summary{font-size:1rem;font-weight:600;line-height:1.7;margin-bottom:var(--sp-24)}
+        .verdict-choices{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16)}
+        .v-choice{padding:var(--sp-16);border-radius:var(--radius-md);background:white;border:1px solid var(--gray-light)}
+        .v-choice-label{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;color:var(--accent);margin-bottom:var(--sp-6)}
+        .v-choice-text{font-size:0.875rem;color:var(--dark-2);line-height:1.6}
+
+        /* Product overviews */
+        .products{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-24);margin-bottom:var(--sp-48)}
+        .product-card{padding:var(--sp-28);border:1px solid var(--gray-light);border-radius:var(--radius-xl);background:var(--light)}
+        .product-card h3{font-size:1.25rem;font-weight:700;margin-bottom:var(--sp-4);display:flex;align-items:center;gap:var(--sp-8)}
+        .brand-icon{width:24px;height:24px;border-radius:var(--radius-sm);flex-shrink:0}
+        .brand-icon-sm{width:18px;height:18px;border-radius:3px;flex-shrink:0}
+        .product-tagline{font-size:0.875rem;color:var(--gray);font-style:italic;margin-bottom:var(--sp-12)}
+        .product-info{font-size:0.875rem;color:var(--dark-2);line-height:1.7}
+        .product-info span{display:block;margin-bottom:var(--sp-4)}
+
+        /* Criteria comparison */
+        .criteria-item{border:1px solid var(--gray-light);border-radius:var(--radius-xl);margin-bottom:var(--sp-20);overflow:hidden}
+        .criteria-header{display:flex;align-items:center;justify-content:space-between;padding:var(--sp-20) var(--sp-24);background:var(--light-2);cursor:pointer}
+        .criteria-name{font-size:1rem;font-weight:700}
+        .criteria-weight{font-family:var(--font-code);font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:3px var(--sp-10);border-radius:var(--radius-pill)}
+        .criteria-weight-critical{background:#FFCDD2;color:#C62828}
+        .criteria-weight-important{background:#FFF3E0;color:#E65100}
+        .criteria-weight-nice-to-have{background:var(--light-3);color:var(--gray)}
+        .criteria-scores{display:flex;gap:var(--sp-4);align-items:center}
+        .score-bar{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6875rem;font-weight:700;font-family:var(--font-code)}
+        .score-a{background:var(--accent-light);color:var(--accent)}
+        .score-b{background:var(--light-3);color:var(--dark-2)}
+        .score-vs{font-size:0.625rem;color:var(--gray);font-weight:600;padding:0 var(--sp-4)}
+        .criteria-winner{font-size:0.6875rem;font-weight:700;padding:var(--sp-2) var(--sp-8);border-radius:var(--radius-pill);margin-left:var(--sp-8)}
+        .winner-a{background:var(--accent-light);color:var(--accent)}
+        .winner-b{background:var(--light-3);color:var(--dark-2)}
+        .winner-tie{background:#FFF3E0;color:#E65100}
+        .criteria-body{padding:var(--sp-20) var(--sp-24);display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-20)}
+        .criteria-detail{font-size:0.875rem;color:var(--dark-2);line-height:1.7}
+        .criteria-detail strong{display:block;margin-bottom:var(--sp-6);font-size:0.8125rem;color:var(--gray)}
+
+        /* Pricing */
+        .pricing-section{margin-bottom:var(--sp-48)}
+        .pricing-section h2{font-size:1.375rem;font-weight:700;margin-bottom:var(--sp-24)}
+        .pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-24);margin-bottom:var(--sp-16)}
+        .pricing-col h3{font-size:1rem;font-weight:700;margin-bottom:var(--sp-16)}
+        .tier{padding:var(--sp-14) var(--sp-16);border:1px solid var(--gray-light);border-radius:var(--radius-md);margin-bottom:var(--sp-8);background:var(--light)}
+        .tier-name{font-weight:600;font-size:0.875rem}
+        .tier-price{font-family:var(--font-code);color:var(--accent);font-weight:700;font-size:0.9375rem}
+        .tier-features{font-size:0.8125rem;color:var(--gray);margin-top:var(--sp-4);line-height:1.5}
+        .pricing-verdict{font-size:0.9375rem;color:var(--dark-2);background:var(--light-2);padding:var(--sp-20);border-radius:var(--radius-md);line-height:1.7}
+
+        /* Final verdict */
+        .final-verdict{background:linear-gradient(145deg,#1a1a2e 0%,#171717 40%,#1a0a2e 100%);color:white;border-radius:var(--radius-xl);padding:var(--sp-48);margin-bottom:var(--sp-48);text-align:center;border:1px solid rgba(112,0,255,0.15)}
+        .fv-label{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--accent);margin-bottom:var(--sp-24);display:inline-block;background:rgba(112,0,255,0.12);padding:var(--sp-6) var(--sp-16);border-radius:var(--radius-pill)}
+        .fv-scores{display:flex;justify-content:center;align-items:center;gap:var(--sp-48);margin-bottom:var(--sp-28)}
+        .fv-score{text-align:center}
+        .fv-score-val{font-family:var(--font-code);font-size:3rem;font-weight:800;line-height:1}
+        .fv-score-name{font-size:0.875rem;color:rgba(255,255,255,0.6);margin-top:var(--sp-8);display:flex;align-items:center;justify-content:center;gap:6px}
+        .fv-divider{width:1px;height:56px;background:rgba(255,255,255,0.12)}
+        .fv-summary{font-size:0.9375rem;line-height:1.8;color:rgba(255,255,255,0.75);max-width:620px;margin:0 auto var(--sp-32);border-top:1px solid rgba(255,255,255,0.08);padding-top:var(--sp-28)}
+        .fv-choices{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16);max-width:620px;margin:0 auto}
+        .fv-choice{padding:var(--sp-20);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-lg);text-align:left;transition:border-color 0.2s}
+        .fv-choice:hover{border-color:rgba(112,0,255,0.3)}
+        .fv-choice-label{font-family:var(--font-code);font-size:0.6875rem;font-weight:700;color:var(--accent);letter-spacing:0.04em;margin-bottom:var(--sp-8)}
+        .fv-choice-text{font-size:0.875rem;color:rgba(255,255,255,0.8);line-height:1.65}
+        .final-verdict a{color:#c9b0ff;text-decoration:underline;text-underline-offset:2px}.final-verdict a:hover{color:#e0d0ff}
+
+        /* FAQ */
+        {{@faq-css}}
+
+        {{@cta-css}}
+
+        {{@footer-css}}
+
+        @media(max-width:768px){.hero{padding:var(--sp-48) var(--sp-24)}.hero h1{font-size:1.75rem}.products,.pricing-grid,.verdict-choices,.criteria-body,.fv-choices{grid-template-columns:1fr}.criteria-header{flex-wrap:wrap;gap:var(--sp-8)}.criteria-header>div:first-child{width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-6)}.criteria-name{width:100%}.final-verdict{padding:var(--sp-32) var(--sp-20)}}
+    </style>
+    <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","url":"{{BLOG_URL}}/compare/{{SLUG}}","publisher":{"@type":"Organization","name":"{{BRAND_NAME}}","url":"{{SITE_URL}}","logo":{"@type":"ImageObject","url":"{{BLOG_URL}}/assets/logo.svg"}},"datePublished":"{{DATE_PUBLISHED}}","dateModified":"{{DATE_MODIFIED}}","mainEntityOfPage":{"@type":"WebPage","@id":"{{BLOG_URL}}/compare/{{SLUG}}"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"{{BLOG_URL}}"},{"@type":"ListItem","position":2,"name":"Compare","item":"{{BLOG_URL}}/compare/"},{"@type":"ListItem","position":3,"name":"{{TITLE}}"}]}]</script>
+</head>
+<body>
+{{>icons}}
+{{>header}}
+<div id="app"></div>
+<script>
+const DATA = {{DATA}};
+const pa = DATA.content.product_overviews.product_a;
+const pb = DATA.content.product_overviews.product_b;
+
+document.getElementById('app').innerHTML = `
+    <div class="hero"><div class="hero-inner">
+        <div class="breadcrumb"><a href="/">Blog</a> / <a href="/compare/">Compare</a></div>
+        <div class="tag-row">
+            <span class="tag">Comparison</span>
+            <span class="reading-tag">${new Date(DATA.meta.date_published + 'T00:00:00').toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</span>
+        </div>
+        <h1>${DATA.seo.title}</h1>
+        <div class="subtitle">${DATA.content.intro}</div>
+    </div></div>
+
+    <div class="container">
+        <div class="verdict-box">
+            <div class="verdict-label">Quick Verdict</div>
+            <div class="verdict-summary">${DATA.content.quick_verdict.summary}</div>
+            <div class="verdict-choices">
+                <div class="v-choice"><div class="v-choice-label">Choose ${pa.name} if:</div><div class="v-choice-text">${DATA.content.quick_verdict.choose_a_if}</div></div>
+                <div class="v-choice"><div class="v-choice-label">Choose ${pb.name} if:</div><div class="v-choice-text">${DATA.content.quick_verdict.choose_b_if}</div></div>
+            </div>
+        </div>
+
+        <h2 style="font-size:1.375rem;font-weight:700;margin-bottom:20px">The Contenders</h2>
+        <div class="products">
+            <div class="product-card">
+                <h3>${pa.icon ? `<img src="${pa.icon}" alt="${pa.name}" class="brand-icon">` : ''}${pa.name}</h3>
+                <div class="product-tagline">${pa.tagline}</div>
+                <div class="product-info">
+                    <span><strong>Founded:</strong> ${pa.founded}</span>
+                    <span><strong>Focus:</strong> ${pa.focus}</span>
+                    <span><strong>Starting at:</strong> ${pa.pricing_start}</span>
+                </div>
+            </div>
+            <div class="product-card">
+                <h3>${pb.icon ? `<img src="${pb.icon}" alt="${pb.name}" class="brand-icon">` : ''}${pb.name}</h3>
+                <div class="product-tagline">${pb.tagline}</div>
+                <div class="product-info">
+                    <span><strong>Founded:</strong> ${pb.founded}</span>
+                    <span><strong>Focus:</strong> ${pb.focus}</span>
+                    <span><strong>Starting at:</strong> ${pb.pricing_start}</span>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size:1.375rem;font-weight:700;margin-bottom:24px">Head-to-Head Comparison</h2>
+        ${DATA.content.criteria.map(c => `
+            <div class="criteria-item">
+                <div class="criteria-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'grid':'none'">
+                    <div>
+                        <span class="criteria-name">${c.name}</span>
+                        <span class="criteria-weight criteria-weight-${c.weight}">${c.weight}</span>
+                        ${c.winner !== 'tie' ? `<span class="criteria-winner winner-${c.winner}">${c.winner === 'a' ? pa.name : pb.name} wins</span>` : '<span class="criteria-winner winner-tie">Tie</span>'}
+                    </div>
+                    <div class="criteria-scores">
+                        <span class="score-bar score-a">${c.product_a_score}</span>
+                        <span class="score-vs">vs</span>
+                        <span class="score-bar score-b">${c.product_b_score}</span>
+                    </div>
+                </div>
+                <div class="criteria-body">
+                    <div class="criteria-detail"><strong>${pa.icon ? `<img src="${pa.icon}" alt="" class="brand-icon-sm" style="vertical-align:middle;margin-right:4px">` : ''}${pa.name}</strong>${c.product_a_detail}</div>
+                    <div class="criteria-detail"><strong>${pb.icon ? `<img src="${pb.icon}" alt="" class="brand-icon-sm" style="vertical-align:middle;margin-right:4px">` : ''}${pb.name}</strong>${c.product_b_detail}</div>
+                </div>
+            </div>
+        `).join('')}
+
+        <div class="pricing-section">
+            <h2>Pricing Comparison</h2>
+            <div class="pricing-grid">
+                <div class="pricing-col">
+                    <h3 style="display:flex;align-items:center;gap:8px">${pa.icon ? `<img src="${pa.icon}" alt="" class="brand-icon">` : ''}${pa.name}</h3>
+                    ${DATA.content.pricing_comparison.product_a_tiers.map(t => `
+                        <div class="tier">
+                            <div style="display:flex;justify-content:space-between"><span class="tier-name">${t.name}</span><span class="tier-price">${t.price}</span></div>
+                            <div class="tier-features">${t.key_features.join(' · ')}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="pricing-col">
+                    <h3 style="display:flex;align-items:center;gap:8px">${pb.icon ? `<img src="${pb.icon}" alt="" class="brand-icon">` : ''}${pb.name}</h3>
+                    ${DATA.content.pricing_comparison.product_b_tiers.map(t => `
+                        <div class="tier">
+                            <div style="display:flex;justify-content:space-between"><span class="tier-name">${t.name}</span><span class="tier-price">${t.price}</span></div>
+                            <div class="tier-features">${t.key_features.join(' · ')}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <div class="pricing-verdict">${DATA.content.pricing_comparison.pricing_verdict}</div>
+        </div>
+
+        <div class="final-verdict">
+            <div class="fv-label">Final Verdict</div>
+            <div class="fv-scores">
+                <div class="fv-score"><div class="fv-score-val" style="color:var(--accent-light)">${DATA.content.verdict.score_a}</div><div class="fv-score-name">${pa.icon ? `<img src="${pa.icon}" alt="" class="brand-icon-sm" style="border-radius:3px">` : ''}${pa.name}</div></div>
+                <div class="fv-divider"></div>
+                <div class="fv-score"><div class="fv-score-val" style="color:rgba(255,255,255,0.5)">${DATA.content.verdict.score_b}</div><div class="fv-score-name">${pb.icon ? `<img src="${pb.icon}" alt="" class="brand-icon-sm" style="border-radius:3px">` : ''}${pb.name}</div></div>
+            </div>
+            <div class="fv-summary">${DATA.content.verdict.summary}</div>
+            <div class="fv-choices">
+                <div class="fv-choice"><div class="fv-choice-label">Choose ${pa.name} if:</div><div class="fv-choice-text">${DATA.content.verdict.choose_a_if}</div></div>
+                <div class="fv-choice"><div class="fv-choice-label">Choose ${pb.name} if:</div><div class="fv-choice-text">${DATA.content.verdict.choose_b_if}</div></div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h3>FAQ</h3>
+            ${DATA.content.faq.map(f => `
+                <details class="faq-item">
+                    <summary>${f.question}</summary>
+                    <div class="faq-a">${f.answer}</div>
+                </details>
+            `).join('')}
+        </div>
+
+        <div class="cta-block">
+            <h3>${DATA.brand_cta.headline}</h3>
+            <p>${DATA.brand_cta.subtext}</p>
+            <a href="${SITE.appUrl('cta','comparison','bottom-cta')}" class="cta-btn">${DATA.brand_cta.cta_button}</a>
+        </div>
+    </div>
+
+    {{>footer}}
+`;
+
+const faqSchema={"@context":"https://schema.org","@type":"FAQPage","mainEntity":DATA.content.faq.map(f=>({"@type":"Question","name":f.question,"acceptedAnswer":{"@type":"Answer","text":f.answer}}))};
+const s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(faqSchema);document.head.appendChild(s);
+</script>
+</body>
+</html>

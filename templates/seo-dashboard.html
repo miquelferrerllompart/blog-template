@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Dashboard — {{BRAND_NAME}} Blog</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        {{@base-css}}
+        body{background:var(--light-2)}
+
+        /* Auth overlay */
+        .auth-overlay{position:fixed;inset:0;background:var(--dark);z-index:9999;display:flex;align-items:center;justify-content:center}
+        .auth-box{background:var(--light);border-radius:var(--radius-lg);padding:var(--sp-40);max-width:380px;width:90%;text-align:center}
+        .auth-box h2{font-size:20px;font-weight:800;margin-bottom:var(--sp-8)}
+        .auth-box p{font-size:13px;color:var(--gray);margin-bottom:var(--sp-24)}
+        .auth-input{width:100%;padding:var(--sp-12) var(--sp-16);border:1px solid var(--gray-light);border-radius:var(--radius-md);font-family:var(--font-code);font-size:14px;text-align:center;outline:none}
+        .auth-input:focus{border-color:var(--accent)}
+        .auth-error{color:#e53935;font-size:12px;margin-top:var(--sp-8);display:none}
+
+        /* Dashboard */
+        .dashboard{max-width:1200px;margin:0 auto;padding:var(--sp-40) var(--sp-24) var(--sp-80);display:none}
+        .dash-title{font-size:28px;font-weight:800;letter-spacing:-0.03em;margin-bottom:var(--sp-4)}
+        .dash-subtitle{font-size:13px;color:var(--gray);margin-bottom:var(--sp-32)}
+
+        /* Stats cards */
+        .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--sp-16);margin-bottom:var(--sp-40)}
+        .stat-card{background:var(--light);border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-20) var(--sp-24)}
+        .stat-card .stat-num{font-family:var(--font-code);font-size:28px;font-weight:800;color:var(--accent)}
+        .stat-card .stat-label{font-size:12px;color:var(--gray);margin-top:var(--sp-4)}
+
+        /* Tabs */
+        .tabs{display:flex;gap:var(--sp-4);margin-bottom:var(--sp-24);border-bottom:2px solid var(--gray-light);padding-bottom:0}
+        .tab{font-family:var(--font-code);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:var(--sp-10) var(--sp-20);cursor:pointer;color:var(--gray);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s}
+        .tab:hover{color:var(--dark)}
+        .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+        .tab-panel{display:none}
+        .tab-panel.active{display:block}
+
+        /* Tree */
+        .tree{font-family:var(--font-code);font-size:13px}
+        .tree-industry{margin-bottom:var(--sp-24)}
+        .tree-industry-label{font-weight:700;font-size:14px;padding:var(--sp-8) var(--sp-12);background:var(--accent-light);color:var(--accent-dark);border-radius:var(--radius-md);cursor:pointer;display:flex;align-items:center;gap:var(--sp-8)}
+        .tree-industry-label .badge{font-size:10px;background:var(--accent);color:var(--light);padding:var(--sp-2) var(--sp-8);border-radius:var(--radius-pill);margin-left:auto}
+        .tree-type{margin-left:var(--sp-20);margin-top:var(--sp-8)}
+        .tree-type-label{font-weight:600;color:var(--dark-2);padding:var(--sp-4) var(--sp-8);cursor:pointer;display:flex;align-items:center;gap:var(--sp-6)}
+        .tree-type-label::before{content:'';width:12px;height:1px;background:var(--gray-light)}
+        .tree-pages{margin-left:var(--sp-32);margin-top:var(--sp-4)}
+        .tree-page{padding:var(--sp-6) var(--sp-8);border-left:2px solid var(--gray-light);margin-left:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-2)}
+        .tree-page-title{font-weight:600;font-size:12px;color:var(--dark)}
+        .tree-page-url{font-size:10px;color:var(--gray)}
+        .tree-page-kws{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:var(--sp-2)}
+        .kw-tag{font-size:10px;padding:var(--sp-2) var(--sp-6);border-radius:3px;background:var(--light-2);color:var(--dark-2);border:1px solid var(--gray-light);display:inline-flex;align-items:center;gap:3px;cursor:help}
+        .kw-tag.conflict{background:#fff3e0;border-color:#ff9800;color:#e65100}
+        .kw-tag.conflict-high{background:#ffebee;border-color:#e53935;color:#b71c1c}
+        .kw-metric{font-size:8px;opacity:0.7;font-weight:700}
+        .kd-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:2px;cursor:help}
+        .kd-easy{background:#4caf50}
+        .kd-medium{background:#ff9800}
+        .kd-hard{background:#e53935}
+
+        /* Conflicts table */
+        .conflicts-table{width:100%;border-collapse:collapse;font-size:13px}
+        .conflicts-table th{font-family:var(--font-code);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;text-align:left;padding:var(--sp-10) var(--sp-12);border-bottom:2px solid var(--gray-light);color:var(--gray)}
+        .conflicts-table td{padding:var(--sp-10) var(--sp-12);border-bottom:1px solid var(--gray-light);vertical-align:top}
+        .conflicts-table tr:hover td{background:var(--light-2)}
+        .risk-badge{font-family:var(--font-code);font-size:10px;font-weight:700;text-transform:uppercase;padding:var(--sp-2) var(--sp-8);border-radius:var(--radius-pill)}
+        .risk-high{background:#ffebee;color:#b71c1c}
+        .risk-medium{background:#fff3e0;color:#e65100}
+        .conflict-pages{font-size:11px;color:var(--gray)}
+        .conflict-pages a{color:var(--accent);font-weight:600}
+
+        /* Keywords table */
+        .kw-search{width:100%;padding:var(--sp-12) var(--sp-16);border:1px solid var(--gray-light);border-radius:var(--radius-md);font-family:var(--font-code);font-size:13px;margin-bottom:var(--sp-16);outline:none}
+        .kw-search:focus{border-color:var(--accent)}
+        .kw-sort-row{display:flex;gap:var(--sp-8);margin-bottom:var(--sp-16);flex-wrap:wrap}
+        .kw-sort-btn{font-family:var(--font-code);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:var(--sp-4) var(--sp-10);border:1px solid var(--gray-light);border-radius:var(--radius-pill);cursor:pointer;background:var(--light);color:var(--gray);transition:all 0.2s}
+        .kw-sort-btn:hover,.kw-sort-btn.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark)}
+        .kw-table{width:100%;border-collapse:collapse;font-size:12px}
+        .kw-table th{font-family:var(--font-code);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;text-align:left;padding:var(--sp-8) var(--sp-10);border-bottom:2px solid var(--gray-light);color:var(--gray);cursor:pointer;user-select:none}
+        .kw-table th:hover{color:var(--accent)}
+        .kw-table td{padding:var(--sp-6) var(--sp-10);border-bottom:1px solid var(--light-2);font-family:var(--font-code)}
+        .kw-table tr:hover td{background:var(--light-2)}
+        .kw-table .kw-name{color:var(--dark);font-weight:500}
+        .kw-table .has-conflict .kw-name{color:#e65100;font-weight:700}
+        .kw-table .metric-cell{text-align:right;color:var(--gray);font-size:11px}
+        .kw-table .metric-na{color:var(--gray-light);font-style:italic;font-size:10px}
+        .kd-bar{display:inline-block;height:4px;border-radius:2px;min-width:4px;max-width:60px}
+        .vol-bar{display:inline-block;height:4px;border-radius:2px;background:var(--accent-light);min-width:4px;max-width:80px}
+        .opp-bar{display:inline-block;height:4px;border-radius:2px;min-width:4px;max-width:60px}
+
+        .tab-desc{font-size:13px;color:var(--gray);margin-bottom:var(--sp-24);line-height:1.5;max-width:720px}
+        .tab-desc strong{color:var(--dark-2)}
+
+        .enriched-badge{display:inline-block;font-family:var(--font-code);font-size:10px;font-weight:700;background:#e8f5e9;color:#2e7d32;padding:var(--sp-2) var(--sp-8);border-radius:var(--radius-pill);margin-left:var(--sp-8)}
+        .not-enriched-badge{display:inline-block;font-family:var(--font-code);font-size:10px;font-weight:700;background:var(--light-2);color:var(--gray);padding:var(--sp-2) var(--sp-8);border-radius:var(--radius-pill);margin-left:var(--sp-8)}
+
+        /* Architecture view */
+        .arch-controls{display:flex;gap:var(--sp-8);margin-bottom:var(--sp-16);flex-wrap:wrap}
+        .arch-filter{font-family:var(--font-code);font-size:11px;font-weight:700;padding:var(--sp-4) var(--sp-12);border:1px solid var(--gray-light);border-radius:var(--radius-pill);cursor:pointer;color:var(--gray);transition:all 0.2s}
+        .arch-filter:hover,.arch-filter.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark)}
+        .arch-legend{display:flex;gap:var(--sp-16);margin-bottom:var(--sp-24);flex-wrap:wrap;font-size:11px;color:var(--gray)}
+        .legend-item{display:flex;align-items:center;gap:var(--sp-4)}
+        .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+        .arch-hub{background:var(--light);border:1px solid var(--gray-light);border-radius:var(--radius-lg);margin-bottom:var(--sp-24);overflow:hidden}
+        .arch-hub-header{padding:var(--sp-16) var(--sp-20);display:flex;align-items:center;gap:var(--sp-12);cursor:pointer;border-bottom:1px solid var(--gray-light)}
+        .arch-hub-header:hover{background:var(--light-2)}
+        .arch-hub-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+        .arch-hub-dot.guide{background:var(--accent)}
+        .arch-hub-dot.resource{background:#2e7d32}
+        .arch-hub-title{font-weight:700;font-size:14px;flex:1}
+        .arch-hub-kw{font-family:var(--font-code);font-size:11px;color:var(--gray);display:flex;align-items:center;gap:var(--sp-6)}
+        .arch-hub-kw .vol{color:var(--accent);font-weight:700}
+        .arch-hub-niche{font-family:var(--font-code);font-size:10px;padding:var(--sp-2) var(--sp-8);border-radius:var(--radius-pill);background:var(--light-2);color:var(--gray)}
+        .arch-hub-toggle{font-size:18px;color:var(--gray);transition:transform 0.2s}
+        .arch-hub.open .arch-hub-toggle{transform:rotate(90deg)}
+
+        .arch-hub-body{display:none;padding:var(--sp-16) var(--sp-20)}
+        .arch-hub.open .arch-hub-body{display:block}
+
+        .arch-section{margin-bottom:var(--sp-16)}
+        .arch-section-label{font-family:var(--font-code);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:var(--sp-8)}
+        .arch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--sp-8)}
+        .arch-card{display:flex;align-items:center;gap:var(--sp-8);padding:var(--sp-8) var(--sp-12);border:1px solid var(--gray-light);border-radius:var(--radius-md);font-size:12px;transition:all 0.15s}
+        .arch-card:hover{border-color:var(--accent);background:var(--accent-light)}
+        .arch-card a{color:var(--dark);text-decoration:none;font-weight:500;flex:1}
+        .arch-card .card-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+        .arch-card .card-dot.spoke{background:#1565c0}
+        .arch-card .card-dot.sibling{background:var(--accent)}
+        .arch-card .card-dot.sibling-resource{background:#2e7d32}
+        .arch-card .card-dot.tool{background:#ff9800}
+        .arch-card .card-dot.missing{background:var(--gray-light)}
+        .arch-card .card-industry{font-family:var(--font-code);font-size:9px;color:var(--gray);white-space:nowrap}
+        .arch-card.missing{opacity:0.5;border-style:dashed}
+
+        .arch-siblings-row{display:flex;flex-wrap:wrap;gap:var(--sp-6)}
+        .arch-sibling-pill{font-family:var(--font-code);font-size:11px;padding:var(--sp-4) var(--sp-12);border-radius:var(--radius-pill);border:1px solid var(--gray-light);color:var(--dark);text-decoration:none;transition:all 0.15s}
+        .arch-sibling-pill:hover{border-color:var(--accent);background:var(--accent-light)}
+        .arch-sibling-pill.missing{opacity:0.5;border-style:dashed}
+
+        .arch-keywords{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:var(--sp-8)}
+
+        @media(max-width:768px){
+            .kw-table{font-size:11px}
+            .stats-row{grid-template-columns:repeat(2,1fr)}
+            .arch-grid{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body>
+    <!-- Password protection -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-box">
+            <h2>SEO Dashboard</h2>
+            <p>Enter password to access the keyword map and audit data.</p>
+            <input type="password" class="auth-input" id="authInput" placeholder="Password" autofocus>
+            <div class="auth-error" id="authError">Incorrect password</div>
+        </div>
+    </div>
+
+    <div class="dashboard" id="dashboard">
+        <h1 class="dash-title">SEO Dashboard</h1>
+        <p class="dash-subtitle">Keyword map, cannibalization detection, and content audit — generated at build time</p>
+
+        <!-- Stats -->
+        <div class="stats-row" id="statsRow"></div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" data-tab="architecture">Architecture</div>
+            <div class="tab" data-tab="tree">Tree View</div>
+            <div class="tab" data-tab="conflicts">Conflicts</div>
+            <div class="tab" data-tab="keywords">All Keywords</div>
+        </div>
+
+        <!-- Architecture -->
+        <div class="tab-panel active" id="tab-architecture">
+            <p class="tab-desc"><strong>Hub & Spoke architecture.</strong> Shows the structure of aggregator pages (hubs) and their child pages (spokes). Each hub captures a generic high-volume keyword; spokes target long-tail variations and link back to the hub. <strong>Look for:</strong> hubs with few or missing spokes (dashed cards), unbalanced clusters, and hubs without related tools.</p>
+            <div class="arch-controls">
+                <span class="arch-filter active" data-niche="all">All</span>
+            </div>
+            <div class="arch-legend">
+                <span class="legend-item"><span class="legend-dot" style="background:var(--accent)"></span> Hub (Guide)</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#2e7d32"></span> Hub (Resource)</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#1565c0"></span> Spoke</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#ff9800"></span> Tool</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--gray-light)"></span> Planned (not built)</span>
+            </div>
+            <div id="archView"></div>
+        </div>
+
+        <!-- Tree View -->
+        <div class="tab-panel" id="tab-tree">
+            <p class="tab-desc"><strong>Content inventory by vertical.</strong> Every published page grouped by industry and content type. Each page lists its target keywords with Ahrefs metrics and cannibalization flags (orange = medium, red = high). <strong>Look for:</strong> pages with too many keywords (unfocused), verticals with few pages (thin coverage), and flagged keywords that need differentiation.</p>
+            <div class="tree" id="treeView"></div>
+        </div>
+
+        <!-- Conflicts -->
+        <div class="tab-panel" id="tab-conflicts">
+            <p class="tab-desc"><strong>Keyword cannibalization alerts.</strong> When 2+ pages target the same keyword, they compete against each other in Google instead of reinforcing one winner. <strong>High risk</strong> (red) = 3+ pages on one keyword; <strong>Medium</strong> (orange) = 2 pages. <strong>Look for:</strong> high-volume keywords with conflicts (biggest ranking losses), and decide per case whether to merge pages, redirect, or change the secondary page's target keyword.</p>
+            <table class="conflicts-table">
+                <thead>
+                    <tr><th>Risk</th><th>Keyword</th><th>Vol</th><th>KD</th><th>Pages</th></tr>
+                </thead>
+                <tbody id="conflictsBody"></tbody>
+            </table>
+        </div>
+
+        <!-- All Keywords -->
+        <div class="tab-panel" id="tab-keywords">
+            <p class="tab-desc"><strong>Complete keyword registry.</strong> Flat list of every keyword across all pages with Ahrefs metrics. <strong>Look for:</strong> high-volume + low-KD keywords (quick ranking wins), keywords assigned to only 1 page (healthy), and orange-highlighted rows (cannibalized — also visible in the Conflicts tab). Sort by volume to prioritize, by KD to find easy targets.</p>
+            <input type="text" class="kw-search" id="kwSearch" placeholder="Search keywords...">
+            <div class="kw-sort-row">
+                <span class="kw-sort-btn active" data-sort="opportunity">Opportunity ↓</span>
+                <span class="kw-sort-btn" data-sort="alpha">A-Z</span>
+                <span class="kw-sort-btn" data-sort="volume">Volume ↓</span>
+                <span class="kw-sort-btn" data-sort="kd">KD ↓</span>
+                <span class="kw-sort-btn" data-sort="pages">Pages ↓</span>
+                <span class="kw-sort-btn" data-sort="conflicts">Conflicts only</span>
+            </div>
+            <table class="kw-table">
+                <thead><tr><th>Keyword</th><th>Pages</th><th>Opportunity</th><th>Volume</th><th>KD</th><th>CPC</th></tr></thead>
+                <tbody id="kwTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        // Password — SHA-256 hash comparison (password: "{{DASHBOARD_PASSWORD}}")
+        // Hash of "{{DASHBOARD_PASSWORD}}"
+        const HASH = '5a0d1b8c7e3f4a2b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6';
+
+        async function sha256(str) {
+            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        const overlay = document.getElementById('authOverlay');
+        const input = document.getElementById('authInput');
+        const error = document.getElementById('authError');
+        const dashboard = document.getElementById('dashboard');
+
+        // Check session
+        if (sessionStorage.getItem('seo-dash-auth') === '1') {
+            overlay.style.display = 'none';
+            dashboard.style.display = 'block';
+            loadData();
+        }
+
+        input.addEventListener('keydown', async function(e) {
+            if (e.key !== 'Enter') return;
+            // Simple password check — not high security, just prevents casual access
+            if (input.value === '{{DASHBOARD_PASSWORD}}') {
+                sessionStorage.setItem('seo-dash-auth', '1');
+                overlay.style.display = 'none';
+                dashboard.style.display = 'block';
+                loadData();
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+            });
+        });
+
+        async function loadData() {
+            try {
+                const res = await fetch('/assets/keyword-map.json');
+                const data = await res.json();
+                renderStats(data.stats);
+                renderArchitecture(data.tree._architecture || [], data.keywords, data.pages, data.conflicts);
+                renderTree(data.tree, data.conflicts, data.keywords);
+                renderConflicts(data.conflicts);
+                renderKeywords(data.keywords, data.conflicts);
+            } catch(e) {
+                console.error('Dashboard load error:', e);
+                dashboard.innerHTML = '<p style="color:#e53935;padding:40px">Failed to load keyword-map.json: ' + e.message + '</p>';
+            }
+        }
+
+        // Helpers
+        function kdColor(kd) {
+            if (kd == null) return '';
+            if (kd <= 20) return 'kd-easy';
+            if (kd <= 50) return 'kd-medium';
+            return 'kd-hard';
+        }
+        function kdLabel(kd) {
+            if (kd == null) return '';
+            if (kd <= 10) return 'Very Easy';
+            if (kd <= 20) return 'Easy';
+            if (kd <= 35) return 'Medium';
+            if (kd <= 50) return 'Hard';
+            if (kd <= 70) return 'Very Hard';
+            return 'Super Hard';
+        }
+        function fmtVol(v) { return v == null ? '' : v >= 1000 ? (v/1000).toFixed(1)+'K' : v.toString(); }
+        function fmtCpc(c) { return c == null ? '' : '$'+c.toFixed(2); }
+        function metricHtml(val, label) { return val != null ? `<span class="kw-metric" title="${label}">${val}</span>` : ''; }
+        function kdDot(kd) { return kd != null ? `<span class="kd-dot ${kdColor(kd)}" title="Keyword Difficulty: ${kd}/100 — ${kdLabel(kd)}. ${kd <= 20 ? 'Green = easy to rank' : kd <= 50 ? 'Orange = moderate competition' : 'Red = very competitive'}"></span>` : ''; }
+        function kdBar(kd) {
+            if (kd == null) return '<span class="metric-na">—</span>';
+            const w = Math.max(4, Math.min(60, kd * 0.6));
+            const bg = kd <= 20 ? '#4caf50' : kd <= 50 ? '#ff9800' : '#e53935';
+            return `<span class="kd-bar" style="width:${w}px;background:${bg}" title="KD ${kd} — ${kdLabel(kd)}"></span> ${kd}`;
+        }
+        function volBar(vol, maxVol) {
+            if (vol == null) return '<span class="metric-na">—</span>';
+            const w = Math.max(4, Math.min(80, (vol / Math.max(maxVol, 1)) * 80));
+            return `<span class="vol-bar" style="width:${w}px"></span> ${fmtVol(vol)}`;
+        }
+
+        function renderArchitecture(hubs, keywords, pages, conflicts) {
+            const conflictKws = new Set((conflicts || []).map(c => c.keyword));
+            const highConflictKws = new Set((conflicts || []).filter(c => c.risk === 'high').map(c => c.keyword));
+            const container = document.getElementById('archView');
+            const controls = document.querySelector('.arch-controls');
+            if (!hubs || !hubs.length) {
+                container.innerHTML = '<p style="color:var(--gray);padding:40px;text-align:center">No hub pages found. Generate hub content first.</p>';
+                return;
+            }
+
+            // Build niche filters
+            const niches = [...new Set(hubs.map(h => h.niche))];
+            for (const n of niches) {
+                const btn = document.createElement('span');
+                btn.className = 'arch-filter';
+                btn.dataset.niche = n;
+                btn.textContent = n.replace(/-/g, ' ');
+                controls.appendChild(btn);
+            }
+
+            function getKwMetrics(kw) {
+                const kwl = kw.toLowerCase().trim();
+                const d = keywords[kwl];
+                return d ? { volume: d.volume, kd: d.kd } : {};
+            }
+
+            function renderHubs(filterNiche) {
+                const filtered = filterNiche === 'all' ? hubs : hubs.filter(h => h.niche === filterNiche);
+                // Sort: guide hubs first, then by volume desc
+                filtered.sort((a, b) => {
+                    if (a.hub_type !== b.hub_type) return a.hub_type === 'guide' ? -1 : 1;
+                    const va = getKwMetrics(a.keyword).volume || 0;
+                    const vb = getKwMetrics(b.keyword).volume || 0;
+                    return vb - va;
+                });
+
+                let html = '';
+                for (const hub of filtered) {
+                    const m = getKwMetrics(hub.keyword);
+                    const volStr = m.volume != null ? fmtVol(m.volume) : '—';
+                    const kdStr = m.kd != null ? m.kd : '—';
+                    const dotCls = hub.hub_type === 'guide' ? 'guide' : 'resource';
+
+                    html += `<div class="arch-hub" data-niche="${hub.niche}">`;
+                    html += `<div class="arch-hub-header" onclick="this.parentElement.classList.toggle('open')">`;
+                    html += `<span class="arch-hub-dot ${dotCls}"></span>`;
+                    html += `<span class="arch-hub-title">${hub.title}</span>`;
+                    html += `<span class="arch-hub-kw">"${hub.keyword}" <span class="vol">${volStr}</span> vol · KD ${kdStr}</span>`;
+                    html += `<span class="arch-hub-niche">${hub.niche}</span>`;
+                    html += `<span class="arch-hub-toggle">▸</span>`;
+                    html += `</div>`;
+
+                    html += `<div class="arch-hub-body">`;
+
+                    // Target keywords
+                    const pageData = pages[hub.slug];
+                    if (pageData) {
+                        html += `<div class="arch-section"><div class="arch-section-label">Target Keywords</div>`;
+                        html += `<div class="arch-keywords">`;
+                        for (const kw of pageData.keywords) {
+                            const km = getKwMetrics(kw);
+                            const kwl = kw.toLowerCase().trim();
+                            const isHigh = highConflictKws.has(kwl);
+                            const isMedium = conflictKws.has(kwl);
+                            const cls = isHigh ? 'kw-tag conflict-high' : isMedium ? 'kw-tag conflict' : 'kw-tag';
+                            const metricsStr = km.volume != null ? ` ${fmtVol(km.volume)}` : '';
+                            const kdTip = km.kd != null ? ` · KD ${km.kd} (${kdLabel(km.kd)})` : '';
+                            const volTip = km.volume != null ? ` · Vol ${fmtVol(km.volume)}` : '';
+                            const conflictTip = isHigh ? ' ⚠ High-risk cannibalization: 3+ pages compete for this keyword' : isMedium ? ' ⚠ Medium-risk: 2 pages target this keyword' : '';
+                            html += `<span class="${cls}" title="${kw}${volTip}${kdTip}${conflictTip}">${kw}${metricHtml(metricsStr, 'Volume')}${kdDot(km.kd)}</span>`;
+                        }
+                        html += `</div></div>`;
+                    }
+
+                    // Spoke pages
+                    if (hub.spokes.length) {
+                        html += `<div class="arch-section"><div class="arch-section-label">Spoke Pages (${hub.spokes.length})</div>`;
+                        html += `<div class="arch-grid">`;
+                        for (const s of hub.spokes) {
+                            const cls = s.exists ? '' : ' missing';
+                            const dotCls2 = s.exists ? 'spoke' : 'missing';
+                            const href = s.exists ? s.url : '#';
+                            const ind = s.industry ? `<span class="card-industry">${s.industry}</span>` : '';
+                            html += `<div class="arch-card${cls}"><span class="card-dot ${dotCls2}"></span><a href="${href}">${s.title}</a>${ind}</div>`;
+                        }
+                        html += `</div></div>`;
+                    }
+
+                    // Sibling hubs
+                    if (hub.siblings.length) {
+                        html += `<div class="arch-section"><div class="arch-section-label">Sibling Hubs</div>`;
+                        html += `<div class="arch-siblings-row">`;
+                        for (const s of hub.siblings) {
+                            const cls = s.exists ? '' : ' missing';
+                            const href = s.exists ? s.url : '#';
+                            html += `<a class="arch-sibling-pill${cls}" href="${href}">${s.title}</a>`;
+                        }
+                        html += `</div></div>`;
+                    }
+
+                    // Related tools
+                    if (hub.tools.length) {
+                        html += `<div class="arch-section"><div class="arch-section-label">Related Tools</div>`;
+                        html += `<div class="arch-siblings-row">`;
+                        for (const t of hub.tools) {
+                            const cls = t.exists ? '' : ' missing';
+                            const href = t.exists ? t.url : '#';
+                            html += `<a class="arch-sibling-pill${cls}" href="${href}">${t.title}</a>`;
+                        }
+                        html += `</div></div>`;
+                    }
+
+                    html += `</div></div>`;
+                }
+                container.innerHTML = html;
+            }
+
+            renderHubs('all');
+
+            // Filter clicks
+            controls.addEventListener('click', function(e) {
+                const btn = e.target.closest('.arch-filter');
+                if (!btn) return;
+                controls.querySelectorAll('.arch-filter').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderHubs(btn.dataset.niche);
+            });
+        }
+
+        function renderStats(stats) {
+            const row = document.getElementById('statsRow');
+            const enrichBadge = stats.enriched
+                ? `<span class="enriched-badge">Ahrefs data</span>`
+                : `<span class="not-enriched-badge">No Ahrefs data — enrich via MCP</span>`;
+            const cards = [
+                { num: stats.totalPages, label: 'Total Pages' },
+                { num: stats.uniqueKeywords, label: 'Unique Keywords' },
+                { num: stats.totalKeywordEntries, label: 'Keyword Entries' },
+                { num: stats.conflictCount, label: 'Conflicts' },
+                { num: stats.overlapRate, label: 'Overlap Rate' }
+            ];
+            if (stats.enriched) cards.push({ num: stats.enrichedKeywords || 0, label: 'Enriched Keywords' });
+            row.innerHTML = cards.map(c =>
+                `<div class="stat-card"><div class="stat-num">${c.num}</div><div class="stat-label">${c.label}</div></div>`
+            ).join('');
+            // Add enrichment badge to subtitle
+            document.querySelector('.dash-subtitle').innerHTML += enrichBadge;
+        }
+
+        function renderTree(tree, conflicts, keywords) {
+            const conflictKws = new Set(conflicts.map(c => c.keyword));
+            const highConflictKws = new Set(conflicts.filter(c => c.risk === 'high').map(c => c.keyword));
+            const container = document.getElementById('treeView');
+            let html = '';
+
+            const industries = Object.entries(tree).filter(([k]) => k !== '_architecture').sort((a, b) => {
+                if (a[0] === '_global') return 1;
+                if (b[0] === '_global') return -1;
+                return a[1].display.localeCompare(b[1].display);
+            });
+
+            for (const [indKey, ind] of industries) {
+                const pageCount = Object.values(ind.types).reduce((sum, pages) => sum + pages.length, 0);
+                html += `<div class="tree-industry">`;
+                html += `<div class="tree-industry-label">${ind.display}<span class="badge">${pageCount} pages</span></div>`;
+
+                const typeOrder = ['tool', 'guide', 'resource', 'alternatives', 'comparison'];
+                const types = Object.entries(ind.types).sort((a, b) =>
+                    (typeOrder.indexOf(a[0]) === -1 ? 99 : typeOrder.indexOf(a[0])) -
+                    (typeOrder.indexOf(b[0]) === -1 ? 99 : typeOrder.indexOf(b[0]))
+                );
+
+                for (const [type, pages] of types) {
+                    html += `<div class="tree-type">`;
+                    html += `<div class="tree-type-label">${type} (${pages.length})</div>`;
+                    html += `<div class="tree-pages">`;
+                    for (const page of pages) {
+                        html += `<div class="tree-page">`;
+                        html += `<span class="tree-page-title">${page.title}</span>`;
+                        html += `<span class="tree-page-url">${page.url}</span>`;
+                        html += `<div class="tree-page-kws">`;
+                        // Use keywordMetrics if available (enriched), otherwise fall back to plain keywords
+                        const kwItems = page.keywordMetrics || page.keywords.map(k => ({ keyword: k }));
+                        for (const kwItem of kwItems) {
+                            const kw = typeof kwItem === 'string' ? kwItem : kwItem.keyword;
+                            const kwl = kw.toLowerCase().trim();
+                            const isHigh = highConflictKws.has(kwl);
+                            const isMedium = conflictKws.has(kwl);
+                            const cls = isHigh ? 'kw-tag conflict-high' :
+                                        isMedium ? 'kw-tag conflict' : 'kw-tag';
+                            const tooltip = isHigh ? 'High-risk cannibalization: multiple pages compete for this keyword — consolidate or differentiate'
+                                          : isMedium ? 'Medium-risk cannibalization: this keyword appears on more than one page — review targeting'
+                                          : 'No conflict — this keyword is uniquely targeted';
+                            const vol = kwItem.volume;
+                            const kd = kwItem.kd;
+                            const metricsStr = (vol != null ? metricHtml(fmtVol(vol), 'Volume') : '') + kdDot(kd);
+                            html += `<span class="${cls}" title="${tooltip}">${kw}${metricsStr}</span>`;
+                        }
+                        html += `</div></div>`;
+                    }
+                    html += `</div></div>`;
+                }
+                html += `</div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function renderConflicts(conflicts) {
+            const body = document.getElementById('conflictsBody');
+            if (conflicts.length === 0) {
+                body.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:40px">No keyword conflicts detected</td></tr>';
+                return;
+            }
+            body.innerHTML = conflicts.map(c => {
+                const riskCls = c.risk === 'high' ? 'risk-high' : 'risk-medium';
+                const pagesHtml = c.pages.map(p =>
+                    `<a href="${p.url}">${p.slug}</a> <span style="opacity:0.5">(${p.type}/${p.industry})</span>`
+                ).join('<br>');
+                const volHtml = c.volume != null ? fmtVol(c.volume) : '<span class="metric-na">—</span>';
+                const kdHtml = c.kd != null ? kdBar(c.kd) : '<span class="metric-na">—</span>';
+                return `<tr>
+                    <td><span class="risk-badge ${riskCls}">${c.risk}</span></td>
+                    <td style="font-family:var(--font-code);font-weight:600">${c.keyword}</td>
+                    <td class="metric-cell">${volHtml}</td>
+                    <td class="metric-cell">${kdHtml}</td>
+                    <td class="conflict-pages">${pagesHtml}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        function renderKeywords(keywords, conflicts) {
+            const conflictKws = new Set(conflicts.map(c => c.keyword));
+            const tbody = document.getElementById('kwTableBody');
+
+            // Opportunity score: volume × (1 − KD/100). High volume + low difficulty = best opportunity
+            function calcOpp(vol, kd) {
+                if (vol == null || kd == null) return null;
+                return Math.round(vol * (1 - kd / 100));
+            }
+            function oppBar(opp, maxOpp) {
+                if (opp == null) return '<span class="metric-na">—</span>';
+                const w = Math.max(4, Math.min(60, (opp / Math.max(maxOpp, 1)) * 60));
+                const pct = maxOpp > 0 ? opp / maxOpp : 0;
+                const bg = pct >= 0.5 ? '#4caf50' : pct >= 0.2 ? '#ff9800' : 'var(--gray-light)';
+                return `<span class="opp-bar" style="width:${w}px;background:${bg}" title="Opportunity: ${opp} = Vol × (1 − KD/100)"></span> ${fmtVol(opp)}`;
+            }
+
+            // Flatten keywords into array with metrics
+            let entries = Object.entries(keywords).map(([kw, data]) => ({
+                kw,
+                pages: data.pages ? data.pages.length : (Array.isArray(data) ? data.length : 1),
+                volume: data.volume ?? null,
+                kd: data.kd ?? null,
+                cpc: data.cpc ?? null,
+                opp: calcOpp(data.volume ?? null, data.kd ?? null),
+                isConflict: conflictKws.has(kw)
+            }));
+
+            // Find max values for bar scaling
+            const maxVol = Math.max(...entries.map(e => e.volume || 0), 1);
+            const maxOpp = Math.max(...entries.map(e => e.opp || 0), 1);
+
+            let currentSort = 'opportunity';
+            let currentFilter = '';
+            let conflictsOnly = false;
+
+            function sortEntries(arr, sort) {
+                switch (sort) {
+                    case 'alpha': return arr.sort((a, b) => a.kw.localeCompare(b.kw));
+                    case 'opportunity': return arr.sort((a, b) => (b.opp || 0) - (a.opp || 0));
+                    case 'volume': return arr.sort((a, b) => (b.volume || 0) - (a.volume || 0));
+                    case 'kd': return arr.sort((a, b) => (b.kd || 0) - (a.kd || 0));
+                    case 'pages': return arr.sort((a, b) => b.pages - a.pages);
+                    default: return arr;
+                }
+            }
+
+            function render() {
+                let filtered = entries;
+                if (currentFilter) filtered = filtered.filter(e => e.kw.includes(currentFilter.toLowerCase()));
+                if (conflictsOnly) filtered = filtered.filter(e => e.isConflict);
+                filtered = sortEntries([...filtered], currentSort);
+
+                tbody.innerHTML = filtered.map(e => {
+                    const cls = e.isConflict ? 'has-conflict' : '';
+                    const tip = e.isConflict ? `title="Cannibalization: ${e.pages} pages target this keyword — review in Conflicts tab"` : '';
+                    return `<tr class="${cls}" ${tip}>
+                        <td class="kw-name">${e.kw}</td>
+                        <td class="metric-cell">${e.pages}</td>
+                        <td class="metric-cell">${oppBar(e.opp, maxOpp)}</td>
+                        <td class="metric-cell">${volBar(e.volume, maxVol)}</td>
+                        <td class="metric-cell">${kdBar(e.kd)}</td>
+                        <td class="metric-cell">${e.cpc != null ? fmtCpc(e.cpc) : '<span class="metric-na">—</span>'}</td>
+                    </tr>`;
+                }).join('');
+            }
+
+            render();
+
+            document.getElementById('kwSearch').addEventListener('input', function() {
+                currentFilter = this.value;
+                render();
+            });
+
+            document.querySelectorAll('.kw-sort-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const sort = this.dataset.sort;
+                    if (sort === 'conflicts') {
+                        conflictsOnly = !conflictsOnly;
+                        this.classList.toggle('active', conflictsOnly);
+                    } else {
+                        currentSort = sort;
+                        conflictsOnly = false;
+                        document.querySelectorAll('.kw-sort-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                    render();
+                });
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

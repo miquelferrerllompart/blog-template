@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "Ahrefs": {
+      "disabled": true,
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://api.ahrefs.com/mcp/mcp",
+        "--header",
+        "Authorization:${AUTH_HEADER}"
+      ],
+      "env": {
+        "AUTH_HEADER": "Bearer ${AHREFS_MCP_KEY}"
+      }
+    }
+  }
+}

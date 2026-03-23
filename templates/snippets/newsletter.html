@@ -1,0 +1,151 @@
+<style>
+/* ─── TOC + Newsletter sticky wrapper ─── */
+@media(min-width:1200px){
+    .toc-wrap{position:sticky;top:calc(80px + var(--sp-16));float:right;width:clamp(220px,calc((100vw - 900px)/2 - 40px),500px);margin-right:calc(-1 * clamp(220px,calc((100vw - 900px)/2 - 40px),500px) - 40px);margin-bottom:var(--sp-40);max-height:calc(100vh - 100px);overflow-y:auto}
+    .toc-wrap::-webkit-scrollbar{width:3px}
+    .toc-wrap::-webkit-scrollbar-thumb{background:var(--gray-light);border-radius:3px}
+    .toc-wrap>.toc-desk{position:static!important;float:none!important;width:auto!important;margin-right:0!important;margin-bottom:0!important;max-height:none!important;overflow-y:visible!important;border-radius:var(--radius-lg) var(--radius-lg) 0 0!important}
+}
+/* ─── Newsletter sidebar (joined to TOC bottom) ─── */
+.nl-sidebar{padding:var(--sp-20);background:var(--dark);border-radius:0 0 var(--radius-lg) var(--radius-lg)}
+.nl-sidebar .nl-label{font-family:var(--font-heading);font-size:0.875rem;font-weight:800;letter-spacing:-0.01em;color:white;margin-bottom:var(--sp-6)}
+.nl-sidebar .nl-desc{font-size:0.8125rem;color:rgba(255,255,255,0.7);line-height:1.5;margin-bottom:var(--sp-14)}
+.nl-sidebar .nl-form{display:flex;border-bottom:1px solid rgba(255,255,255,0.25)}
+.nl-sidebar .nl-form input[type="email"]{flex:1;padding:var(--sp-10) 0;background:transparent;border:none;color:white;font-family:var(--font-primary);font-size:0.8125rem;outline:none}
+.nl-sidebar .nl-form input[type="email"]::placeholder{color:rgba(255,255,255,0.35)}
+.nl-sidebar .nl-form button{padding:var(--sp-10) var(--sp-4);background:transparent;border:none;cursor:pointer;color:rgba(255,255,255,0.6);transition:all 0.2s;display:flex;align-items:center;opacity:0;pointer-events:none}
+.nl-sidebar .nl-form button:hover{color:white}
+.nl-sidebar .nl-form button svg{width:14px;height:14px}
+.nl-sidebar .nl-form.has-value button{opacity:1;pointer-events:auto}
+.nl-sidebar .nl-done{color:var(--accent-light)}
+
+/* ─── Newsletter mobile (after .toc-mobile, dark card) ─── */
+.nl-mobile{display:none;margin-bottom:var(--sp-24);padding:var(--sp-24);background:var(--dark);border-radius:var(--radius-lg)}
+.nl-mobile .nl-label{font-size:0.875rem;font-weight:800;letter-spacing:-0.01em;color:white;margin-bottom:var(--sp-6)}
+.nl-mobile .nl-desc{font-size:0.875rem;color:rgba(255,255,255,0.7);line-height:1.5;margin-bottom:var(--sp-14)}
+.nl-mobile .nl-form{display:flex;border-bottom:1px solid rgba(255,255,255,0.25)}
+.nl-mobile .nl-form input[type="email"]{flex:1;padding:var(--sp-12) 0;background:transparent;border:none;color:white;font-family:var(--font-primary);font-size:0.875rem;outline:none}
+.nl-mobile .nl-form input[type="email"]::placeholder{color:rgba(255,255,255,0.35)}
+.nl-mobile .nl-form button{padding:var(--sp-12) var(--sp-4);background:transparent;border:none;cursor:pointer;color:rgba(255,255,255,0.6);transition:all 0.2s;display:flex;align-items:center;opacity:0;pointer-events:none}
+.nl-mobile .nl-form button:hover{color:white}
+.nl-mobile .nl-form button svg{width:16px;height:16px}
+.nl-mobile .nl-form.has-value button{opacity:1;pointer-events:auto}
+.nl-mobile .nl-done{color:var(--accent-light)}
+@media(max-width:1199px){.nl-mobile{display:block}.nl-sidebar{display:none}}
+
+/* ─── Newsletter banner (full-width dark) ─── */
+.nl-banner{background:var(--dark);padding:var(--sp-56) 0;text-align:center}
+.nl-banner .nl-banner-title{color:white;font-size:1.5rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--sp-10)}
+.nl-banner .nl-banner-desc{color:rgba(255,255,255,0.55);font-size:0.875rem;line-height:1.6;margin-bottom:var(--sp-28);max-width:480px;margin-left:auto;margin-right:auto}
+.nl-banner .nl-form{display:flex;max-width:400px;margin:0 auto;border-bottom:1px solid rgba(255,255,255,0.25)}
+.nl-banner .nl-form input[type="email"]{flex:1;padding:var(--sp-14) 0;background:transparent;border:none;color:white;font-family:var(--font-primary);font-size:0.9375rem;outline:none}
+.nl-banner .nl-form input[type="email"]::placeholder{color:rgba(255,255,255,0.35)}
+.nl-banner .nl-form button{padding:var(--sp-14) var(--sp-8);background:transparent;border:none;cursor:pointer;color:rgba(255,255,255,0.6);transition:all 0.2s;display:flex;align-items:center;opacity:0;pointer-events:none}
+.nl-banner .nl-form button:hover{color:white}
+.nl-banner .nl-form button svg{width:20px;height:20px}
+.nl-banner .nl-form.has-value button{opacity:1;pointer-events:auto}
+
+/* ─── Shared success + subscribed states ─── */
+.nl-done{display:none;font-size:0.875rem;font-weight:600;color:var(--accent);padding:var(--sp-8) 0}
+.nl-banner .nl-done{color:var(--accent-light);font-size:0.875rem;padding:var(--sp-14) 0}
+.nl-success .nl-form{display:none}
+.nl-success .nl-done{display:block}
+.nl-subscribed{display:none!important}
+
+@media(max-width:768px){
+    .nl-banner{padding:var(--sp-40) 0}
+    .nl-banner .nl-banner-title{font-size:1.25rem}
+    .nl-banner .nl-form{max-width:320px}
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    var arrowSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
+    setTimeout(function(){
+        if(localStorage.getItem('nl_subscribed')) return;
+
+        var formHTML='<div class="nl-label">{{NL_SIDEBAR_LABEL}}</div>'+
+            '<div class="nl-desc">Weekly retention strategies and real merchant examples. One email, no fluff.</div>'+
+            '<form class="nl-form" data-source="sidebar">'+
+            '<input type="email" placeholder="you@store.com" required>'+
+            '<button type="submit" aria-label="Subscribe">'+arrowSVG+'</button>'+
+            '</form>'+
+            '<div class="nl-done">Thanks for subscribing!</div>';
+
+        // Sidebar: wrap .toc-desk + newsletter in sticky wrapper
+        var tocDesk=document.querySelector('.toc-desk');
+        if(tocDesk){
+            var wrap=document.createElement('div');
+            wrap.className='toc-wrap';
+            tocDesk.parentNode.insertBefore(wrap,tocDesk);
+            wrap.appendChild(tocDesk);
+            var el=document.createElement('div');
+            el.className='nl-sidebar';
+            el.innerHTML=formHTML;
+            wrap.appendChild(el);
+        }
+
+        // Mobile: insert after .toc-mobile
+        var tocMobile=document.querySelector('.toc-mobile');
+        if(tocMobile){
+            var mob=document.createElement('div');
+            mob.className='nl-mobile';
+            mob.innerHTML=formHTML;
+            tocMobile.parentNode.insertBefore(mob,tocMobile.nextSibling);
+        }
+
+        // Show/hide inline submit button on input
+        document.querySelectorAll('.nl-form').forEach(function(form){
+            var input=form.querySelector('input[type="email"]');
+            if(input){
+                input.addEventListener('input',function(){
+                    form.classList.toggle('has-value',this.value.trim().length>0);
+                });
+            }
+            form.addEventListener('submit',function(e){
+                e.preventDefault();
+                var email=this.querySelector('input[type="email"]').value.trim();
+                if(!email) return;
+                var source=this.dataset.source||'banner';
+                if(window.posthog){
+                    posthog.identify(email,{email:email});
+                    posthog.capture('newsletter_signup',{email:email,source:source,page:window.location.pathname});
+                }
+                var wrap=this.closest('.nl-sidebar,.nl-mobile,.nl-banner,.footer-nl');
+                if(wrap) wrap.classList.add('nl-success');
+                try{localStorage.setItem('nl_subscribed','1')}catch(ex){}
+            });
+        });
+    },300);
+
+    // Handle static HTML forms (banners + footer) for returning subscribers
+    if(localStorage.getItem('nl_subscribed')){
+        document.querySelectorAll('.nl-banner').forEach(function(el){el.classList.add('nl-subscribed')});
+        document.querySelectorAll('.footer-nl').forEach(function(el){el.classList.add('nl-subscribed')});
+    }
+
+    // Bind footer form outside the early-return guard (it's static HTML, always in DOM)
+    document.querySelectorAll('.footer-nl .nl-form').forEach(function(form){
+        var input=form.querySelector('input[type="email"]');
+        if(input){
+            input.addEventListener('input',function(){
+                form.classList.toggle('has-value',this.value.trim().length>0);
+            });
+        }
+        form.addEventListener('submit',function(e){
+            e.preventDefault();
+            var email=this.querySelector('input[type="email"]').value.trim();
+            if(!email) return;
+            var source=this.dataset.source||'footer';
+            if(window.posthog){
+                posthog.identify(email,{email:email});
+                posthog.capture('newsletter_signup',{email:email,source:source,page:window.location.pathname});
+            }
+            var wrap=this.closest('.footer-nl');
+            if(wrap) wrap.classList.add('nl-success');
+            try{localStorage.setItem('nl_subscribed','1')}catch(ex){}
+        });
+    });
+});
+</script>

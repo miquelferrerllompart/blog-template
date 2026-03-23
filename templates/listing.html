@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <style>
+        {{@base-css}}
+        {{@header-css}}
+        {{@cta-css}}
+        {{@footer-css}}
+
+        .pw{max-width:68.75rem;margin:0 auto;padding:0 var(--sp-48)}
+
+        /* Hero */
+        .hero{padding:var(--sp-64) var(--sp-48) var(--sp-48);background:linear-gradient(135deg,rgba(112,0,255,0.06) 0%,transparent 40%),linear-gradient(225deg,rgba(112,0,255,0.04) 0%,transparent 40%),var(--light);border-bottom:1px solid var(--gray-light)}
+        .hero-inner{max-width:68.75rem;margin:0 auto}
+        .hero .breadcrumb{font-family:var(--font-code);font-size:0.8125rem;color:var(--gray);margin-bottom:var(--sp-20);letter-spacing:0.05em}
+        .hero .breadcrumb a{color:var(--accent);font-weight:600}
+        .hero h1{font-size:2.375rem;font-weight:800;letter-spacing:-0.03em;line-height:1.12;max-width:800px;margin-bottom:var(--sp-12)}
+        .hero .subtitle{font-size:1rem;color:var(--gray);max-width:600px;line-height:1.7}
+        .hero-stats{display:flex;gap:var(--sp-24);margin-top:var(--sp-24)}
+        .hero-stat{font-family:var(--font-code);font-size:0.8125rem;color:var(--gray)}
+        .hero-stat strong{color:var(--dark);font-size:1.25rem;font-weight:800}
+
+        /* Grid container */
+        .listing-container{max-width:68.75rem;margin:0 auto;padding:var(--sp-48) var(--sp-48) var(--sp-56)}
+
+        /* Tools (dark) */
+        .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--sp-16)}
+        .tool-card{display:block;background:var(--dark-2);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);padding:var(--sp-24) var(--sp-20);transition:all 0.25s;color:var(--light);text-decoration:none;--ic-1:#F1E5FF;--ic-2:rgba(241,229,255,0.12);--ic-3:rgba(255,255,255,0.5)}
+        .tool-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(112,0,255,0.15);text-decoration:none;color:var(--light)}
+        .tool-icon{width:40px;height:40px;margin-bottom:var(--sp-12)}
+        .tool-label{font-family:var(--font-code);font-size:0.5625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-light);opacity:0.6;margin-bottom:var(--sp-8)}
+        .tool-name{font-size:0.9375rem;font-weight:700;letter-spacing:-0.02em;line-height:1.3;margin-bottom:var(--sp-6)}
+        .tool-desc{font-size:0.8125rem;color:rgba(255,255,255,0.5);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .tools-wrap{background:var(--dark);border-radius:var(--radius-xl);padding:var(--sp-36)}
+
+        /* Guides / Resources */
+        .guides-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--sp-16)}
+        .guide-card{display:block;border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-24);transition:all 0.25s;text-decoration:none;color:var(--dark)}
+        .guide-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.06);text-decoration:none;color:var(--dark)}
+        .guide-type{font-family:var(--font-code);font-size:0.5625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:var(--sp-10)}
+        .guide-title{font-size:0.9375rem;font-weight:700;letter-spacing:-0.02em;line-height:1.3;margin-bottom:var(--sp-6)}
+        .guide-desc{font-size:0.8125rem;color:var(--gray);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .guide-tag{display:inline-block;font-family:var(--font-code);font-size:0.5625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);background:var(--accent-light);padding:2px var(--sp-8);border-radius:var(--radius-pill);margin-top:var(--sp-10)}
+        .group-section{scroll-margin-top:var(--sp-80);transition:background 0.4s}
+        .group-section:not(:first-child){margin-top:var(--sp-36)}
+        .group-section.highlighted{background:radial-gradient(circle at 20% 30%,rgba(112,0,255,0.04) 0%,transparent 50%),var(--light-2);margin-left:calc(-1 * var(--sp-48));margin-right:calc(-1 * var(--sp-48));padding:var(--sp-32) var(--sp-48);border-radius:var(--radius-xl)}
+        .group-section.highlighted .guide-card{background:var(--light)}
+        .group-label{font-family:var(--font-code);font-size:0.75rem;font-weight:700;color:var(--dark);margin-bottom:var(--sp-16);letter-spacing:0.04em;text-transform:uppercase}
+
+        /* Compare */
+        .compare-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--sp-16)}
+        .compare-card{display:block;border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:var(--sp-24);transition:all 0.25s;text-decoration:none;color:var(--dark)}
+        .compare-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.06);text-decoration:none;color:var(--dark)}
+        .compare-type{font-family:var(--font-code);font-size:0.5625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:var(--sp-10)}
+        .compare-icons{display:flex;align-items:center;gap:var(--sp-6);margin-bottom:var(--sp-10)}
+        .compare-icon{width:20px;height:20px;border-radius:4px;background:var(--gray-light)}
+        .compare-vs{font-family:var(--font-code);font-size:0.5625rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.06em}
+        .compare-title{font-size:0.9375rem;font-weight:700;letter-spacing:-0.02em;line-height:1.3;margin-bottom:var(--sp-6)}
+        .compare-desc{font-size:0.8125rem;color:var(--gray);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+        /* CTA spacing */
+        .cta-wrap{max-width:68.75rem;margin:0 auto;padding:0 var(--sp-48) var(--sp-56)}
+
+        @media(max-width:768px){
+            .pw{padding:0 var(--sp-20)}
+            .hero{padding:var(--sp-40) var(--sp-20) var(--sp-32)}.hero h1{font-size:1.75rem}
+            .hero-stats{flex-direction:column;gap:var(--sp-8)}
+            .listing-container{padding:var(--sp-32) var(--sp-20) var(--sp-40)}
+            .tools-grid{grid-template-columns:1fr}
+            .guides-grid{grid-template-columns:1fr}
+            .compare-grid{grid-template-columns:1fr}
+            .tools-wrap{padding:var(--sp-20);border-radius:var(--radius-lg)}
+            .cta-wrap{padding:0 var(--sp-20) var(--sp-40)}
+            .group-section.highlighted{margin-left:calc(-1 * var(--sp-20));margin-right:calc(-1 * var(--sp-20));padding:var(--sp-24) var(--sp-20);border-radius:var(--radius-lg)}
+        }
+    </style>
+    <script type="application/ld+json">[{"@context":"https://schema.org","@type":"CollectionPage","name":"{{TITLE}}","description":"{{DESCRIPTION}}","url":"{{BLOG_URL}}/{{SLUG}}/","publisher":{"@type":"Organization","name":"{{BRAND_NAME}}","url":"{{SITE_URL}}","logo":{"@type":"ImageObject","url":"{{BLOG_URL}}/assets/logo.svg"}}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"{{BLOG_URL}}"},{"@type":"ListItem","position":2,"name":"{{TITLE}}"}]}]</script>
+</head>
+<body>
+{{>icons}}
+{{>header}}
+<div id="app"></div>
+<script>
+const DATA = {{DATA}};
+const listingType = DATA.listing.type;
+const pages = DATA.pages;
+
+const urlPrefixes = {resource:'/resources/',guide:'/guides/',alternatives:'/compare/',comparison:'/compare/',tool:'/tools/'};
+const typeLabels = {guide:'Guide',resource:'Resource',alternatives:'Alternatives',comparison:'Comparison',tool:'Free Tool'};
+
+const toolIconIds = {
+    'loyalty-roi-calculator':'ic-roi','retention-rate-calculator':'ic-retention',
+    'referral-roi-calculator':'ic-referral',
+    'loyalty-cost-comparison':'ic-compare','points-value-calculator':'ic-points',
+    'push-vs-email-roi':'ic-push-email'
+};
+function icon(id,cls){return `<svg class="${cls||''}" viewBox="0 0 48 48"><use href="#${id}"></use></svg>`;}
+
+function renderTools(items) {
+    return `<div class="tools-wrap"><div class="tools-grid">${items.map(p =>
+        `<a class="tool-card" href="${urlPrefixes.tool}${p.slug}">${icon(toolIconIds[p.slug]||'ic-tool-default','tool-icon')}<div class="tool-label">Interactive tool</div><div class="tool-name">${p.title.replace(/ Calculator| Tool/i,'')}</div><div class="tool-desc">${p.description}</div></a>`
+    ).join('')}</div></div>`;
+}
+
+function renderGuides(items) {
+    const hubTopicMap = {
+        'best-loyalty-programs':'Loyalty Programs','ecommerce-loyalty-program':'Loyalty Programs','loyalty-program-examples':'Loyalty Programs',
+        'loyalty-program-small-business':'Loyalty Programs','tiered-loyalty-program':'Loyalty Programs','digital-punch-card':'Loyalty Programs','omnichannel-loyalty-program':'Loyalty Programs',
+        'ecommerce-referral-program':'Referral','referral-program-examples':'Referral','referral-program-ideas':'Referral',
+        'customer-retention-program':'Retention','customer-retention-strategies-ecommerce':'Retention','how-to-retain-customers':'Retention','retention-rate-formula':'Retention',
+        'fitness-studio-marketing':'Marketing','salon-marketing-ideas':'Marketing','spa-marketing-ideas':'Marketing','yoga-studio-marketing':'Marketing',
+        'coffee-shop-loyalty-program':'Marketing','salon-loyalty-program':'Marketing'
+    };
+    const topicOrder = [
+        {name:'Loyalty Programs', anchor:'loyalty-programs'},
+        {name:'Referral', anchor:'referral'},
+        {name:'Retention', anchor:'retention'},
+        {name:'Marketing', anchor:'marketing'}
+    ];
+    const hubsByTopic = {};
+    const regularGuides = [];
+    items.forEach(p => {
+        if(p.is_hub && hubTopicMap[p.slug]) {
+            const topic = hubTopicMap[p.slug];
+            if(!hubsByTopic[topic]) hubsByTopic[topic] = [];
+            hubsByTopic[topic].push(p);
+        } else {
+            regularGuides.push(p);
+        }
+    });
+    const card = p => `<a class="guide-card" href="${urlPrefixes[p.type] || urlPrefixes.guide}${p.slug}"><div class="guide-type">${p.is_hub?'Complete Guide':'Guide'}${p.industry_display?' · '+p.industry_display:''}</div><div class="guide-title">${p.title}</div><div class="guide-desc">${p.description}</div>${p.industry_display?`<span class="guide-tag">${p.industry_display}</span>`:''}</a>`;
+    let html = '';
+    topicOrder.forEach(t => {
+        const group = hubsByTopic[t.name];
+        if(!group || !group.length) return;
+        html += `<div class="group-section" id="${t.anchor}"><div class="group-label">${t.name}</div><div class="guides-grid">${group.map(card).join('')}</div></div>`;
+    });
+    if(regularGuides.length) {
+        html += `<div class="group-section"><div class="group-label">Guides</div><div class="guides-grid">${regularGuides.map(card).join('')}</div></div>`;
+    }
+    return html;
+}
+
+function renderCompare(items) {
+    return `<div class="compare-grid">${items.map(p => {
+        let icons = '';
+        if (p.type === 'comparison' && p.icon_a && p.icon_b) {
+            icons = `<div class="compare-icons"><img class="compare-icon" src="${p.icon_a}" alt="${p.name_a}" loading="lazy"><span class="compare-vs">vs</span><img class="compare-icon" src="${p.icon_b}" alt="${p.name_b}" loading="lazy"></div>`;
+        }
+        return `<a class="compare-card" href="${urlPrefixes[p.type]}${p.slug}"><div class="compare-type">${typeLabels[p.type]||p.type}</div>${icons}<div class="compare-title">${p.title}</div><div class="compare-desc">${p.description}</div></a>`;
+    }).join('')}</div>`;
+}
+
+const renderers = {tools: renderTools, guides: renderGuides, compare: renderCompare};
+
+document.getElementById('app').innerHTML = `
+    <div class="hero"><div class="hero-inner">
+        <div class="breadcrumb"><a href="/">Blog</a> / ${DATA.listing.breadcrumb}</div>
+        <h1>${DATA.listing.headline}</h1>
+        <div class="subtitle">${DATA.listing.subtitle}</div>
+        <div class="hero-stats">
+            <div class="hero-stat"><strong>${pages.length}</strong> ${pages.length === 1 ? 'article' : 'articles'}</div>
+        </div>
+    </div></div>
+
+    <div class="listing-container">
+        ${renderers[listingType](pages)}
+    </div>
+
+    <div class="nl-banner" style="border-radius:0">
+        <div style="max-width:68.75rem;margin:0 auto;padding:0 var(--sp-48)">
+            <h3 class="nl-banner-title">More repeat customers, less guesswork</h3>
+            <p class="nl-banner-desc">{{NL_BANNER_DESC}}</p>
+            <form class="nl-form" data-source="banner">
+                <input type="email" placeholder="Email address" required>
+                <button type="submit" aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </form>
+            <div class="nl-done">Thanks for subscribing!</div>
+        </div>
+    </div>
+
+    <div class="cta-wrap">
+        <div class="cta-block">
+            <h3>Keep more customers coming back</h3>
+            <p>{{LISTING_CTA_BODY}}</p>
+            <a href="${SITE.appUrl('cta','listing','bottom-cta')}" class="cta-btn">{{LISTING_CTA_BUTTON}}</a>
+        </div>
+    </div>
+
+    {{>footer}}
+`;
+if(window.location.hash){
+    const el = document.getElementById(window.location.hash.slice(1));
+    if(el && el.classList.contains('group-section')){
+        el.classList.add('highlighted');
+        setTimeout(() => el.scrollIntoView({behavior:'smooth',block:'start'}), 100);
+    }
+}
+</script>
+</body>
+</html>
