@@ -95,12 +95,7 @@
 const DATA = {{DATA}};
 
 const industryIconIds = {
-    'fashion-apparel':'ic-fashion','beauty-cosmetics':'ic-beauty','food-beverage':'ic-food',
-    'health-supplements':'ic-health','pet-supplies':'ic-pet','sports-outdoor':'ic-sports',
-    'jewelry-accessories':'ic-jewelry','home-decor':'ic-home','coffee-tea':'ic-coffee','baby-kids':'ic-baby',
-    'gyms-fitness-studios':'ic-sports','spas-salons-medspas':'ic-spa',
-    'health-coaching-personal-training':'ic-health-coaching','health-food-organic-stores':'ic-health-food',
-    'supplement-vitamin-brands':'ic-supplement','wellness-dtc-ecommerce':'ic-wellness','yoga-pilates-studios':'ic-yoga'
+    // Populated per-niche: e.g. 'industry-key':'ic-industry'
 };
 const heroIcon = industryIconIds[DATA.meta.industry] || 'ic-default';
 
@@ -123,7 +118,7 @@ function renderItems(items) {
             </div>
             <div class="item-desc">${item.description}</div>
             ${item.example ? `<div class="item-example"><strong>Example:</strong> ${item.example}</div>` : ''}
-            ${item.wallet_pass_angle ? `<div class="item-wallet"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-wallet"></use></svg>${item.wallet_pass_angle}</div>` : ''}
+            ${item.product_angle ? `<div class="item-wallet"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-wallet"></use></svg>${item.product_angle}</div>` : ''}
         </div>
     `).join('');
 }
@@ -183,18 +178,11 @@ document.getElementById('app').innerHTML = `
         ${DATA.content.industry_benchmarks ? `
         <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:16px">${DATA.meta.industry_display} Benchmarks</h3>
         <div class="benchmarks">
+            ${(DATA.content.industry_benchmarks.metrics || []).filter(m => m && m.value).map(m => `
             <div class="bench-card">
-                <div class="bench-value">${DATA.content.industry_benchmarks.avg_repeat_purchase_rate}</div>
-                <div class="bench-label">Avg. Repeat Purchase Rate</div>
-            </div>
-            <div class="bench-card">
-                <div class="bench-value">${DATA.content.industry_benchmarks.avg_customer_lifetime_value}</div>
-                <div class="bench-label">Avg. Customer Lifetime Value</div>
-            </div>
-            <div class="bench-card">
-                <div class="bench-value">${DATA.content.industry_benchmarks.loyalty_program_adoption_rate}</div>
-                <div class="bench-label">Program Adoption Rate</div>
-            </div>
+                <div class="bench-value">${m.value}</div>
+                <div class="bench-label">${m.label}</div>
+            </div>`).join('')}
         </div>
         ` : ''}
 

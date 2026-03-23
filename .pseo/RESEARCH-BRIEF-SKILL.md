@@ -23,8 +23,8 @@ This skill generates a **research brief** for a specific page by reading all loc
 
 - User says: "improve", "optimize", "work on", "fix" + a page slug or description
 - User says: "research brief", "brief for", "analyze", "diagnostic" + a page reference
-- User names a specific slug: "best-rewards-fashion-apparel"
-- User describes a page: "the fashion rewards page", "the beauty loyalty ideas post"
+- User names a specific slug: "example-getting-started-tips"
+- User describes a page: "the getting started tips page", "the complete guide"
 - User says: "what should I improve?"
 
 ## Prerequisites
@@ -211,7 +211,7 @@ After presenting the brief, ask:
 
 > **What would you like to focus on?** You can:
 > - Pick specific actions from the list above
-> - Add your own goals (e.g., "target the keyword X", "make it more specific to fast fashion")
+> - Add your own goals (e.g., "target the keyword X", "make it more specific to a sub-niche")
 > - Say "fix everything" and I'll work through all suggested actions
 
 **Do NOT start editing until the user responds.** The brief is a conversation starter, not an automatic fix.

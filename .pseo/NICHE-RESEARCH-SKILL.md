@@ -105,7 +105,7 @@ Use the Site Explorer organic-keywords MCP tool with: `target={your-domain}` (ge
 7. **Don't re-query** — check the keyword metrics cache before calling MCP tools. Only fetch keywords not already cached
 8. **Handle rate limits** — Ahrefs MCP has strict rate limits. Do NOT make parallel API calls. Run them sequentially, and if you hit a rate limit, wait 60 seconds before retrying
 9. **Handle errors:** if a tool call fails, check the error message and retry with corrected parameters. The API returns available column names in the error when you use a wrong `select` field
-10. **Expect sparse data for long-tail keywords** — most industry-specific long-tail keywords (e.g., "beauty ecommerce loyalty launch") return no data in Ahrefs. This is normal. Only ~10-15% of niche long-tail keywords will have volume/KD data. Focus on the broader terms for metrics and use long-tail keywords for content structure
+10. **Expect sparse data for long-tail keywords** — most industry-specific long-tail keywords return no data in Ahrefs. This is normal. Only ~10-15% of niche long-tail keywords will have volume/KD data. Focus on the broader terms for metrics and use long-tail keywords for content structure
 11. **Country targeting** — default to `us` but ask user if targeting other markets
 12. **Monetary values** — Ahrefs MCP returns monetary values (CPC, traffic_value, etc.) in USD cents. Divide by 100 to display in USD.
 
@@ -291,14 +291,14 @@ Before outputting, verify:
 
 ## Examples
 
-### Example 1: User says "new niche: pet care ecommerce"
+### Example 1: User says "new niche: pet care"
 
-1. Run MCP playbook (Calls 1-8) with seeds: "pet care ecommerce", "pet store online", "pet shop customer retention"
+1. Run MCP playbook (Calls 1-8) with seeds: "pet care", "pet store online", "pet shop marketing"
 2. MCP returns 150+ keywords, top competitors identified from SERPs
 3. Identify subtopics: dogs, cats, exotic pets, pet grooming, pet food subscriptions
 4. Generate `pet-care.json` with full context
 5. Generate `_registry-update.json` with 25 planned pages
-6. Summary: "25 pages planned, 45K monthly volume addressable, top opportunity: 'pet store ecommerce' (vol: 1,200, KD: 12)"
+6. Summary: "25 pages planned, 45K monthly volume addressable, top opportunity: 'pet care tips' (vol: 1,200, KD: 12)"
 
 ### Example 2: User pastes Ahrefs CSV data
 

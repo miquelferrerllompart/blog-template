@@ -25,14 +25,14 @@ interface AlternativesPage {
   };
   content: {
     intro: {
-      why_look_for_alternatives: string;  // Honest, specific reasons merchants switch FROM this product
+      why_look_for_alternatives: string;  // Honest, specific reasons users switch FROM this product
       target_product_overview: string;    // Fair summary of what the product does well
       evaluation_criteria: string[];      // EXACTLY 6 criteria used to evaluate alternatives
     };
     alternatives: Array<{          // 8-10 alternatives (your product always included, position varies)
       name: string;
       one_liner: string;
-      best_for: string;            // Specific merchant type/use case
+      best_for: string;            // Specific user type/use case
       pros: string[];              // 3-4 pros
       cons: string[];              // 2-3 cons
       pricing_summary: string;     // Actual pricing tiers

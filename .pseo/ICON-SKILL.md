@@ -33,8 +33,8 @@ These can be overridden per-context via CSS:
 - **Complexity:** Keep paths minimal — these render at 18–48px
 
 ### Naming Convention
-- Industry icons: `ic-{industry-slug}` (e.g., `ic-fashion`, `ic-beauty`)
-- Topic icons: `ic-topic-{topic}` (e.g., `ic-topic-loyalty`)
+- Industry icons: `ic-{industry-slug}` (populated per-niche)
+- Topic icons: `ic-topic-{topic}` (populated per-niche)
 - Tool icons: `ic-tool-{name}` or `ic-tool-default`
 - UI icons: `ic-{function}` (e.g., `ic-action`, `ic-wallet`, `ic-lightbulb`)
 

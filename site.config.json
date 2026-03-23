@@ -49,13 +49,22 @@
     }
   },
   "newsletter": {
-    "sidebar_label": "Stay updated"
+    "sidebar_label": "Stay updated",
+    "sidebar_description": "The latest insights delivered to your inbox. One email, no fluff.",
+    "footer_description": "The latest insights delivered to your inbox. One email, no fluff.",
+    "banner_title": "Stay ahead of the curve",
+    "banner_description": "Get actionable strategies and real examples every week. One email, no fluff."
   },
   "dashboard_password": "admin2026",
   "index": {
     "title": "My Brand Blog",
     "description": "Guides, tools, and resources to help you grow.",
     "hero_headline": "Welcome to My Brand Blog",
-    "hero_subtitle": "Resources to help you grow."
+    "hero_subtitle": "Resources to help you grow.",
+    "tools_subtitle": "Free calculators and interactive tools",
+    "industries_subtitle": "Find content for your industry",
+    "guides_subtitle": "Step-by-step playbooks for success",
+    "cta_headline": "Ready to take the next step?",
+    "nl_description": "Stay updated with our latest guides and resources."
   }
 }

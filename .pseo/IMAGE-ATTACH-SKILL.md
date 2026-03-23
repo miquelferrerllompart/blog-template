@@ -33,7 +33,7 @@ Collect from the user:
 | Target slug | Yes | `best-practices-topic-industry` |
 | Alt text | Yes | `Best practices for topic in industry` |
 | Placement | Yes | `after:intro` |
-| Caption | No | `Fashion brands can boost retention...` |
+| Caption | No | `Businesses can accelerate growth with...` |
 
 If the user ran `image-prompts` first, these values should already be defined — confirm with user.
 

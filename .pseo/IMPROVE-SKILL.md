@@ -7,7 +7,7 @@ description: "Iterates and improves existing blog posts, tools, or content categ
 
 ## Overview
 
-This skill handles **iterating on existing content** — individual posts, tools, or entire categories (e.g., all fashion resources, all tools). It bridges the gap between Phase 7 (feedback loop) and Phase 4 (content generation) by analyzing what exists, querying Ahrefs via MCP for real SEO data, and applying data-driven improvements.
+This skill handles **iterating on existing content** — individual posts, tools, or entire categories (e.g., all resources in an industry, all tools). It bridges the gap between Phase 7 (feedback loop) and Phase 4 (content generation) by analyzing what exists, querying Ahrefs via MCP for real SEO data, and applying data-driven improvements.
 
 ### Relationship With Other Skills
 
@@ -41,9 +41,9 @@ Identify the target scope:
 
 | Scope | Example | Files to read |
 |-------|---------|---------------|
-| **Single post** | "improve the fashion loyalty ideas post" | `content/resources/loyalty-ideas-fashion-apparel.json` |
-| **Single tool** | "update the ROI calculator" | `content/tools/loyalty-roi-calculator.json` |
-| **Industry category** | "improve all beauty content" | All `*-beauty-cosmetics.json` files |
+| **Single post** | "improve the getting started tips post" | `content/resources/example-getting-started-tips.json` |
+| **Single tool** | "update the ROI calculator" | `content/tools/roi-calculator.json` |
+| **Industry category** | "improve all industry-x content" | All `*-industry-x.json` files |
 | **Content type** | "improve all resource pages" | All `content/resources/*.json` |
 | **Cross-cutting** | "improve interlinking across everything" | All content files |
 

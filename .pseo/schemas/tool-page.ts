@@ -30,7 +30,7 @@ interface ToolPage {
       field_name: string;
       field_type: 'text' | 'select' | 'number' | 'range' | 'currency';
       label: string;
-      placeholder: string;         // your platform-merchant-specific example
+      placeholder: string;         // example value for this field
       options?: string[];          // For select fields
       default_value?: string | number;
       validation: {
@@ -62,7 +62,7 @@ interface ToolPage {
     }>;
   };
   content: {
-    intro: string;                 // Why this calculation matters for Your Platform merchants
+    intro: string;                 // Why this calculation matters
     how_to_use: string[];          // 4-5 step instructions
     interpretation_guide: string;  // How to read and act on the results
     industry_benchmarks: Array<{   // 5-6 benchmark ranges
@@ -101,14 +101,9 @@ interface ToolPage {
   };
 }
 
+// Customize per-niche during onboarding
 const toolTitleTemplates: Record<string, string> = {
-  'loyalty-roi-calculator':      'Program ROI Calculator for Your Platform Stores',
-  'retention-rate-calculator':   'Customer Retention Rate Calculator for Your Platform',
-  'clv-calculator':      'Customer Lifetime Value Calculator for Your Platform Stores',
-  'points-value-calculator':     'Points Program Value Calculator — How Much Are Your Points Worth?',
-  'loyalty-cost-comparison':     'App Cost Comparison Tool for Your Platform',
-  'push-vs-email-roi':           'Push Notification vs Email ROI Calculator',
-  'referral-roi-calculator':     'Referral Program ROI Calculator for Your Platform',
+  // e.g. 'roi-calculator': 'ROI Calculator for {industry}',
 };
 
 export type { ToolPage };

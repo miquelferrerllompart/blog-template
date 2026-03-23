@@ -94,10 +94,7 @@ const urlPrefixes = {resource:'/resources/',guide:'/guides/',alternatives:'/comp
 const typeLabels = {guide:'Guide',resource:'Resource',alternatives:'Alternatives',comparison:'Comparison',tool:'Free Tool'};
 
 const toolIconIds = {
-    'loyalty-roi-calculator':'ic-roi','retention-rate-calculator':'ic-retention',
-    'referral-roi-calculator':'ic-referral',
-    'loyalty-cost-comparison':'ic-compare','points-value-calculator':'ic-points',
-    'push-vs-email-roi':'ic-push-email'
+    // Populated per-niche: e.g. 'tool-slug':'ic-tool-name'
 };
 function icon(id,cls){return `<svg class="${cls||''}" viewBox="0 0 48 48"><use href="#${id}"></use></svg>`;}
 
@@ -109,18 +106,10 @@ function renderTools(items) {
 
 function renderGuides(items) {
     const hubTopicMap = {
-        'best-loyalty-programs':'Loyalty Programs','ecommerce-loyalty-program':'Loyalty Programs','loyalty-program-examples':'Loyalty Programs',
-        'loyalty-program-small-business':'Loyalty Programs','tiered-loyalty-program':'Loyalty Programs','digital-punch-card':'Loyalty Programs','omnichannel-loyalty-program':'Loyalty Programs',
-        'ecommerce-referral-program':'Referral','referral-program-examples':'Referral','referral-program-ideas':'Referral',
-        'customer-retention-program':'Retention','customer-retention-strategies-ecommerce':'Retention','how-to-retain-customers':'Retention','retention-rate-formula':'Retention',
-        'fitness-studio-marketing':'Marketing','salon-marketing-ideas':'Marketing','spa-marketing-ideas':'Marketing','yoga-studio-marketing':'Marketing',
-        'coffee-shop-loyalty-program':'Marketing','salon-loyalty-program':'Marketing'
+        // Populated per-niche: e.g. 'hub-slug':'Topic Name'
     };
     const topicOrder = [
-        {name:'Loyalty Programs', anchor:'loyalty-programs'},
-        {name:'Referral', anchor:'referral'},
-        {name:'Retention', anchor:'retention'},
-        {name:'Marketing', anchor:'marketing'}
+        // Populated per-niche: e.g. {name:'Topic', anchor:'topic'}
     ];
     const hubsByTopic = {};
     const regularGuides = [];
@@ -174,7 +163,7 @@ document.getElementById('app').innerHTML = `
 
     <div class="nl-banner" style="border-radius:0">
         <div style="max-width:68.75rem;margin:0 auto;padding:0 var(--sp-48)">
-            <h3 class="nl-banner-title">More repeat customers, less guesswork</h3>
+            <h3 class="nl-banner-title">{{NL_BANNER_TITLE}}</h3>
             <p class="nl-banner-desc">{{NL_BANNER_DESC}}</p>
             <form class="nl-form" data-source="banner">
                 <input type="email" placeholder="Email address" required>
@@ -186,7 +175,7 @@ document.getElementById('app').innerHTML = `
 
     <div class="cta-wrap">
         <div class="cta-block">
-            <h3>Keep more customers coming back</h3>
+            <h3>{{LISTING_CTA_HEADLINE}}</h3>
             <p>{{LISTING_CTA_BODY}}</p>
             <a href="${SITE.appUrl('cta','listing','bottom-cta')}" class="cta-btn">{{LISTING_CTA_BUTTON}}</a>
         </div>

@@ -74,7 +74,7 @@ modern SaaS aesthetic, no text, no logos.
 - **Must include one target keyword** from `seo.keywords` naturally
 - Should describe the image content, not be generic ("image of a product")
 - 8-15 words, readable as a sentence
-- Example: "Ecommerce dashboard showing customer engagement metrics and trends"
+- Example: "Dashboard showing key business metrics and performance trends"
 
 ## Step 4: Output Format
 
@@ -85,9 +85,9 @@ Present the results as a markdown block the user can review:
 
 ### Image 1
 - **Placement:** `after:intro`
-- **Prompt:** Flat illustration of a store owner reviewing analytics on a tablet, with performance badges floating nearby. Clean minimal design, purple (#7000FF) accent color, white background, modern SaaS aesthetic, no text, no logos.
-- **Alt text:** Ecommerce analytics dashboard with performance tracking
-- **Caption:** Tracking key metrics helps businesses retain customers
+- **Prompt:** Flat illustration of a professional reviewing analytics on a tablet, with performance badges floating nearby. Clean minimal design, purple (#7000FF) accent color, white background, modern aesthetic, no text, no logos.
+- **Alt text:** Analytics dashboard showing key business performance metrics
+- **Caption:** Tracking key metrics helps businesses make smarter decisions
 
 ### Image 2
 ...
@@ -108,6 +108,6 @@ For a resource page content JSON:
 
 **Image 1:**
 - Placement: `after:intro`
-- Prompt: Flat illustration of a modern storefront with digital elements floating around it, a smartphone showing an app interface nearby. Clean minimal design, purple accent, white background, modern SaaS aesthetic, no text, no logos.
-- Alt: Ecommerce best practices for customer engagement and retention
-- Caption: Businesses can boost retention with creative engagement strategies
+- Prompt: Flat illustration of a modern workspace with digital elements floating around it, a smartphone showing an app interface nearby. Clean minimal design, purple accent, white background, modern aesthetic, no text, no logos.
+- Alt: Best practices for business growth and customer engagement
+- Caption: Businesses can accelerate growth with the right strategies

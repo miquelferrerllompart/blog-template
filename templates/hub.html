@@ -99,7 +99,9 @@
 <script>
 const DATA = {{DATA}};
 const hubType = DATA.meta.hub_type;
-const industryIconIds = {'fashion-apparel':'ic-fashion','beauty-cosmetics':'ic-beauty','food-beverage':'ic-food','health-supplements':'ic-health','pet-supplies':'ic-pet','sports-outdoor':'ic-sports','jewelry-accessories':'ic-jewelry','home-decor':'ic-home','coffee-tea':'ic-coffee','baby-kids':'ic-baby','gyms-fitness-studios':'ic-sports','spas-salons-medspas':'ic-spa','health-coaching-personal-training':'ic-health-coaching','health-food-organic-stores':'ic-health-food','supplement-vitamin-brands':'ic-supplement','wellness-dtc-ecommerce':'ic-wellness','yoga-pilates-studios':'ic-yoga'};
+const industryIconIds = {
+    // Populated per-niche: e.g. 'industry-key':'ic-industry'
+};
 const heroIconId = industryIconIds[DATA.meta.industry] || 'ic-default';
 const urlPrefix = hubType === 'guide' ? '/guides/' : '/resources/';
 const sectionLabel = hubType === 'guide' ? 'Guides' : 'Resources';
@@ -137,8 +139,8 @@ document.getElementById('app').innerHTML = `
                 <div class="guide-body">${s.body.split(/\n/).map(p => p.trim() ? '<p>' + p + '</p>' : '').join('')}</div>
                 <div class="key-takeaway"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-lightbulb"></use></svg>${s.key_takeaway}</div>
                 <div class="actionable-tip"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-action"></use></svg>${s.actionable_tip}</div>
-                ${s.platform_integration ? '<div class="platform-note"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-platform"></use></svg>' + s.platform_integration + '</div>' : ''}
-                ${s.wallet_pass_angle ? '<div class="wallet-note"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-wallet"></use></svg>' + s.wallet_pass_angle + '</div>' : ''}
+                ${s.platform_integration ? '<div class="platform-note"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-lightbulb"></use></svg>' + s.platform_integration + '</div>' : ''}
+                ${s.product_angle ? '<div class="wallet-note"><svg class="callout-icon" viewBox="0 0 48 48"><use href="#ic-wallet"></use></svg>' + s.product_angle + '</div>' : ''}
             </div>
         `).join('')}
 
@@ -214,7 +216,7 @@ document.getElementById('app').innerHTML = `
         </div>
 
         <div class="nl-banner" style="border-radius:var(--radius-xl);padding:var(--sp-40) var(--sp-24);margin-bottom:var(--sp-48)">
-            <h3 class="nl-banner-title">More repeat customers, less guesswork</h3>
+            <h3 class="nl-banner-title">{{NL_BANNER_TITLE}}</h3>
             <p class="nl-banner-desc">{{NL_BANNER_DESC}}</p>
             <form class="nl-form" data-source="banner">
                 <input type="email" placeholder="Email address" required>
